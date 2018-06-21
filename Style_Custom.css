@@ -1,0 +1,623 @@
+﻿body
+{
+  margin-left:10px;
+  padding-left:10px;
+  margin-right:10px;
+  padding-right:10px;
+}
+
+
+.topnav 
+{
+  overflow: hidden;
+  background-color: #2E2E2E;
+}
+
+.topnav a 
+{
+  float: left;
+  display: block;
+  color: #D8D8D8;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover
+{
+  background-color: #000;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.topnav a.active 
+{
+  background-color: #000;
+  color: white;
+  font-weight: bold;
+}
+
+.topnav .icon 
+{
+  display: none;
+}
+
+.topnav-right {
+  float: right;
+}
+
+
+@media screen and (max-width: 1100px) 
+{
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 1100px) 
+{
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon 
+  {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a 
+  {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+ .topnav.responsive div 
+  {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+
+/*style="position:fixed;width:200px;left:10px;height:300px;z-index:2"*/
+.sidenav
+{	
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 200px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 52px;
+    left: 0;
+    background-color: white; /* Black */
+    overflow: hidden; /* Disable horizontal scroll */
+	padding-left: 10px;
+}
+
+.canvascontent
+{
+	position:absolute;
+	margin-left:204px;
+}
+
+table.simple 
+{
+    border: 0px;
+	width: 100%;
+}
+
+table.fixed { table-layout:fixed; }
+
+table.butons 
+{
+    border: 0px;
+	width: 80%;
+}
+
+table.llistes 
+{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.llistes2
+{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    table-layout: fixed;
+	width:150px;
+}
+
+th.llistes2
+{
+    border: 1px solid #4069B2;
+    text-align: left;
+    padding: 6px;
+	background-color: #4069B2;
+	color: #FFF;
+	width:150px;
+}
+
+td.llistes2
+{
+    border: 1px solid #4069B2;
+    text-align: left;
+    padding: 6px;
+	width:150px;
+}
+
+th.llistes
+{
+    border: 1px solid #4069B2;
+    text-align: left;
+    padding: 6px;
+	background-color: #4069B2;
+	color: #FFF;
+}
+
+td.llistes
+{
+    border: 1px solid #4069B2;
+    text-align: left;
+    padding: 6px;
+}
+
+td.fill
+{
+    border: 1px solid #4069B2;
+    text-align: left;
+    padding: 6px;
+	text-align:center;
+}
+
+tr.llistes:nth-child(even) 
+{
+    /* background-color: #CED8F6; */
+	background-color: #eaeae1;
+}
+
+td.llistes a.boto{
+	color: #FFF;
+}
+
+td.llistes a{
+	color: #4069B2;
+}
+
+.triangle-up {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #FFF;
+}
+
+.triangle-down {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #FFF;
+}
+
+.boto{
+  display: inline-block;
+  padding: 2px 6px;
+  font-size: 14px;
+  line-height: 1.8;
+  vertical-align: bottom;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 4px;
+  color: #FFF;
+  background-color: #4069B2;
+  border-color:#1D51B2;
+  border: none;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -moz-user-select: none;
+  background-image: none;
+  font-weight: bold;  
+}
+
+/* Add a background color to the button if you move the mouse over it (hover) */
+button.boto:hover,
+a.boto:hover{
+	background-color: #FFC43D;
+	color: #FFF;
+	text-decoration: none;
+}
+
+.boto_remove{
+	background-color: red;
+}
+
+button.boto_remove:hover,
+a.boto_remove:hover{
+	background-color: #FFC43D;
+}
+
+.tabulador{
+  display: inline-block;
+  padding: 2px 10px;
+  margin-right: 4px;
+  font-size: 14px;
+  vertical-align: bottom;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 1px;
+  color: #FFF;
+  background-color: #5BC0DE;
+  border-color:#46B8DA;
+  border: none;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -moz-user-select: none;
+  background-image: none;
+  font-weight: none;  
+}
+
+button.tabulador:hover{
+	background-color: #CC782B;
+}
+
+button.tabuladorActiu{
+	background-color: #CC782B;
+}
+
+
+/***************  GRIDS   ********************/
+
+.container-fluid,
+.container {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.container-fluid {
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+
+.row {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -0.5rem;
+  margin-left: -0.5rem;
+}
+
+.col-xs {
+  box-sizing: border-box;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.col-xs {
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  max-width: 100%;
+}
+
+
+/***************  FROMS   ********************/
+
+div.form_group{
+	padding-left: 20px;
+	padding-bottom: 10px;
+}
+
+.form_edit{
+    border: 1px solid #4069B2;
+    border-radius: 4px;
+	width:100%;
+	padding: 5px;
+}
+
+input.form_edit:focus{
+	outline: 0px none;
+	/*box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);*/
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(240, 136, 42, 0.6);
+	border: 1px solid #FFC43D;
+}
+
+/****************************ACCORDION******************************/
+
+/* Style the buttons that are used to open and close the accordion panel */
+
+button.accordion{
+  color: #FFF;
+  width:100%;
+  text-align: left;
+  border-radius: 0;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+button.accordion:hover,
+button.accordion.hover{
+	background-color: #4069B2;
+	color: #FFF;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+div.accordionItem{
+	background-color:#FFF;
+	display: none;
+	vertical-align: middle;
+	padding-left:5px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+div.castellerNoInscrit{
+	background-color: #F5A9BC;
+}
+
+div.castellerSeleccionat{
+	background-color: #81F781;
+}
+
+/**************************** SWITCH ****************************/
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 20px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #4069B2;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #4069B2;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 18px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.slider.slider2
+{
+	background-color: #40FF00;
+}
+
+/****************************POPUP******************************/
+/* Popup container - can be anything you want */
+.popup {
+    /*position: relative;
+    display: inline-block;*/
+    -webkit-user-select: none;
+    -moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 260px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: fixed;
+    z-index: 1;
+    top: 40%;
+    left: 40%;
+    //margin-left: -80px;
+}
+
+/* The actual popup */
+.popuptext .text {
+    width: 90%;
+    color: #000;
+}
+
+/* The actual popup */
+.popup .popupcasella{
+    visibility: hidden;
+    width: 150px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: fixed;
+    z-index: 1;
+    top: 10%;
+    left: 40%;
+    //margin-left: -80px;
+}
+
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+
+
+
+/* COOKIES */
+#barraaceptacion {
+    display:none;
+    position:fixed;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    padding-bottom:20px;
+    width:100%;
+    text-align:center;
+    min-height:40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color:#fff;
+    z-index:99999;
+}
+ 
+.inner {
+    width:100%;
+    position:absolute;
+    padding-left:5px;
+    font-family:verdana;
+    font-size:12px;
+    top:4%;
+}
+ 
+.inner a.ok {
+    padding:4px;
+    color:#00ff2e;
+    text-decoration:none;
+}
+ 
+.inner a.info {
+    padding-left:5px;
+    text-decoration:none;
+    color:#faff00;
+}
+
+
+/****/
+
+.thead-fixed thead
+{
+	top:0;
+}
+.thead-fixed th
+{
+	border: 1px solid #4069B2;
+	text-align: left;
+	background-color: #4069B2;
+	color: #FFF;
+	padding: 6px;
+}
+
+.thead-fixed td
+{
+	border: 1px solid #4069B2;
+	text-align: left;
+	padding: 6px;
+}
+
+.thead-fixed tr:nth-child(even) 
+{
+	/* background-color: #CED8F6; */
+	background-color: #eaeae1;
+}
+
+.sticky
+{
+  position: fixed;
+}
+
+
+/* COUNTER */
+.counter
+{
+    background: linear-gradient(white, black);
+	border-radius: 5px;
+    width: 40px;
+    height: 60px;
+	color: white;
+	font-size:48px;
+	text-align: center;
+	position: relative;
+}
+
+.countertd
+{
+	padding:1px;
+}
+
+.counterframe
+{
+	height:100px;
+	width:160;
+	border:none;
+	background:none;
+}

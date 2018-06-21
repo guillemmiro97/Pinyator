@@ -1,0 +1,7 @@
+OK Pinat numeros al seleccionat
+OK Alinear seleccionats
+OK Marcar les caselles següents
+-Qui te el castell obert
+-Bloquejar posicio casella
+OK Colors per les posicions
+- Llista Privada mostrar tots els castellers
