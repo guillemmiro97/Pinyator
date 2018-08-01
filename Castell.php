@@ -31,7 +31,6 @@
 		<th class='butons'>
 			<a href="Castell.php?e=1" class="boto" >Actius</a>
 			<a href="Castell.php?e=-1" class="boto" >Inactius</a>
-			<a href="Castell.php?e=2" class="boto" >Arxivats</a>
 		</th>
 	</tr>
 </table> 
