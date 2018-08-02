@@ -8,6 +8,7 @@
             <File name="llibreria\grids.js" />
             <File name="llibreria\inscripcio.js" />
             <File name="llibreria\plantilla.js" />
+            <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\llibreria\table2CSV.js" />
         </Folder>
         <File name="Apuntat.php" />
         <File name="Castell.php" />
@@ -71,6 +72,7 @@
             <File name="Estadistiques\Assistencia.php" />
             <File name="Estadistiques\Assistencia_Casteller_estadistiques_taula.php" />
             <File name="Estadistiques\Castell_Posicio_estadistiques_taula.php" />
+            <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Estadistiques\Castells_Fets.php" />
         </Folder>
     </Project>
 </NotepadPlus>

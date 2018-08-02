@@ -64,12 +64,12 @@ else if (EsURLAdmin() && !EsAdmin())
 	{	
 		echo  "<a ".$plantilla." href='Plantilla.php'>Plantilles</a>
 			<a ".$castell." href='Castell.php'>Assaig/Actuació</a>
-			<a ".$posicions." href='Posicio.php'>Posicions</a>";		  
+			<a ".$posicions." href='Posicio.php'>Posicions</a>
+			<a ".$estadistiques." href='Estadistiques.php'>Estadístiques</a>";		  
 	}
 	if (EsBossLv2())
 	{	
-		echo "<a ".$planificacio." href='Planificacio.php'>Planificació</a>
-		  <a ".$estadistiques." href='Estadistiques.php'>Estadistiques</a>";
+		echo "<a ".$planificacio." href='Planificacio.php'>Planificació</a>";
 	}	
 	if (EsAdmin())
 	{	
@@ -229,12 +229,12 @@ function EsURLCasteller()
 
 function EsURLCastell()
 {
-	return (ContainsUrl("Plantilles") || ContainsUrl("Castell.") || ContainsUrl("Castell_") || ContainsUrl("Posicio"));	
+	return (ContainsUrl("Plantilles") || ContainsUrl("Castell.") || ContainsUrl("Castell_") || ContainsUrl("Posicio") || ContainsUrl("Estadistiques"));	
 }
 
 function EsURLBoss()
 {
-	return (ContainsUrl("Planificacio") || ContainsUrl("Estadistiques"));
+	return (ContainsUrl("Planificacio"));
 }
 
 

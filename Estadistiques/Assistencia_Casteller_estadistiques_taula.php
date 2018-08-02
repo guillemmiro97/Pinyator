@@ -1,5 +1,7 @@
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../Llibreria/table2CSV.js"></script>
 <style>
 table, td
 {
@@ -34,7 +36,9 @@ th
 </head>
 <link rel="stylesheet" href="../Style_Custom.css">
 <body>
-<button class="boto" onClick="filterTable(true)">Tots</button>&nbsp&nbsp<button class="boto" onClick="filterTable(false)">Actius</button>
+<button class="boto" onClick="filterTable(true)">Tots</button>
+&nbsp&nbsp<button class="boto" onClick="filterTable(false)">Actius</button>
+&nbsp&nbsp<a class="boto" onClick="ExportCSV(false)">Exporta CSV</a>
 
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";?>
 
@@ -155,7 +159,7 @@ foreach($dies as $event=>$dia)
 
 $head = $head." </tr>";
 
-echo "<table name='graella'>";
+echo "<table id='graella' name='graella'>";
 //echo "<table class='thead-fixed' name='graella'>";
 //echo "<thead class='sticky'>";
 //echo $head;
@@ -210,6 +214,11 @@ echo "</tbody></table>";
 </body>
 <script>
 
+function ExportCSV() 
+{
+	$('#graella').table2CSV();
+}
+
 function filterTable(Tots) 
 {
 	var tr = document.getElementsByClassName("castellerInactiu");
@@ -225,5 +234,6 @@ function filterTable(Tots)
 		}
 	}
 }
+
 </script>
 </html>

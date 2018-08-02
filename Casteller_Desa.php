@@ -18,6 +18,7 @@ $forca = intval($_POST["forca"]);
 $lesionat = 0;
 $portarpeu = 0;
 $estat = 1;
+$accio = strval($_POST["Desa"]);
 
 if (!empty($_POST["estat"]))
 	$estat=intval($_POST["estat"]);
@@ -47,7 +48,31 @@ else
 
 if (mysqli_query($conn, $sql)) 
 {	
-	echo "<meta http-equiv='refresh' content='0; url=Casteller.php'/>";
+	if ($accio=="desarievents")	
+	{		
+		$sql="SELECT CASTELLER_ID
+			FROM CASTELLER
+			WHERE MALNOM = '".$malnom."'";
+
+		$result = mysqli_query($conn, $sql);
+
+		if (mysqli_num_rows($result) > 0) 
+		{
+			while($row = mysqli_fetch_assoc($result))
+			{
+				$id = $row["CASTELLER_ID"];
+			}
+			echo "<meta http-equiv='refresh' content='0; url=Casteller_Fitxa.php?id=".$id."'/>";
+		}
+		else if (mysqli_error($conn) != "")
+		{
+			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+		}
+	}
+	else
+	{
+		//echo "<meta http-equiv='refresh' content='0; url=Casteller.php'/>";
+	}
 } 
 else if (mysqli_error($conn) != "")
 {
