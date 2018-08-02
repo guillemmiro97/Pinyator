@@ -29,6 +29,7 @@
 	$estat = 0;
 	$lesionat = 0;
 	$portarpeu = 1;
+	$urlInscripcio = "";
 				
 	echo "<form method='post' action='Casteller_Desa.php'>";
 
@@ -61,6 +62,7 @@
 				$estat = $row["ESTAT"];
 				$portarpeu = $row["PORTAR_PEU"];
 				$lesionat = $row["LESIONAT"];
+				$urlInscripcio = "src='Inscripcio.php?id=".$url."'";
 			}
 		}
 		else if (mysqli_error($conn) != "")
@@ -76,13 +78,10 @@
 			</tr>
 		</table>
 	</div> 
-	<div id="panellLateral" style="position:absolute;padding-top:10px;width:300px;">
-	<h3>Estadístiques</h3>
-	<?php
-	$Casteller_id =	$id;	
-	include "$_SERVER[DOCUMENT_ROOT]/pinyator/Casteller_estadistiques_taula.php";?>
+	<div id="panellLateral" style="position:absolute;padding-top:10px;width:320px;">
+	<iframe id="mainFrame" <?php echo $urlInscripcio ?> width="100%" height="90%" style="border:0" ></iframe>
 	</div>
-	<div style="position:absolute;left:310px;width:500px">
+	<div style="position:absolute;left:320px;width:500px">
 		<div class="form_group">
 			<label>ID - </label><?php echo "  <a href='Inscripcio.php?id=".$url."'>Link als seus esdeveniments</a>"?>
 			<input type="text" class="form_edit" name="id" value="<?php echo $id ?>" readonly>
@@ -119,15 +118,25 @@
 			<label>Cognom 2on</label>
 			<input type="text" class="form_edit" name="cognom2" value="<?php echo $cognom2 ?>">
 			<br><br>
-			<label>Altura</label>
-			<input type="number" class="form_edit" name="altura" value="<?php echo $altura ?>">
-			<br><br>
-			<label>Força</label>
-			<input type="number" class="form_edit" name="forca" value="<?php echo $forca ?>">
-			<br><br>
-			<label for="sel1">Posicio pinya:</label>
-			<select class="form_edit" name="posiciopinyaid">
-			<option value=0>Sense posicio</option>
+			<table style="width:100%;">
+				<tr>
+					<td style="padding-right:20px">
+						<label>Altura</label>
+						<input type="number" class="form_edit" name="altura" value="<?php echo $altura ?>">
+					</td>
+					<td>
+						<label>Força</label>
+						<input type="number" class="form_edit" name="forca" value="<?php echo $forca ?>">
+					</td>
+				</tr>
+			</table>
+			<br>
+			<table style="width:100%;">
+				<tr style="padding-top:20px">
+					<td style="padding-right:20px">
+						<label for="sel1">Posicio pinya:</label>
+						<select class="form_edit" name="posiciopinyaid">
+						<option value=0>Sense posicio</option>
 <?php
 
 		$sql="SELECT POSICIO_ID, NOM
@@ -155,7 +164,8 @@
 		}
 ?>
 			</select>
-			<br><br>
+			</td>
+					<td>
 			<label for="sel1">Posicio tronc:</label>
 			<select class="form_edit" name="posiciotroncid">
 			<option value=0>Sense posicio</option>
@@ -185,8 +195,11 @@
 			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 		}
 ?>
-			</select>
-			<br><br>
+					</select>
+				</td>
+			</tr>
+		</table>
+			<br>
 			<label for="sel2">Responsable apuntar-me a pinyes:</label>
 			<select class="form_edit" name="responsableid1">
 			<option value=0>Sense responsable</option>
@@ -250,7 +263,8 @@
 			  <span class="slider round"></span>
 			</label>
 			<br><br>
-			<button type="Submit" class="boto">Desa</button>
+			<button type="Submit" name= "Desa" value="desar" class="boto">Desa</button>
+			<button type="Submit" name= "Desa" value="desarievents" class="boto" style="float:right">Desa sense sortir</button>
 		</div>
 	</div>
 	</form>
