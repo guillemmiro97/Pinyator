@@ -83,7 +83,6 @@
 		LEFT JOIN CASTELLER AS CR1 ON CR1.CASTELLER_ID=C.FAMILIA_ID
 		LEFT JOIN CASTELLER AS CR2 ON CR2.CASTELLER_ID=C.FAMILIA2_ID
 		WHERE 1=1
-		AND (C.ESTAT = 1 ".$baixa.")
 		".$where."
 		ORDER BY C.MALNOM";
 
@@ -100,9 +99,20 @@
 				{
 					$malnom = "----";
 				}
+				if ($row["ESTAT"] == "ACTIU")
+				{
+					$a=2;
+					$aTxt="BAIXA"; 
+				}
+				else
+				{
+					$a=1;
+					$aTxt="ACTIU";
+				}
+				
 				$malnom = SiCastellerLv2("<a href='Casteller_Fitxa.php?id=".$row["CASTELLER_ID"]."'>".$malnom."</a>", $malnom);
 				$codi = SiCastellerLv2("<td class='llistes'><a href='Inscripcio.php?id=".$row["CODI"]."'>".$row["CODI"]."</a></td>", "");
-				$baixa = SiCastellerLv2("<td class='llistes'><a href='Casteller_Baixa.php?id=".$row["CASTELLER_ID"]."'>Baixa</a></td>", "");
+				$accio = SiCastellerLv2("<td class='llistes'><a href='Casteller_Accio.php?id=".$row["CASTELLER_ID"]."&a=".$a."'>".$aTxt."</a></td>", "");
 				
 				echo "<tr class='llistes'>
 				<td class='llistes'>".$malnom."</td>
@@ -114,7 +124,7 @@
 				".$codi."
 				<td class='llistes'>".implode(", ", array_filter([$row["RESPONSABLE1"],$row["RESPONSABLE2"]]))."</td>
 				<td class='llistes'>".$row["ESTAT"]."</td>
-				".$baixa."
+				".$accio."
 				</tr>";
 				$count++;
 			}	

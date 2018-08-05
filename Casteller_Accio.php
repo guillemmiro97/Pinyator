@@ -5,16 +5,17 @@
 <body>
 <?php
 $id = intval($_GET["id"]);
+$accio = intval($_GET["a"]);
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
 if ($id > 0)
 {
-	$sql="UPDATE CASTELLER SET ESTAT=2 WHERE CASTELLER_ID = ".$id;
+	$sql="UPDATE CASTELLER SET ESTAT=".$accio." WHERE CASTELLER_ID = ".$id;
 
 	if (mysqli_query($conn, $sql)) 
 	{	
-		echo "<meta http-equiv='refresh' content='0; url=Casteller.php'/>";
+		echo "<meta http-equiv='refresh' content='0; url=".$_SERVER['HTTP_REFERER']."'/>";
 	} 
 	else if (mysqli_error($conn) != "")
 	{
