@@ -30,7 +30,7 @@ if (mysqli_num_rows($result) > 0)
     while($row = mysqli_fetch_assoc($result)) 
 	{
 		echo "<label>".$row["USUARI"]." - ".$row["DATA"]."</label>";
-		echo "<pre style='background:lightblue'>".$row["TEXT"]."</pre>";
+		echo "<pre style='background:lightblue;white-space: pre-wrap;'>".$row["TEXT"]."</pre>";
 		echo "<br>";
     }	
 }
