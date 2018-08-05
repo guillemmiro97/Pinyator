@@ -42,7 +42,7 @@ if ($id > 0)
 
 if (mysqli_query($conn, $sql)) 
 {	
-	echo "<meta http-equiv='refresh' content='0; url=Castell.php'/>";
+	echo "<meta http-equiv='refresh' content='0; url=".$_SERVER['HTTP_REFERER']."'/>";
 } 
 else if (mysqli_error($conn) != "")
 {

@@ -28,6 +28,7 @@
 	<?php if (EsEventLv2())echo "<th class='llistes'>Castells</th>"; ?>	
 	<th class='llistes'>Inscrits</th>
 	<th class='llistes'>Comentaris</th>	
+	<th class='llistes'>Plantilla</th>
 	<th class='llistes'>Estat</th>
 	<?php if (EsEventLv2()) echo "<th class='llistes'>Acció</th>" ?>	
   </tr>
@@ -42,7 +43,7 @@ if (!empty($_GET["e"]))
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
 $sql="SELECT E.EVENT_ID, E.NOM, date_format(E.DATA, '%d-%m-%Y %H:%i') AS DATA, 
-E.ESTAT, E.EVENT_PARE_ID,
+E.ESTAT, E.EVENT_PARE_ID, E.ESPLANTILLA,
 COUNT(I.ESTAT) AS CONTESTES_QTA,
 SUM(IFNULL(I.ESTAT,0)) AS INSCRITS_QTA,
 (SELECT IFNULL(COUNT(*), 0) FROM CASTELL C WHERE C.EVENT_ID=E.EVENT_ID) AS CASTELLS_QTA,
@@ -87,6 +88,7 @@ if (mysqli_num_rows($result) > 0)
 		{
 			$estatNom = "";
 		}
+		$esPlantilla = $row["ESPLANTILLA"]==1?"SI":"NO";
 		
 		$tInici = "";
 		$tFinal = "";
@@ -127,6 +129,7 @@ if (mysqli_num_rows($result) > 0)
 		}
 		echo "<td class='llistes'><a href='Event_LlistaPrivat.php?".$link."'>(".$row["UTILS"].")".$row["INSCRITS_QTA"]."/".$row["CONTESTES_QTA"]."</a></td>
 		<td class='llistes'><a href='Event_Comentari_Privat.php?id=".$row["EVENT_ID"]."'>".$row["COMENTARIS"]."</a></td>
+		<td class='llistes'>".$esPlantilla."</td>
 		<td class='llistes'>".$estatNom."</td>";
 		if(EsEventLv2())
 		{

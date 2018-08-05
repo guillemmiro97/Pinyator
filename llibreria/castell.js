@@ -57,17 +57,17 @@ var elementActualId=0;
 
 function ShowPopupCasella()
 {
-	if(document.getElementById("VeurePopup").checked)
+	/*if(document.getElementById("VeurePopup").checked)
 	{
 		var popup = document.getElementById("PopUpCasella");	
 		popup.classList.toggle("show");
-	}
+	}*/
 }
 
 function HidePopupCasella()
 {
-	var popup = document.getElementById("PopUpCasella");
-	popup.classList.remove("show");
+	//var popup = document.getElementById("PopUpCasella");
+	//popup.classList.remove("show");
 }
 
 
@@ -425,6 +425,25 @@ function EsborraCasellesLinkades(id, idCasteller, castellId)
 		i = i + 1;
 	}
 }
+
+function Neteja()
+{	
+	if(confirm("Segurx que vols esborrar tothom que no està apuntat?"))
+	{
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				Log(this.responseText);
+				window.location.reload(true);
+			}
+		};
+		xmlhttp.open("GET", "Castell_Posicio_Desa.php?n=" + boxes[0].castellId, true);
+		xmlhttp.send();
+	}
+}
+
 
 function checkLinkatAfegit(id) 
 {
