@@ -104,7 +104,7 @@
 					</tr>";
 				echo "<tr class='llistes'>
 					<td class='llistes'><button class='boto' onClick='Ordena(".$row["EVENT_ID"].")'>Ordena</button></td>
-					<td class='llistes'><a href='Castell_Fitxa.php?id=".$row["CASTELL_ID"]."&a=1'>Troncs i nuclis</a></td>
+					<td class='llistes'><a href='Castell_Fitxa.php?id=".$row["EVENT_ID"]."&a=1'>Troncs i nuclis</a></td>
 					<td class='llistes'></td>
 					<td class='llistes'></td>
 					<td class='llistes'></td>
