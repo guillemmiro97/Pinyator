@@ -68,15 +68,16 @@ else if (mysqli_error($conn) != "")
 	<div  class="sidenav" id="navlateral">
 		<h4><?php echo $titol ?></h4>
 		<button class="boto" onclick="download()">Imatge</button>
+		<button class="boto boto_remove" id="Neteja" onClick="Neteja()" <?php echo $autogenerat?"hidden":""; ?>>Neteja</button>
+		<br><br>
 		<button class="boto boto_remove" id="EsborraPaleta" onClick="EsborraMenu()">Esborra</button>
 		<button class="boto" id="EditaPaleta" onClick="EditaMenu()">Edita</button>
-		<br>
-		<br>
-		Popup 
+		<br><br>
+		<!--Popup 
 		<label class="switch">text
 		  <input type="checkbox" id="VeurePopup">
 		  <span class="slider round"></span>
-		</label>
+		</label-->
 		Mides 
 		<label class="switch">text
 		  <input type="checkbox" onclick="Mides()">
@@ -294,10 +295,10 @@ else if (mysqli_error($conn) != "")
 		init();
 	</script>
 	<span id="txtHint"></span>
-	<div class="popupcasella" id = "PopUpCasella">
+	<!--div class="popupcasella" id = "PopUpCasella">
 		<button class="boto boto_remove" id="EsborraPopup" onClick="EsborraPopup()">Esborra</button>
 		<button class="boto" id="EditaPopup" onClick="EditaPopup()">_Edita_</button>
-	</div> 
+	</div--> 
 <?php
 	
 	if ($autogenerat)
