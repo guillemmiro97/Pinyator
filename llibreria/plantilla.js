@@ -82,15 +82,15 @@ document.ontouchend = function (e) {
   {
 	//myUp(e);
     e.preventDefault();	
-  };
-} 
+  }
+};
 document.ontouchmove = function (e) {
   if (e.target == canvas) 
   {
 	//touchMove(e);
     e.preventDefault();	
-  };
-}
+  }
+};
 
 var shiftKey = true;
 var currentSelected = null;
@@ -115,75 +115,80 @@ function OnDown()
 		mySel = [];
 	}
 	
-	clear(gctx);
-	var l = boxes.length;
-	for (var i = l-1; i >= 0; i--) 
-	{
-		if (boxes[i].pestanya == pestanyaActual)
+	var imageData = ctx.getImageData(mx, my, 1, 1);
+	// if the mouse pixel exists, select and break
+	if (imageData.data[3] > 0)
+	{	
+		clear(gctx);
+		var l = boxes.length;
+		for (var i = l-1; i >= 0; i--) 
 		{
-			// draw shape onto ghost context
-			drawshape(gctx, boxes[i]);
-			
-			// get image data at the mouse x,y pixel
-			var imageData = gctx.getImageData(mx, my, 1, 1);
-			//var index = (mx + my * imageData.width) * 4;
-
-			// if the mouse pixel exists, select and break
-			if (imageData.data[3] > 0)
+			if (boxes[i].pestanya == pestanyaActual)
 			{
-				var selected = boxes[i];
-				//Si el primer seleccionat es un text no fem cap operacio.
-				if ((mySel.length == 0) || (mySel[0].forma != 6) || (selected.id == mySel[0].id))
+				// draw shape onto ghost context
+				drawshape(gctx, boxes[i]);
+				
+				// get image data at the mouse x,y pixel
+				imageData = gctx.getImageData(mx, my, 1, 1);
+				//var index = (mx + my * imageData.width) * 4;
+
+				// if the mouse pixel exists, select and break
+				if (imageData.data[3] > 0)
 				{
-					if (mySel.indexOf(selected) >= 0)
+					var selected = boxes[i];
+					//Si el primer seleccionat es un text no fem cap operacio.
+					if ((mySel.length == 0) || (mySel[0].forma != 6) || (selected.id == mySel[0].id))
 					{
-						mySel.splice(mySel.indexOf(selected),1);
-						isDrag = true;
-						canvas.onmousemove = myMove;
-						//canvas.ontouchmove = touchMove;
-						invalidate();
-						clear(gctx);
-					}
-					else
-					{
-						Selecciona(selected);
-						currentSelected = selected;
-						offsetx = mx - selected.x;
-						offsety = my - selected.y;
-						selected.x = mx - offsetx;
-						selected.y = my - offsety;
-						document.getElementById("posicioangle").value = selected.angle;
-						document.getElementById("posiciocordo").value = selected.cordo;
-						document.getElementById("posicioC").value = selected.posicio;
-						document.getElementById("posicioH").value = selected.h;
-						document.getElementById("posicioW").value = selected.w;
-						document.getElementById("forma").value = selected.forma;
-						document.getElementById("text").value = selected.text;
-						document.getElementById("linkat").value = selected.linkat;
-						document.getElementById("seguent").value = selected.seguent;
-						isDrag = true;
-						canvas.onmousemove = myMove;
-						//canvas.ontouchmove = touchMove;
-						invalidate();
-						clear(gctx);
-						textInfo(selected);
-						
-						ReadOnly("posicioH", EsOval(selected.forma));
-						ReadOnly("posicioW", false);
-						ReadOnly("posicioangle", false);
-						ReadOnly("forma", false);
-						if (!EsText(selected.forma))
+						if (mySel.indexOf(selected) >= 0)
 						{
-							ReadOnly("posicioC", false);
-							ReadOnly("posiciocordo", false);
+							mySel.splice(mySel.indexOf(selected),1);
+							isDrag = true;
+							canvas.onmousemove = myMove;
+							//canvas.ontouchmove = touchMove;
+							invalidate();
+							clear(gctx);
 						}
-						ReadOnly("linkat", false);
-						ReadOnly("seguent", false);
+						else
+						{
+							Selecciona(selected);
+							currentSelected = selected;
+							offsetx = mx - selected.x;
+							offsety = my - selected.y;
+							selected.x = mx - offsetx;
+							selected.y = my - offsety;
+							document.getElementById("posicioangle").value = selected.angle;
+							document.getElementById("posiciocordo").value = selected.cordo;
+							document.getElementById("posicioC").value = selected.posicio;
+							document.getElementById("posicioH").value = selected.h;
+							document.getElementById("posicioW").value = selected.w;
+							document.getElementById("forma").value = selected.forma;
+							document.getElementById("text").value = selected.text;
+							document.getElementById("linkat").value = selected.linkat;
+							document.getElementById("seguent").value = selected.seguent;
+							isDrag = true;
+							canvas.onmousemove = myMove;
+							//canvas.ontouchmove = touchMove;
+							invalidate();
+							clear(gctx);
+							textInfo(selected);
+							
+							ReadOnly("posicioH", EsOval(selected.forma));
+							ReadOnly("posicioW", false);
+							ReadOnly("posicioangle", false);
+							ReadOnly("forma", false);
+							if (!EsText(selected.forma))
+							{
+								ReadOnly("posicioC", false);
+								ReadOnly("posiciocordo", false);
+							}
+							ReadOnly("linkat", false);
+							ReadOnly("seguent", false);
+						}
+						return;
 					}
-					return;
 				}
+				clear(gctx);
 			}
-			clear(gctx);
 		}
 	}
 	// havent returned means we have selected nothing
@@ -260,6 +265,19 @@ function SeleccionaTot()
     }
 }
 
+function SeleccionaPestanya()
+{
+	mySel = [];
+	var l = boxes.length;
+    for (var i = 0; i < l; i++) 
+	{
+		if (EsPenstanyaActual(boxes[i].pestanya))
+        {
+			Selecciona(boxes[i]);
+		}
+    }
+}
+
 function MoureCastellAvall()
 {
 	MoureCastellVertical(GetValorMoure());
@@ -272,7 +290,7 @@ function MoureCastellAmunt()
 
 function MoureCastellVertical(distancia)
 {
-	SeleccionaTot();
+	SeleccionaPestanya();
 	MoureCaselles(0, distancia);
 	Save();
 	mySel=[];
@@ -291,7 +309,7 @@ function MoureCastellEsquerra()
 
 function MoureCastellHoritzontal(distancia)
 {
-	SeleccionaTot();
+	SeleccionaPestanya();
 	MoureCaselles(distancia, 0);
 	Save();
 	mySel=[];

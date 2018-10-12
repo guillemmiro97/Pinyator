@@ -44,7 +44,7 @@ function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, form
 	var rect = new Box();
 	rect.x = x;
 	rect.y = y;
-	rect.w = w
+	rect.w = w;
 	rect.h = h;
 	rect.cordo=cordo;
 	rect.angle=angle;
@@ -76,7 +76,7 @@ function PosicioColor()
 {
   this.id = 0;
   this.colorfons = "#BDBDBD";
-  this.colortext = "#000000" 
+  this.colortext = "#000000";
 }
 
 function AddColorPosicio(id, colorfons, colottext)
@@ -166,14 +166,14 @@ var canvas;
 var ctx;
 var WIDTH;
 var HEIGHT;
-var INTERVAL = 20;  // how often, in milliseconds, we check to see if a redraw is needed
+var INTERVAL = 200;  // how often, in milliseconds, we check to see if a redraw is needed
 var angleTrapezi = 10;
 
 var mostrar = false;
 
 var isDownloading = false;
 
-var _angle = 0 //Angle general
+var _angle = 0; //Angle general
 
 var isPopupShown = false;
 
@@ -225,7 +225,7 @@ function initCanvas(plantillaId, esReadOnly)
   gctx = ghostcanvas.getContext('2d');
   
   //fixes a problem where double clicking causes text to get selected on the canvas
-  canvas.onselectstart = function () { return false; }
+  canvas.onselectstart = function () { return false; };
   
   // fixes mouse co-ordinate problems when there's a border or padding
   // see getMouse for more detail
@@ -503,24 +503,21 @@ function DrawText(context, shape)
 	}
 	DrawDownText(context, shape, str, x, y);
 	
-	if((shape.forma != 5) && (EsPlantilla())
-	&& (IsInmySelById(shape.id, shape.castellId)))
+	if((shape.forma != 5) && (EsPlantilla()) && (IsInmySelById(shape.id, shape.castellId)))
 	{
 		context.fillStyle = "red";
 		str = GetSelPosById(shape.id, shape.castellId);
 		DrawDownText2(context, shape, str, 8, 6, 12);
 	}
 	
-	if((shape.forma != 5) && (EsPlantilla())
-	&& (shape.linkat > 0))
+	if((shape.forma != 5) && (EsPlantilla()) && (shape.linkat > 0))
 	{
 		context.fillStyle = GetColorTextById(shape.posicio);
 		str = shape.linkat;
 		DrawDownText2(context, shape, str, shape.w-10, shape.h-6, 10);
 	}
 	
-	if((shape.forma != 5) && (EsPlantilla())
-	&& (shape.seguent > 0))
+	if((shape.forma != 5) && (EsPlantilla()) && (shape.seguent > 0))
 	{
 		context.fillStyle = GetColorTextById(shape.posicio);
 		str = shape.seguent;
@@ -584,7 +581,7 @@ function DrawDownText2(context, shape, str, x, y, fontSize)
 			}
 			lines.push(new_line);
 			return lines;
-		}
+		};
 
 		var lines = split_lines(context, shape.w, str);
 		var ly=shape.h/(lines.length+1);
@@ -744,10 +741,10 @@ function GetIndexById(id, castellid)
 
 function MoureCaselles(dX, dY)
 {
+	isMoved = isMoved || (0 != dX) || (0 != dY);
 	var l = mySel.length;
 	for (var i = 0; i < l; i++) 
-	{
-		isMoved = isMoved || (0 != dX) || (0 != dY);
+	{		
 		mySel[i].x += dX;
 		mySel[i].y += dY;
     }
@@ -865,7 +862,7 @@ function HideEditPopup()
 
 function EsPlantilla()
 {
-	return !(plantilla_id == -1);
+	return (plantilla_id != -1);
 }
 
 function invalidate() 
@@ -985,4 +982,3 @@ function ResizeLateralBar()
 	
 	pnlLateral.style.height=mainLateral.offsetHeight-mainLateral.offsetTop-pnlLateral.offsetTop;
 }
-

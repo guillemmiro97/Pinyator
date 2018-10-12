@@ -234,12 +234,12 @@ function myDown(e)
 
 function EsCasteller(casteller)
 {
-	return (casteller.id > 0) || (EsCastellerNoLLista(casteller.id))
+	return (casteller.id > 0) || (EsCastellerNoLLista(casteller.id));
 }
 
 function EsCastellerNoLLista(id)
 {
-	return (id <= -99)
+	return (id <= -99);
 }
 
 function CopiaCastellermySel(mySelect, objCasteller)
