@@ -71,7 +71,7 @@ if (mysqli_query($conn, $sql))
 	}
 	else
 	{
-		//echo "<meta http-equiv='refresh' content='0; url=Casteller.php'/>";
+		echo "<meta http-equiv='refresh' content='0; url=Casteller.php'/>";
 	}
 } 
 else if (mysqli_error($conn) != "")
