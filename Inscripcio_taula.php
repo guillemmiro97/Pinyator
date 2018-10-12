@@ -50,14 +50,13 @@ if (!empty($Casteller_id))
 				$Separador="";
 				$tInici = "<li>";
 				$tFinal = "</li>";
-				$comment = "";
 			}
 
 			echo $Separador;
 			
 			$script .= "EventNou(".$row2["EVENT_ID"].",".$stat.",".$row2["CASTELLER_ID"].");";
 			echo "<tr>			
-			<td width='85%'>".$comment."<b>".$tInici.$row2["EVENT_NOM"]."</b><br>".$row2["DATA"].$tFinal."</td>
+			<td width='85%'>".$tInici.$comment."<b>".$row2["EVENT_NOM"]."</b><br>".$row2["DATA"].$tFinal."</td>
 			<td><button class='boto' onClick='Save(".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].")' id=E".$row2["EVENT_ID"]."C".$row2["CASTELLER_ID"]." ".$color.">".$estat."</button></td>
 			</tr>";
 			
