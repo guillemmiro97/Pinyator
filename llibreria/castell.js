@@ -942,3 +942,37 @@ function SetPinyaTronc()
 	}
 	location.replace("PinyaTronc.php?id="+boxes[0].castellId+a+"'");
 }
+
+function Buscat()
+{
+	mySelWidth = 10;
+	var samePestanya = true;
+	var input, text, tab=0;
+    input = document.getElementById("myInput");
+    text = input.value.toUpperCase();
+	ClearmySel();
+	
+	if (text != "")
+	{
+		for (var i=0;i<boxes.length;i++)
+		{		
+			if(getCleanedString(boxes[i].malnom).toUpperCase().indexOf(text) > -1)
+			{
+				samePestanya = (samePestanya && ((tab==0) || (tab==boxes[i].pestanya)));
+				mySel.push(boxes[i]);
+				tab = boxes[i].pestanya;
+			}
+		}
+	}
+	
+	if ((samePestanya) && (tab>0))
+	{
+		var obj = document.getElementsByName(tab);
+		if(obj.length > 0)
+		{
+			CanviPestanya(obj[0]);	
+		}
+	}
+	
+	invalidate();
+}
