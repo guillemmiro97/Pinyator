@@ -58,7 +58,7 @@
 
 	$sql="SELECT CASTELL_ID, C.NOM, E.NOM AS EVENT, date_format(E.DATA, '%d-%m-%Y %H:%i') AS DATA, 
 	date_format(C.DATA_CREACIO, '%d-%m-%Y %H:%i') AS DATA_CREACIO, 
-	C.EVENT_ID AS EVENT_ID, C.ORDRE,
+	C.EVENT_ID AS EVENT_ID, C.ORDRE, C.PUBLIC,
 	(SELECT COUNT(*) 
 			FROM CASTELL_POSICIO AS CPR 
 			INNER JOIN POSICIO AS PR ON PR.POSICIO_ID=CPR.POSICIO_ID 
@@ -94,17 +94,19 @@
 				
 				echo "<h3>".$event."</h3>
 				<table class='llistes fixed' id=".$row["EVENT_ID"].">
-					<col width='100px' />
+					<col width='74px' />
 					<tr class='llistes'>
 						<th class='llistes'>Ordre</th>
 						<th class='llistes'>Castell</th>
 						<th class='llistes'>Hora</th>
+						<th class='llistes'>Públic</th>
 						<th class='llistes'>Creat</th>
-						<th class='llistes'></th>
+						<th class='llistes'>Esbor.</th>
 					</tr>";
 				echo "<tr class='llistes'>
 					<td class='llistes'><button class='boto' onClick='Ordena(".$row["EVENT_ID"].")'>Ordena</button></td>
 					<td class='llistes'><a href='Castell_Fitxa.php?id=".$row["CASTELL_ID"]."&a=1'>Troncs i nuclis</a></td>
+					<td class='llistes'></td>
 					<td class='llistes'></td>
 					<td class='llistes'></td>
 					<td class='llistes'></td>
@@ -125,13 +127,20 @@
 			$stamp1 = $timeInici->format('H:i');
 			$stamp2 = $time->format('H:i');	
 			
+			$public = "";
+			if ($row["PUBLIC"] == 1)
+			{
+				$public = "boto_add";
+			}
+			
 			echo"
 				<tr class='llistes'>
 					<td class='llistes'><div contenteditable id=".$row["CASTELL_ID"]." title=".$row["ORDRE"].">".$row["ORDRE"]."</div>
 					<td class='llistes'><a href='Castell_Fitxa.php?id=".$row["CASTELL_ID"]."'>".$row["NOM"]."</a></td>
 					<td class='llistes'>".$stamp1."-".$stamp2."</td>
+					<td class='llistes'><button class='boto ".$public."' name='Castell_Publica.php?id=".$row["CASTELL_ID"]."' onClick='Publicar(this)'>P</button></td>
 					<td class='llistes'>".$row["DATA_CREACIO"]."</td>
-					<td class='llistes'><button class='boto boto_remove' name='Castell_Desa.php?id=".$row["CASTELL_ID"]."&a=1' onClick='ShowPopup(this)'>Esborra</button></td>
+					<td class='llistes'><button class='boto boto_remove' name='Castell_Desa.php?id=".$row["CASTELL_ID"]."&a=1' onClick='ShowPopup(this)'>X</button></td>
 				</tr>";
 				
 			$timeInici->add(new DateInterval('PT' . $minuts . 'M'));
@@ -175,6 +184,21 @@ function Ordena(eventId)
 			xmlhttp.send();
 		}
 	}	
+}
+
+function Publicar(item)
+{
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() 
+	{
+		if (this.readyState == 4 && this.status == 200) 
+		{
+			location.reload();
+		}
+	};
+	xmlhttp.open("GET", item.name, true);
+	xmlhttp.send();
+
 }
 </script>   
    

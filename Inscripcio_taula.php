@@ -6,7 +6,8 @@ if (!empty($Casteller_id))
 	
 	$sql="SELECT E.EVENT_ID, E.NOM AS EVENT_NOM, E.EVENT_PARE_ID,
 	date_format(E.DATA, '%d-%m-%Y %H:%i') AS DATA, ".$Casteller_id." AS CASTELLER_ID, IFNULL(I.ESTAT,-1) AS ESTAT,
-	IFNULL(EP.DATA, E.DATA) AS ORDENACIO
+	IFNULL(EP.DATA, E.DATA) AS ORDENACIO, 
+	(SELECT SUM(C.PUBLIC) FROM CASTELL AS C WHERE C.EVENT_ID=E.EVENT_ID) AS PUBLIC
 	FROM EVENT AS E
 	LEFT JOIN EVENT AS EP ON EP.EVENT_ID = E.EVENT_PARE_ID
 	LEFT JOIN CASTELLER_INSCRITS AS I ON I.EVENT_ID = E.EVENT_ID AND I.CASTELLER_ID=".$Casteller_id."
@@ -25,6 +26,14 @@ if (!empty($Casteller_id))
 		while($row2 = mysqli_fetch_assoc($result2)) 
 		{
 			$comment = "<a href='Event_Comentari_Public.php?id=".$row2["EVENT_ID"]."&nom=".$malnomPrincipal."'><img src='icons/comment.png'></img></a>";
+			if ($row2["PUBLIC"]>0)
+			{	
+				$eventNom = "<a href='Actuacio.php?id=".$row2["EVENT_ID"]."'><b>".$row2["EVENT_NOM"]."</b></a>";
+			}
+			else
+			{
+				$eventNom = "<b>".$row2["EVENT_NOM"]."</b>";
+			}
 			$stat  = $row2["ESTAT"];
 			if ($stat == -1)
 			{
@@ -56,7 +65,7 @@ if (!empty($Casteller_id))
 			
 			$script .= "EventNou(".$row2["EVENT_ID"].",".$stat.",".$row2["CASTELLER_ID"].");";
 			echo "<tr>			
-			<td width='85%'>".$tInici.$comment."<b>".$row2["EVENT_NOM"]."</b><br>".$row2["DATA"].$tFinal."</td>
+			<td width='85%'>".$tInici.$comment.$eventNom."<br>".$row2["DATA"].$tFinal."</td>
 			<td><button class='boto' onClick='Save(".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].")' id=E".$row2["EVENT_ID"]."C".$row2["CASTELLER_ID"]." ".$color.">".$estat."</button></td>
 			</tr>";
 			

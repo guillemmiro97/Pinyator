@@ -201,9 +201,7 @@ else if (mysqli_error($conn) != "")
 		$ps1="";
 		$ps2="";
 		$ps3="";
-		$ps4="";
-		
-		
+		$ps4="";		
 
 		$sql="SELECT NOM, POSICIO_ID, COLORFONS, COLORTEXT
 		FROM POSICIO
