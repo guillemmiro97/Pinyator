@@ -26,6 +26,8 @@ $estat = -1;
 $tipus=0;
 $eventPareId = 0;
 $esplantilla=0;
+$escontador=0;
+$hashtag="";
 
 echo "<form method='post' action='Event_Desa.php'>";
 
@@ -36,7 +38,8 @@ if ($id > 0)
 	$sql="SELECT E.EVENT_ID, E.NOM, 
 	date_format(E.DATA, '%Y-%m-%d') AS DATA,
 	date_format(E.DATA, '%H:%i') AS HORA,
-	E.TIPUS, E.ESTAT, E.EVENT_PARE_ID, E.ESPLANTILLA
+	E.TIPUS, E.ESTAT, E.EVENT_PARE_ID, E.ESPLANTILLA,
+	E.HASHTAG, E.CONTADOR
 	FROM EVENT AS E
 	WHERE E.EVENT_ID = ".$id."
 	ORDER BY E.DATA, E.NOM ";
@@ -54,6 +57,8 @@ if ($id > 0)
 			$tipus = $row["TIPUS"];
 			$eventPareId = $row["EVENT_PARE_ID"];
 			$esplantilla = $row["ESPLANTILLA"];
+			$escontador = $row["CONTADOR"];
+			$hashtag = $row["HASHTAG"];
 		}
 	}
 	else if (mysqli_error($conn) != "")
@@ -111,6 +116,23 @@ if (!empty($_GET["e"]))
 					<input type="checkbox" name="esplantilla" value=1 <?php if ($esplantilla == 1) echo " checked";?>>
 					<span class="slider round"></span>
 				</label>
+			</td>
+		</tr>
+	</table>
+  <br><br>
+  	<table>
+		<tr>
+			<th>Contador</th><th>#Hashtag</th>
+		</tr>	
+		<tr>
+			<td width=100px>
+				<label class="switch">texte
+					<input type="checkbox" name="escontador" value=1 <?php if ($escontador == 1) echo " checked";?>>
+					<span class="slider round"></span>
+				</label>
+			</td>
+			<td width=300px>
+				<input type="text" class="form_edit" name="hashtag" value="<?php echo $hashtag ?>">
 			</td>
 		</tr>
 	</table>

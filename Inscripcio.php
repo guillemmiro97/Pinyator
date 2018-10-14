@@ -33,7 +33,35 @@ background-attachment: fixed;  background-position: center; opacity:0.4'>
 
 <a href="Apuntat.php?reset=1" class="boto" >No sóc jo</a>
 <div style="position: absolute; right: 0px; top: 4px">
-<iframe src="Counter.php" class="counterframe" id="counterCastellers"></iframe>
+<?php
+    $eventId=0;
+	$hashtag="";
+	$hasHash=0;
+	
+	include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
+
+	$sql="SELECT EVENT_ID, HASHTAG 
+	FROM EVENT
+	WHERE CONTADOR=1
+	AND ESTAT=1
+	ORDER BY DATA LIMIT 1";
+
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) 
+	{
+		$row = mysqli_fetch_assoc($result);
+		$eventId = $row["EVENT_ID"];
+		$hashtag = $row["HASHTAG"];
+		if(strpos($hashtag, '#') !== false)
+		{
+			$hashtag=str_replace("#", "", $hashtag);
+			$hasHash=1;
+		}
+	}
+
+	echo "<iframe src='Counter.php?id=".$eventId."&h=".$hashtag."&hh=".$hasHash."' class='counterframe' id='counterCastellers'></iframe>";
+?>
 </div>
 <?php
 if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
@@ -41,9 +69,7 @@ if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 	$Casteller_uuid = strval($_GET['id']);
 	$Casteller_id=0;
 	$malnom="";
-	$malnomPrincipal="";
-	
-	include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
+	$malnomPrincipal="";	
 
 	$sql="SELECT C.MALNOM, C.CASTELLER_ID 
 	FROM CASTELLER AS C
