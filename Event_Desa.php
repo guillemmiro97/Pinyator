@@ -11,12 +11,18 @@ $hora = $_POST["hora"];
 $tipus = intval($_POST["tipus"]);
 $estat = intval($_POST["estat"]);
 $pare = intval($_POST["eventpareid"]);
-$contador = intval($_POST["escontador"]);
 $hashtag = strval($_POST["hashtag"]);
 $esplantilla = 0;
-if (!empty($_POST["esplantilla"]))
-	$esplantilla = intval($_POST["esplantilla"]);
+$contador = 0;
 
+if (!empty($_POST["esplantilla"]))
+{
+	$esplantilla = intval($_POST["esplantilla"]);
+}
+if (!empty($_POST["escontador"]))
+{
+	$contador = intval($_POST["escontador"]);
+}
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
