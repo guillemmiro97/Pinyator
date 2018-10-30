@@ -355,7 +355,7 @@ else if (mysqli_error($conn) != "")
 				
 				if ($castellId != $row["CASTELL_ID"])
 				{//Inici, nom del castell
-			
+					
 					//TODO: Calcular inici cada castell
 					if(($rengles + $row["RENGLES"]) > 9)
 					{
@@ -379,6 +379,7 @@ else if (mysqli_error($conn) != "")
 					$h=30;
 					$w=80;
 					
+					//Nom castell
 					echo "addRect(".$x.",".$y.",".$w.",".$h.",0,0,0,
 					".$row["CASTELL_ID"].",".(-1*$row["CASELLA_ID"]).",1,".$forma.",'".$row["CASTELL_NOM"]."',0,0,".$castellId.");\n";
 				}
@@ -430,6 +431,7 @@ else if (mysqli_error($conn) != "")
 				if (($suma != "") && (
 				(($nextRow != null) && ($cordo != $nextRow["CORDO"]) || ($nextRow["ESTRONC"] == 0))
 				|| (($nextRow == null) && ($row["ESTRONC"] == 0))
+				|| ($castellId != $nextRow["CASTELL_ID"])
 				))
 				{//Insertem text per sumar altures
 					$forma=6;
