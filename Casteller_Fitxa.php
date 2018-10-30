@@ -78,7 +78,7 @@
 			</tr>
 		</table>
 	</div> 
-	<div id="panellLateral" style="position:absolute;padding-top:10px;width:320px;">
+	<div id="panellLateral" style="position:absolute;padding-top:10px;width:320px;height:100%">
 	<iframe id="mainFrame" <?php echo $urlInscripcio ?> width="100%" height="90%" style="border:0" ></iframe>
 	</div>
 	<div style="position:absolute;left:320px;width:500px">
