@@ -431,7 +431,7 @@ else if (mysqli_error($conn) != "")
 				if (($suma != "") && (
 				(($nextRow != null) && ($cordo != $nextRow["CORDO"]) || ($nextRow["ESTRONC"] == 0))
 				|| (($nextRow == null) && ($row["ESTRONC"] == 0))
-				|| ($castellId != $nextRow["CASTELL_ID"])
+				|| (($nextRow != null) && ($castellId != $nextRow["CASTELL_ID"]))
 				))
 				{//Insertem text per sumar altures
 					$forma=6;
