@@ -42,7 +42,7 @@ if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 	INNER JOIN EVENT AS E ON E.EVENT_ID=C.EVENT_ID
 	WHERE C.EVENT_ID=".$eventId."
 	AND C.PUBLIC = 1
-	ORDER BY C.NOM";
+	ORDER BY C.ORDRE";
 
 	$result = mysqli_query($conn, $sql);
 
