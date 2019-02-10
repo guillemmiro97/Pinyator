@@ -45,7 +45,7 @@ include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 $sql="SELECT E.EVENT_ID, E.NOM, date_format(E.DATA, '%d-%m-%Y %H:%i') AS DATA, 
 E.ESTAT,E.TIPUS,
 COUNT(I.ESTAT) AS CONTESTES_QTA,
-SUM(IFNULL(I.ESTAT,0)) AS INSCRITS_QTA,
+SUM(IFNULL(I.ESTAT,0)) + SUM(IFNULL(I.ACOMPANYANTS,0)) AS INSCRITS_QTA,
 C.NOM AS CASTELL,
 	(SELECT COUNT(*) 
 			FROM CASTELL_POSICIO AS CPR 
@@ -89,7 +89,7 @@ if (mysqli_num_rows($result) > 0)
 	$minuts=0;
 	$proxim=0;
 	
-	array_push($castells, array_fill(0, 50, ""));
+	array_push($castells, array_fill(0, 150, ""));
     // output data of each row
     while($row = mysqli_fetch_assoc($result)) 
 	{	
@@ -196,7 +196,7 @@ if (mysqli_num_rows($result) > 0)
 		}
 		
 		if (count($castells) <= $linia)
-			array_push($castells, array_fill(0, 50, ""));	
+			array_push($castells, array_fill(0, 150, ""));	
 		
 		$castells[$linia][$e] .= $tdCastell;
 		

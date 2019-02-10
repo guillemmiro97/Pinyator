@@ -21,7 +21,7 @@ if (!empty($_GET['id']))
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" sizes="111x192" href="icons\logo192.png">
   <link rel="icon" sizes="111x192" href="icons\logo192.png">
-  <script src="llibreria/inscripcio.js?v=1.1"></script>
+  <script src="llibreria/inscripcio.js?v=1.2"></script>
 </head>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
 <br>

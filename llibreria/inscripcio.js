@@ -160,3 +160,38 @@ function Esborra(event_id, casteller_id)
 	}
 }
 
+
+function IncrementaAcompanyant(event_id, casteller_id) 
+{	
+    if(event_id > 0)
+	{			
+		var count = parseInt(document.getElementById("AE"+event_id+"C"+casteller_id).innerHTML)+1;
+		ModificaAcompanyant(event_id, casteller_id, count);
+	}
+}
+
+function DecrementaAcompanyant(event_id, casteller_id) 
+{	
+    if(event_id > 0)
+	{			
+		var count = parseInt(document.getElementById("AE"+event_id+"C"+casteller_id).innerHTML)-1;
+		ModificaAcompanyant(event_id, casteller_id, count);
+	}
+}
+
+function ModificaAcompanyant(event_id, casteller_id, count) 
+{	
+    if ((event_id > 0) && (count>=0))
+	{			
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				document.getElementById("AE"+event_id+"C"+casteller_id).innerHTML = count;
+			}
+		};	
+		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&a=" + count, true);
+		xmlhttp.send();
+	}
+}

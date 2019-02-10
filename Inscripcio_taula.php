@@ -7,6 +7,7 @@ if (!empty($Casteller_id))
 	$sql="SELECT E.EVENT_ID, E.NOM AS EVENT_NOM, E.EVENT_PARE_ID,
 	date_format(E.DATA, '%d-%m-%Y %H:%i') AS DATA, ".$Casteller_id." AS CASTELLER_ID, IFNULL(I.ESTAT,-1) AS ESTAT,
 	IFNULL(EP.DATA, E.DATA) AS ORDENACIO, 
+	IFNULL(ACOMPANYANTS, 0) AS ACOMPANYANTS, E.TIPUS,
 	(SELECT SUM(C.PUBLIC) FROM CASTELL AS C WHERE C.EVENT_ID=E.EVENT_ID) AS PUBLIC
 	FROM EVENT AS E
 	LEFT JOIN EVENT AS EP ON EP.EVENT_ID = E.EVENT_PARE_ID
@@ -26,6 +27,7 @@ if (!empty($Casteller_id))
 		while($row2 = mysqli_fetch_assoc($result2)) 
 		{
 			$comment = "<a href='Event_Comentari_Public.php?id=".$row2["EVENT_ID"]."&nom=".$malnomPrincipal."'><img src='icons/comment.png'></img></a>";
+			
 			if ($row2["PUBLIC"]>0)
 			{	
 				$eventNom = "<a href='Actuacio.php?id=".$row2["EVENT_ID"]."'><b>".$row2["EVENT_NOM"]."</b></a>";
@@ -63,9 +65,17 @@ if (!empty($Casteller_id))
 
 			echo $Separador;
 			
+			$acompanyants = "";
+			if ($row2["TIPUS"] == -1)
+			{
+				$acompanyants = "<button class='boto' onClick='IncrementaAcompanyant(".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].")'>&nbsp+&nbsp</button>";
+				$acompanyants .= "&nbsp&nbsp&nbsp<b>Acompanyants:</b> <label id='AE".$row2["EVENT_ID"]."C".$row2["CASTELLER_ID"]."'>".$row2["ACOMPANYANTS"]."</label>&nbsp&nbsp&nbsp";
+				$acompanyants .= "<button class='boto' onClick='DecrementaAcompanyant(".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].")'>&nbsp-&nbsp</button>";
+			}
+			
 			$script .= "EventNou(".$row2["EVENT_ID"].",".$stat.",".$row2["CASTELLER_ID"].");";
 			echo "<tr>			
-			<td width='85%'>".$tInici.$comment.$eventNom."<br>".$row2["DATA"].$tFinal."</td>
+			<td width='85%'>".$tInici.$comment.$eventNom."<br>".$row2["DATA"]."<br>".$acompanyants.$tFinal."</td>
 			<td><button class='boto' onClick='Save(".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].")' id=E".$row2["EVENT_ID"]."C".$row2["CASTELLER_ID"]." ".$color.">".$estat."</button></td>
 			</tr>";
 			
