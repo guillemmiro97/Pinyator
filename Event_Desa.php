@@ -12,6 +12,7 @@ $tipus = intval($_POST["tipus"]);
 $estat = intval($_POST["estat"]);
 $pare = intval($_POST["eventpareid"]);
 $hashtag = strval($_POST["hashtag"]);
+$temporada = strval($_POST["temporada"]);
 $esplantilla = 0;
 $contador = 0;
 
@@ -29,13 +30,13 @@ include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 if ($id > 0)
 {
 	$sql="UPDATE EVENT SET NOM='".$nom."',DATA='".GetFormatedDate($data,$hora)."',TIPUS=".$tipus.",ESTAT=".$estat.",EVENT_PARE_ID=".$pare."
-	,ESPLANTILLA=".$esplantilla.",CONTADOR=".$contador.",HASHTAG='".$hashtag."'  
+	,ESPLANTILLA=".$esplantilla.",CONTADOR=".$contador.",HASHTAG='".$hashtag."',TEMPORADA='".$temporada."'  
 	WHERE EVENT_ID = ".$id.";";
 	$sql=$sql." UPDATE EVENT SET ESTAT=".$estat." WHERE EVENT_PARE_ID = ".$id.";";
 }
 else
 {
-	$sql="INSERT INTO EVENT(NOM,DATA,TIPUS,ESTAT,EVENT_PARE_ID,ESPLANTILLA,CONTADOR,HASHTAG) VALUES('".$nom."','".GetFormatedDate($data,$hora)."',".$tipus.",".$estat.",".$pare.",".$esplantilla.",".$contador.",'".$hashtag."');";
+	$sql="INSERT INTO EVENT(NOM,DATA,TIPUS,ESTAT,EVENT_PARE_ID,ESPLANTILLA,CONTADOR,HASHTAG,TEMPORADA) VALUES('".$nom."','".GetFormatedDate($data,$hora)."',".$tipus.",".$estat.",".$pare.",".$esplantilla.",".$contador.",'".$hashtag."','".$temporada."');";
 }
 
 if (mysqli_multi_query($conn, $sql)) 

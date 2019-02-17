@@ -28,6 +28,9 @@ $eventPareId = 0;
 $esplantilla=0;
 $escontador=0;
 $hashtag="";
+$temporada="";
+
+$autofocus="";
 
 echo "<form method='post' action='Event_Desa.php'>";
 
@@ -39,7 +42,7 @@ if ($id > 0)
 	date_format(E.DATA, '%Y-%m-%d') AS DATA,
 	date_format(E.DATA, '%H:%i') AS HORA,
 	E.TIPUS, E.ESTAT, E.EVENT_PARE_ID, E.ESPLANTILLA,
-	E.HASHTAG, E.CONTADOR
+	E.HASHTAG, E.CONTADOR, E.TEMPORADA
 	FROM EVENT AS E
 	WHERE E.EVENT_ID = ".$id."
 	ORDER BY E.DATA, E.NOM ";
@@ -59,6 +62,27 @@ if ($id > 0)
 			$esplantilla = $row["ESPLANTILLA"];
 			$escontador = $row["CONTADOR"];
 			$hashtag = $row["HASHTAG"];
+			$temporada = $row["TEMPORADA"];
+		}
+	}
+	else if (mysqli_error($conn) != "")
+	{
+		echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+	}
+}
+else
+{
+	$autofocus = "autofocus";
+	$sql="SELECT C.TEMPORADA
+	FROM CONFIGURACIO AS C";
+
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) 
+	{
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$temporada = $row["TEMPORADA"];
 		}
 	}
 	else if (mysqli_error($conn) != "")
@@ -74,16 +98,32 @@ if (!empty($_GET["e"]))
 
 ?>
 <div>
-  <a href="Event.php?e=<?php echo $estat?>" class="boto" >Torna als esdeveniments</a>
+  <a href="Event.php?e=<?php echo $estat?>" class="boto" >Torna</a>
 </div> 
 <br>
 <div style="position:absolute;width:500px">
   <div class="form_group">
-	<label>ID</label>
-	<input type="text" class="form_edit" name="id" value="<?php echo $id ?>" readonly>
+  <table width=100%>
+  <tr>
+	<th>
+		<label>ID</label>
+	</th>
+	<th>
+		<label>Temporada</label>
+	</th>
+  </tr>
+  <tr>
+	<td>
+		<input type="text" class="form_edit" name="id" value="<?php echo $id ?>" readonly>
+	</td>
+	<td>
+		<input type="text" class="form_edit" name="temporada" value="<?php echo $temporada ?>" required>
+	</td>
+  </tr>
+  </table>
 <br><br>
 	<label>Nom</label>
-	<input type="text" class="form_edit" name="nom" value="<?php echo $nom ?>" required>
+	<input type="text" class="form_edit" name="nom" value="<?php echo $nom ?>" required <?php echo $autofocus ?>>
 <br><br>
 	<label>Data</label>
 	

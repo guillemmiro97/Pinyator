@@ -1,5 +1,9 @@
 <?php
 
+$NoVincColor = "#ff1a1a";
+$VincColor = "#33cc33";
+$NoVistColor = "#FFFF00";
+
 if ($public)
 {
 	$url = "Event_Comentari_Public.php";
@@ -43,15 +47,17 @@ if (mysqli_num_rows($result) > 0)
  <table class="llistes">
   <tr class="llistes">
     <th class="llistes">MALNOM</th>
-    <th class="llistes">Estat</th>
-	<?php if ($esEditable == 1) echo "<th class='llistes'>Vinc</th><th class='llistes'>NO Vinc</th><th class='llistes'>Esborra</th>";?>
+	<th class="llistes">CO.</th>
+    <th class="llistes">Estat</th>	
+	<?php if ($esEditable == 1) echo "<th class='llistes'>Vinc</th><th class='llistes'>NO Vinc</th><th class='llistes'>Clear</th>";?>
   </tr>
 <?php
 
 $edicioInscripcio="";
 
 $sql="SELECT C.MALNOM, IFNULL(I.ESTAT,-1) AS ESTAT, C.CODI,
-IFNULL(E.EVENT_ID,".$id.") AS EVENT_ID, C.CASTELLER_ID
+IFNULL(E.EVENT_ID,".$id.") AS EVENT_ID, C.CASTELLER_ID,
+IFNULL(I.ACOMPANYANTS,0) AS ACOMPANYANTS
 FROM CASTELLER AS C
 LEFT JOIN EVENT AS E ON E.EVENT_ID=".$id."
 LEFT JOIN INSCRITS AS I ON C.CASTELLER_ID=I.CASTELLER_ID AND I.EVENT_ID=E.EVENT_ID
@@ -66,22 +72,28 @@ if (mysqli_num_rows($result) > 0)
     // output data of each row
     while($row = mysqli_fetch_assoc($result)) 
 	{
+		$Acompanyants = "";
+		if ($row["ACOMPANYANTS"] > 0)
+		{
+			$Acompanyants = $row["ACOMPANYANTS"];
+		}
+		
 		$color = "";
 		$a  = $row["ESTAT"];
 		if ($a == 0)
 		{
 			$Estat = "No vinc";
-			$color = "style='background-color:#ff1a1a;'"; 			
+			$color = "style='background-color:".$NoVincColor.";'"; 			
 		}
 		elseif ($a == 1)
 		{
 			$Estat = "Vinc";
-			$color = "style='background-color:#33cc33;'";
+			$color = "style='background-color:".$VincColor.";'";
 		}
 		elseif ($a == -1)
 		{
 			$Estat = "????";
-			$color = "style='background-color:#FFFF00;'";
+			$color = "style='background-color:".$NoVistColor.";'";
 		}
 		echo "<tr class='llistes'>";
 		if ($esEditable == 1)
@@ -92,12 +104,15 @@ if (mysqli_num_rows($result) > 0)
 		{
 			echo "<td class='llistes'>".$row["MALNOM"]."</td>";
 		}
+
+		echo "<td class='llistes'>".$Acompanyants."</td>";
 		echo "<td class='llistes' id=".$row["CASTELLER_ID"]." ".$color.">".$Estat."</td>";
+		
 		if ($esEditable == 1)
 		{	
-			echo "<td class='llistes'><button class='boto' onClick='Vinc(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>Vinc</button></td>";
-			echo "<td class='llistes'><button class='boto' onClick='NoVinc(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>No vinc</button></td>";
-			echo "<td class='llistes'><button class='boto' onClick='Esborra(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>????</button></td>";
+			echo "<td class='llistes'><button class='boto' style='background-color:".$VincColor."' onClick='Vinc(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbsp+&nbsp</button></td>";
+			echo "<td class='llistes'><button class='boto' style='background-color:".$NoVincColor."' onClick='NoVinc(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbsp-&nbsp</button></td>";
+			echo "<td class='llistes'><button class='boto' style='background-color:".$NoVistColor.";color:black' onClick='Esborra(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbsp?&nbsp</button></td>";
 		}
 		echo "</tr>";
     }	

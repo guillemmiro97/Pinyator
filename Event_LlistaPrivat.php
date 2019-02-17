@@ -21,7 +21,7 @@ $esEditable = 1;
 	</div> 
 	<table class='butons'>
 		<tr class='butons'>
-			<th class='butons'><a href="Event.php?e=<?php echo $estat?>" class="boto" >Torna als esdeveniments</a></th>
+			<th class='butons'><a href="Event.php?e=<?php echo $estat?>" class="boto" >Torna</a></th>
 			<th></th>
 			
 			<th class='butons'>
