@@ -14,6 +14,7 @@ $llistats="";
 $usuaris="";
 $posicions="";
 $estadistiques="";
+$configuracio="";
 
 if($menu==1) $casteller="class='active'";
 if($menu==2) $event="class='active'";
@@ -25,7 +26,7 @@ if($menu==6) $usuaris="class='active'";
 if($menu==7) $posicions="class='active'";
 if($menu==8) $estadistiques="class='active'";
 if($menu==9) $planificacio="class='active'";
-
+if($menu==10) $configuracio="class='active'";
 
 if (EsURLEvent() && !EsEventLv1())
 {
@@ -74,6 +75,7 @@ else if (EsURLAdmin() && !EsAdmin())
 	if (EsAdmin())
 	{	
 		echo "<a ".$usuaris." href='Usuari.php'>Usuaris</a>";
+		echo "<a ".$configuracio." href='Configuracio.php'>Configuració</a>";
 	}	
 	
 ?>		  		  
@@ -240,7 +242,7 @@ function EsURLBoss()
 
 function EsURLAdmin()
 {
-	return ContainsUrl("Usuari.php");
+	return ContainsUrl("Usuari.php") || ContainsUrl("Configuracio.php");
 }
 
 ?>
