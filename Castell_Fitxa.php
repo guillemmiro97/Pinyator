@@ -13,12 +13,19 @@
 $id = intval($_GET['id']);
 $eventid = -1;
 $autogenerat = false;
+$troncs = false;
 
 if (!empty($_GET["a"]))
 {	
 	$autogenerat=intval($_GET["a"]);
 }	
-	
+
+if (!empty($_GET["t"]))
+{	
+	$troncs=intval($_GET["t"]);
+}	
+
+$resoluciopantalla=1200;
 $estronc=0;
 $pinyaTronc="C.POSICIO_PINYA_ID";
 $switchPinyaTronc="";
@@ -119,6 +126,19 @@ else if (mysqli_error($conn) != "")
 				$eventActuacioid = $row["EVENT_ID"];
 			}
 		}		
+		
+		$sql="SELECT RESOLUCIOPANTALLA
+		FROM CONFIGURACIO";
+
+		$result = mysqli_query($conn, $sql);
+
+		if (mysqli_num_rows($result) > 0)
+		{
+			while($row = mysqli_fetch_assoc($result)) 
+			{
+				$resoluciopantalla = $row["RESOLUCIOPANTALLA"];
+			}
+		}
 
 		$ordrealtura = "";
 		if ($_SESSION["carrec"]=="2")
@@ -196,8 +216,8 @@ else if (mysqli_error($conn) != "")
 		}
 		
 		$nom="";
-		$H=700;
-		$W=1000;
+		$canvasH=700;
+		$canvasW=$troncs?$resoluciopantalla:1000;
 		$ps1="";
 		$ps2="";
 		$ps3="";
@@ -235,8 +255,8 @@ else if (mysqli_error($conn) != "")
 				while($row = mysqli_fetch_assoc($result)) 
 				{
 					$nom = $row["NOM"];
-					$H = $row["H"];
-					$W = $row["W"];
+					$canvasH = $row["H"];
+					$canvasW = $row["W"];
 					$ps1 = $row["PESTANYA_1"];
 					$ps2 = $row["PESTANYA_2"];
 					$ps3 = $row["PESTANYA_3"];
@@ -250,7 +270,7 @@ else if (mysqli_error($conn) != "")
 		}
 		else
 		{
-			$H = 4000;		
+			$canvasH = 4000;		
 		}
 	?>	
 
@@ -275,7 +295,7 @@ else if (mysqli_error($conn) != "")
 				</tr>
 				<tr>
 				<td>
-					<canvas id="canvas1" style="border:1px solid" height="<?php echo $H ?>" width="<?php echo $W ?>">
+					<canvas id="canvas1" style="border:1px solid" height="<?php echo $canvasH ?>" width="<?php echo $canvasW ?>">
 						This text is displayed if your browser does not support HTML5 Canvas.
 					</canvas>
 					<div class="popuptext" id = "myPopup">
@@ -301,6 +321,8 @@ else if (mysqli_error($conn) != "")
 	
 	if ($autogenerat)
 	{		
+		$nucli = $troncs?"1=0":"P.ESNUCLI = 1";
+		
 		$sql="SELECT CP.CASELLA_ID,CTT.CASTELL_ID,CTT.NOM AS CASTELL_NOM,CORDO,CP.POSICIO_ID,
 		CP.CASTELLER_ID, CP.TEXT, IFNULL(C.MALNOM, 0) AS MALNOM, IFNULL(I.ESTAT,0) AS ESTAT,
 		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA,
@@ -316,7 +338,7 @@ else if (mysqli_error($conn) != "")
 		LEFT JOIN CASTELLER AS C ON C.CASTELLER_ID=CP.CASTELLER_ID 
 		LEFT JOIN INSCRITS AS I ON CTT.EVENT_ID=I.EVENT_ID AND I.CASTELLER_ID=C.CASTELLER_ID				
 		WHERE CTT.EVENT_ID = ".$eventid."
-		AND (P.ESNUCLI = 1 OR P.ESTRONC = 1)
+		AND (".$nucli." OR P.ESTRONC = 1)
 		ORDER BY CTT.ORDRE, CTT.NOM, CORDO, ESTRONC DESC, ESNUCLI, 
 		CASE WHEN ESTRONC=1 THEN CP.Y ELSE CP.POSICIO_ID END";
 
@@ -328,7 +350,7 @@ else if (mysqli_error($conn) != "")
 			
 			$castellId = -1;
 			$x=0;
-			$xIni=30;
+			$xIni=10;
 			$y=0;
 			$yIni=30;
 			$h=0;
@@ -356,11 +378,12 @@ else if (mysqli_error($conn) != "")
 				if ($castellId != $row["CASTELL_ID"])
 				{//Inici, nom del castell
 					
+					$renglesMax=$canvasW/100;
 					//TODO: Calcular inici cada castell
-					if(($rengles + $row["RENGLES"]) > 9)
+					if(($rengles + $row["RENGLES"]) > $renglesMax)
 					{
 						$rengles = $row["RENGLES"];
-						$xIni=20;
+						$xIni=10;
 						$x=$xIni;
 						$yIni=30+$h+$yMax;
 						$y=$yIni;
@@ -368,7 +391,7 @@ else if (mysqli_error($conn) != "")
 					else
 					{
 						$rengles = $rengles + $row["RENGLES"];
-						$xIni=30+$x+$w;
+						$xIni=20+$x+$w;
 						$x=$xIni;
 						$y=$yIni;					
 					}					
@@ -428,22 +451,24 @@ else if (mysqli_error($conn) != "")
 				
 				$linkat = $row["LINKAT"];
 				
-				if (($suma != "") && (
-				(($nextRow != null) && ($cordo != $nextRow["CORDO"]) || ($nextRow["ESTRONC"] == 0))
-				|| (($nextRow == null) && ($row["ESTRONC"] == 0))
-				|| (($nextRow != null) && ($castellId != $nextRow["CASTELL_ID"]))
-				))
-				{//Insertem text per sumar altures
-					$forma=6;
-					$y=$y + $h + 4;
-					$suma=substr($suma,0,-1);
+				if(!$troncs)
+				{
+					if (($suma != "") && (
+					(($nextRow != null) && ($cordo != $nextRow["CORDO"]) || ($nextRow["ESTRONC"] == 0))
+					|| (($nextRow == null) && ($row["ESTRONC"] == 0))
+					|| (($nextRow != null) && ($castellId != $nextRow["CASTELL_ID"]))
+					))
+					{//Insertem text per sumar altures
+						$forma=6;
+						$y=$y + $h + 4;
+						$suma=substr($suma,0,-1);
 
-					echo "addRect(".$x.",".$y.",".$w.",".$h.",0,0,0,
-					".$row["CASTELL_ID"].",".$row["CASELLA_ID"].",1,".$forma.",'SUM(".$suma.")',0,0,".$castellId.");\n";
-					
-					$suma="";
+						echo "addRect(".$x.",".$y.",".$w.",".$h.",0,0,0,
+						".$row["CASTELL_ID"].",".$row["CASELLA_ID"].",1,".$forma.",'SUM(".$suma.")',0,0,".$castellId.");\n";
+						
+						$suma="";
+					}
 				}
-				
 				$row = $nextRow;
 			}
 			echo " CollapsaTot();\n";
