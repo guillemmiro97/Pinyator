@@ -3,8 +3,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pinyator - Castell</title>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Head.php";?>
-  <script src="llibreria/castell.js"></script>
-  <script src="llibreria/disseny.js"></script>  
+  <script src="llibreria/castell.js?1.1"></script>
+  <script src="llibreria/disseny.js?1.1"></script>  
 </head>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
 <body>
@@ -223,7 +223,7 @@ else if (mysqli_error($conn) != "")
 		$ps3="";
 		$ps4="";		
 
-		$sql="SELECT NOM, POSICIO_ID, COLORFONS, COLORTEXT
+		$sql="SELECT NOM, POSICIO_ID, COLORFONS, COLORTEXT, COLORCAMISA
 		FROM POSICIO
 		ORDER BY NOM";
 
@@ -234,7 +234,7 @@ else if (mysqli_error($conn) != "")
 			$colors = "<script>";
 			while($row = mysqli_fetch_assoc($result)) 
 			{
-				$colors = $colors." AddColorPosicio(".$row["POSICIO_ID"].",'".$row["COLORFONS"]."','".$row["COLORTEXT"]."');";
+				$colors = $colors." AddColorPosicio(".$row["POSICIO_ID"].",'".$row["COLORFONS"]."','".$row["COLORTEXT"]."','".$row["COLORCAMISA"]."');";
 			}
 			echo $colors."</script>";
 		}
@@ -327,7 +327,7 @@ else if (mysqli_error($conn) != "")
 		CP.CASTELLER_ID, CP.TEXT, IFNULL(C.MALNOM, 0) AS MALNOM, IFNULL(I.ESTAT,0) AS ESTAT,
 		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA,
 		IFNULL(C.PORTAR_PEU, 1) AS PORTAR_PEU, IFNULL(C.LESIONAT, 0) AS LESIONAT,
-		ESTRONC, ESNUCLI, PESTANYA, P.COLORFONS, P.COLORTEXT, IFNULL(LINKAT, 0) AS LINKAT,
+		ESTRONC, ESNUCLI, PESTANYA, IFNULL(LINKAT, 0) AS LINKAT, IFNULL(IA.ESTAT,0) AS CAMISA,
 		(SELECT MAX(CORDO) 
 			FROM CASTELL_POSICIO AS CPR 
 			INNER JOIN POSICIO AS PR ON PR.POSICIO_ID=CPR.POSICIO_ID 
@@ -336,7 +336,10 @@ else if (mysqli_error($conn) != "")
 		INNER JOIN CASTELL_POSICIO AS CP ON CP.CASTELL_ID=CTT.CASTELL_ID
 		INNER JOIN POSICIO AS P ON P.POSICIO_ID=CP.POSICIO_ID
 		LEFT JOIN CASTELLER AS C ON C.CASTELLER_ID=CP.CASTELLER_ID 
-		LEFT JOIN INSCRITS AS I ON CTT.EVENT_ID=I.EVENT_ID AND I.CASTELLER_ID=C.CASTELLER_ID				
+		LEFT JOIN INSCRITS AS I ON CTT.EVENT_ID=I.EVENT_ID AND I.CASTELLER_ID=C.CASTELLER_ID
+		LEFT JOIN EVENT AS E ON E.EVENT_ID=I.EVENT_ID
+		LEFT JOIN EVENT AS EA ON EA.EVENT_ID=".$eventActuacioid." AND EA.DATA >= E.DATA
+		LEFT JOIN INSCRITS AS IA ON IA.EVENT_ID=EA.EVENT_ID AND IA.CASTELLER_ID=C.CASTELLER_ID		
 		WHERE CTT.EVENT_ID = ".$eventid."
 		AND (".$nucli." OR P.ESTRONC = 1)
 		ORDER BY CTT.ORDRE, CTT.NOM, CORDO, ESTRONC DESC, ESNUCLI, 
@@ -447,7 +450,7 @@ else if (mysqli_error($conn) != "")
 				
 				echo "addRect(".$x.",".$y.",".$w.",".$h.",".$row["CORDO"].",".$row["POSICIO_ID"].",0,
 				".$row["CASTELL_ID"].",".$row["CASELLA_ID"].",".$row["PESTANYA"].",".$forma.",'".$row["TEXT"]."',".$row["LINKAT"].",-1,".$castellId.",
-				".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].");\n";
+				".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].");\n";
 				
 				$linkat = $row["LINKAT"];
 				
@@ -488,15 +491,19 @@ else if (mysqli_error($conn) != "")
 	else
 	{
 		$sql="SELECT CASELLA_ID,CORDO,CP.POSICIO_ID,CP.X,CP.Y,CP.H,CP.W,ANGLE,
-		FORMA,TEXT,SEGUENT,LINKAT,  P.COLORFONS, P.COLORTEXT,
+		FORMA,TEXT,SEGUENT,LINKAT,
 		CP.CASTELLER_ID,IFNULL(C.MALNOM, 0) AS MALNOM, IFNULL(I.ESTAT,0) AS ESTAT,
 		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA, PESTANYA,
-		IFNULL(C.PORTAR_PEU, 1) AS PORTAR_PEU, IFNULL(C.LESIONAT, 0) AS LESIONAT
+		IFNULL(C.PORTAR_PEU, 1) AS PORTAR_PEU, IFNULL(C.LESIONAT, 0) AS LESIONAT,
+		IFNULL(IA.ESTAT,0) AS CAMISA
 		FROM CASTELL_POSICIO AS CP 
 		INNER JOIN CASTELL AS CT ON CT.CASTELL_ID=CP.CASTELL_ID
 		LEFT JOIN CASTELLER AS C ON C.CASTELLER_ID=CP.CASTELLER_ID 
 		LEFT JOIN INSCRITS AS I ON CT.EVENT_ID=I.EVENT_ID AND I.CASTELLER_ID=C.CASTELLER_ID
 		LEFT JOIN POSICIO AS P ON P.POSICIO_ID=CP.POSICIO_ID
+		LEFT JOIN EVENT AS E ON E.EVENT_ID=I.EVENT_ID
+		LEFT JOIN EVENT AS EA ON EA.EVENT_ID=".$eventActuacioid." AND EA.DATA >= E.DATA
+		LEFT JOIN INSCRITS AS IA ON IA.EVENT_ID=EA.EVENT_ID AND IA.CASTELLER_ID=C.CASTELLER_ID	
 		WHERE CP.CASTELL_ID = ".$id;
 
 		$result = mysqli_query($conn, $sql);
@@ -509,7 +516,7 @@ else if (mysqli_error($conn) != "")
 			{
 				echo "addRect(".$row["X"].",".$row["Y"].",".$row["W"].",".$row["H"].",".$row["CORDO"].",".$row["POSICIO_ID"].",".$row["ANGLE"].",".$id.",".$row["CASELLA_ID"]."
 				,".$row["PESTANYA"].",".$row["FORMA"].",'".$row["TEXT"]."',".$row["LINKAT"].",".$row["SEGUENT"].",".$id.",".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["FORCA"]."
-				,".$row["PORTAR_PEU"].",".$row["LESIONAT"].");\n";
+				,".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].");\n";
 			}
 			echo " CollapsaTot();\n";
 			echo "</script>";

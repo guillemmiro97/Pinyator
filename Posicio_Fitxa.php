@@ -26,7 +26,7 @@
 
 	if ($id > 0)
 	{
-		$sql="SELECT NOM, ESNUCLI, ESCORDO, ESTRONC, ESFOLRE, COLORFONS, COLORTEXT, ESCANALLA
+		$sql="SELECT NOM, ESNUCLI, ESCORDO, ESTRONC, ESFOLRE, COLORFONS, COLORTEXT, ESCANALLA, COLORCAMISA
 		FROM POSICIO
 		WHERE POSICIO_ID = ".$id;
 
@@ -44,6 +44,7 @@
 				$escanalla = $row["ESCANALLA"];
 				$colorfons = $row["COLORFONS"];
 				$colortext = $row["COLORTEXT"];
+				$colorcamisa = $row["COLORCAMISA"];
 			}
 		}
 		else if (mysqli_error($conn) != "")
@@ -56,7 +57,7 @@
 	<div>
 		<table class="butons">
 			<tr>
-				<th><a href="Posicio.php" class="boto" >Torna a les posicions</a></th>
+				<th><a href="Posicio.php" class="boto" >Torna</a></th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -75,6 +76,9 @@
 		<br><br>
 		<label>Color text</label>
 		<input name="colortext" class="form_edit" value="<?php echo $colortext ?>" style="width:5%;" type="color">
+		<br><br>
+		<label>Color text camisa</label>
+		<input name="colorcamisa" class="form_edit" value="<?php echo $colorcamisa ?>" style="width:5%;" type="color">
 		<br><br>
 		<label>Es nucli</label>
 		<label class="switch">texte

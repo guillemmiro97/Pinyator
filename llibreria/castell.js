@@ -202,6 +202,7 @@ function myDown(e)
 					casteller.forca=mySel[0].forca;
 					casteller.peu=mySel[0].peu;
 					casteller.lesionat=mySel[0].lesionat;
+					casteller.camisa=mySel[0].camisa;
 					
 					ShowPopupCasella();
 				}
@@ -251,7 +252,8 @@ function CopiaCastellermySel(mySelect, objCasteller)
 	mySelect.altura=objCasteller.altura;
 	mySelect.forca=objCasteller.forca;
 	mySelect.peu=objCasteller.peu;
-	mySelect.lesionat=objCasteller.lesionat;	
+	mySelect.lesionat=objCasteller.lesionat;
+	mySelect.camisa=objCasteller.camisa;
 }
 
 function AfegeixCasellesLinkades(id, objCasteller, castellId)
@@ -305,6 +307,7 @@ function MouCastellers(casella, objCasteller)
 			casteller.forca=casella.forca;
 			casteller.peu=casella.peu;
 			casteller.lesionat=casella.lesionat;
+			casteller.camisa=casella.camisa;
 			
 			var mySelect = boxes[i];
 			mySel.push(mySelect);
@@ -464,6 +467,7 @@ function ResetmySel()
 			mySel[i].forca=0;
 			mySel[i].peu=1;
 			mySel[i].lesionat=0;
+			mySel[i].camisa=false;
 		}
 	}
 }
@@ -570,6 +574,7 @@ function ResetCasteller()
 	casteller.forca = 0;
 	casteller.lesionat = 0;
 	casteller.peu = 1;
+	casteller.camisa = false;
 }
 
 function SetCasteller(elem, altura, forca, peu, lesionat)

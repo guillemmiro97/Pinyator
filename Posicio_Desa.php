@@ -42,19 +42,24 @@ if(!empty($_POST["colortext"]))
 else
 	$colortext = "#FFFFFF";
 
+if(!empty($_POST["colorcamisa"]))
+	$colorcamisa = strval($_POST["colorcamisa"]);
+else
+	$colorcamisa = "#FFFFFF";
+
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
 if ($id > 0)
 {
 	$sql="UPDATE POSICIO SET NOM='".$nom."',ESNUCLI=".$esnucli.",ESCORDO=".$escordo.
 	",ESTRONC=".$estronc.",ESFOLRE=".$esfolre.",ESCANALLA=".$escanalla.
-	",COLORFONS='".$colorfons."',COLORTEXT='".$colortext."' 
+	",COLORFONS='".$colorfons."',COLORTEXT='".$colortext."',COLORCAMISA='".$colorcamisa."' 
 	 WHERE POSICIO_ID = ".$id;
 }
 else
 {
-	$sql="INSERT INTO POSICIO(NOM, ESNUCLI, ESCORDO, ESTRONC, ESFOLRE, ESCANALLA, COLORFONS, COLORTEXT) 
-	VALUES('".$nom."',".$esnucli.",".$escordo.",".$estronc.",".$esfolre.",".$escanalla.",'".$colorfons."','".$colortext."')";
+	$sql="INSERT INTO POSICIO(NOM, ESNUCLI, ESCORDO, ESTRONC, ESFOLRE, ESCANALLA, COLORFONS, COLORTEXT, COLORCAMISA) 
+	VALUES('".$nom."',".$esnucli.",".$escordo.",".$estronc.",".$esfolre.",".$escanalla.",'".$colorfons."','".$colortext."','".$colorcamisa."')";
 }
 
 if (mysqli_query($conn, $sql)) 

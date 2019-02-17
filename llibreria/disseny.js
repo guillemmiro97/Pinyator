@@ -25,6 +25,7 @@ function Box()
 	this.lesionat=0;
 	this.seguent=0;
 	this.linkat=0;
+	this.camisa=false;
 }
 
 function Casteller() 
@@ -36,10 +37,11 @@ function Casteller()
   this.forca=0;
   this.peu=1;
   this.lesionat=0;
+  this.camisa=false;
 }
 
 //Initialize a new Box, add it, and invalidate the canvas
-function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, forma, text, linkat, seguent, castellid, castellerid, malnom, inscrit, altura, forca, peu, lesionat)
+function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, forma, text, linkat, seguent, castellid, castellerid, malnom, inscrit, altura, forca, peu, lesionat, camisa)
 {
 	var rect = new Box();
 	rect.x = x;
@@ -66,6 +68,7 @@ function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, form
 		rect.forca=forca;
 		rect.peu=peu;
 		rect.lesionat=lesionat;
+		rect.camisa=camisa;
 		PintaCastellerLlista(castellerid, rect.inscrit);
 	}
 	boxes.push(rect);
@@ -77,14 +80,16 @@ function PosicioColor()
   this.id = 0;
   this.colorfons = "#BDBDBD";
   this.colortext = "#000000";
+  this.colorcamisa = "#000000";
 }
 
-function AddColorPosicio(id, colorfons, colottext)
+function AddColorPosicio(id, colorfons, colortext, colorcamisa)
 {
 	var color = new PosicioColor();
 	color.id = id;
 	color.colorfons = colorfons;
-	color.colortext = colottext;
+	color.colortext = colortext;
+	color.colorcamisa = colorcamisa;
 	
 	colors.push(color);	
 }
@@ -103,13 +108,20 @@ function GetColorFonsById(id)
 	}
 }
 
-function GetColorTextById(id)
+function GetColorTextById(id, camisa)
 {
 	var index = GetColorById(id);
 	
 	if (index > -1)
 	{
-		return colors[index].colortext;
+		if (camisa && !isDownloading)
+		{
+			return colors[index].colorcamisa;
+		}
+		else
+		{
+			return colors[index].colortext;
+		}
 	}
 	else
 	{
@@ -446,7 +458,7 @@ function DrawCustomShape(context, shape, filled)
 
 function DrawText(context, shape)
 {
-	context.fillStyle = GetColorTextById(shape.posicio);
+	context.fillStyle = GetColorTextById(shape.posicio, shape.camisa);
 	context.textAlign = "center";
 	context.textBaseline="middle"; 
 	var x = (shape.w / 2);
@@ -512,14 +524,14 @@ function DrawText(context, shape)
 	
 	if((shape.forma != 5) && (EsPlantilla()) && (shape.linkat > 0))
 	{
-		context.fillStyle = GetColorTextById(shape.posicio);
+		context.fillStyle = GetColorTextById(shape.posicio, shape.camisa);
 		str = shape.linkat;
 		DrawDownText2(context, shape, str, shape.w-10, shape.h-6, 10);
 	}
 	
 	if((shape.forma != 5) && (EsPlantilla()) && (shape.seguent > 0))
 	{
-		context.fillStyle = GetColorTextById(shape.posicio);
+		context.fillStyle = GetColorTextById(shape.posicio, shape.camisa);
 		str = shape.seguent;
 		DrawDownText2(context, shape, str, 8, shape.h-6, 10);
 	}
