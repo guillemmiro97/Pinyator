@@ -203,7 +203,7 @@ else if (mysqli_error($conn) != "")
 				$info = "<a href='Casteller_Fitxa.php?id=".$row["CASTELLER_ID"]."' target='_blank'><img src='icons/info.png'></a>";
 				$text = $info." ".$cstl." ".$portarpeu.$lesionat.$camisa;
 				
-				$onClick = " onClick='SetCasteller(this,".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].")' ";
+				$onClick = " onClick='SetCasteller(this,".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].")' ";
 				
 				
 				echo "<div class='accordionItem ".$class."' id=".$row["CASTELLER_ID"]." title='".$row["MALNOM"]."' ".$onClick.$color.">".$text."</div>";

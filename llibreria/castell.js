@@ -577,7 +577,7 @@ function ResetCasteller()
 	casteller.camisa = false;
 }
 
-function SetCasteller(elem, altura, forca, peu, lesionat)
+function SetCasteller(elem, altura, forca, peu, lesionat, camisa)
 {
 	ResetCasteller();
 	casteller.id = elem.id;	
@@ -589,6 +589,7 @@ function SetCasteller(elem, altura, forca, peu, lesionat)
 		casteller.forca = forca;
 		casteller.peu = peu;
 		casteller.lesionat = lesionat;
+		casteller.camisa = camisa;
 		elem.classList.add("castellerSeleccionat");
 		elem.style.backgroundColor = "#81F781";
 		MarcaCastellerPinya();
