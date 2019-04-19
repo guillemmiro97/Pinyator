@@ -6,6 +6,7 @@
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";?>
 
 <?php
+$temporada=strval($_GET["t"]);
 $Castell_nom=strval($_GET["id"]);
 if (!empty($Castell_nom))
 {
@@ -28,16 +29,20 @@ if (!empty($Castell_nom))
 	$posicio="";
 	$cordo=-1;	
 	
-	$sql="SELECT P.NOM AS POSICIO, CP.CORDO,
-	CT.MALNOM AS CASTELLER, COUNT(*) AS CNT
+	$sql="SELECT *, COUNT(*) AS CNT
+	FROM (SELECT P.NOM AS POSICIO, 
+	CASE WHEN P.ESCORDO=1 THEN CP.CORDO ELSE 0 END AS CORDO,
+	CT.MALNOM AS CASTELLER
 	FROM CASTELL C
 	JOIN CASTELL_POSICIO AS CP ON CP.CASTELL_ID = C.CASTELL_ID
 	JOIN POSICIO P ON P.POSICIO_ID = CP.POSICIO_ID
 	JOIN CASTELLER CT ON CT.CASTELLER_ID = CP.CASTELLER_ID
-	WHERE C.NOM='".$Castell_nom."'
-	AND (P.ESTRONC=1 OR P.ESNUCLI=1 OR P.ESCORDO=1)
-	GROUP BY P.NOM, CP.CORDO, CT.MALNOM
-	ORDER BY P.NOM, CP.CORDO, CT.MALNOM";
+	JOIN EVENT E ON E.EVENT_ID = C.EVENT_ID
+	WHERE C.NOM = '".$Castell_nom."'
+	AND (E.TEMPORADA = '".$temporada."' OR '0' = '".$temporada."') 
+	AND (P.ESTRONC = 1 OR P.ESNUCLI = 1 OR P.ESCORDO = 1 OR P.ESFOLRE = 1)	
+	ORDER BY P.NOM, CORDO, CT.MALNOM) T1
+	GROUP BY POSICIO, CORDO, CASTELLER";
 	
 	$result = mysqli_query($conn, $sql);
 
@@ -49,7 +54,7 @@ if (!empty($Castell_nom))
 			{
 				$posicio=$row["POSICIO"];
 				$cordo=$row["CORDO"];
-
+				
 				$objPosicio = new Posicio();
 				$objPosicio->Castellers = array();
 				$objPosicio->Nom = $posicio;

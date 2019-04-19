@@ -6,6 +6,7 @@
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";?>
 
 <?php
+$temporada=strval($_GET["t"]);
 $Castell_nom=strval($_GET["id"]);
 if (!empty($Castell_nom))
 {	
@@ -29,6 +30,7 @@ if (!empty($Castell_nom))
 	FROM CASTELL C
 	INNER JOIN EVENT AS E ON E.EVENT_ID=C.EVENT_ID
 	WHERE C.NOM='".$Castell_nom."'
+	AND (E.TEMPORADA = '".$temporada."' OR '0' = '".$temporada."')
 	ORDER BY E.DATA";
 	
 	

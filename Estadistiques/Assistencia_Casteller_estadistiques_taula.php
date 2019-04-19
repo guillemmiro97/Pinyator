@@ -43,7 +43,7 @@ th
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";?>
 
 <?php
-
+$temporada=strval($_GET["t"]);
 
 class Casteller 
 { 
@@ -74,6 +74,7 @@ $sql="SELECT E.EVENT_ID, date_format(E.DATA, '%d-%m') AS DATA, E.NOM
 FROM EVENT E
 WHERE (E.EVENT_PARE_ID IS NULL OR E.EVENT_PARE_ID=0)
 AND E.TIPUS = 0
+AND (E.TEMPORADA = '".$temporada."' OR '0' = '".$temporada."') 
 ORDER BY E.DATA";
 
 $result = mysqli_query($conn, $sql);
@@ -111,6 +112,7 @@ JOIN CASTELLER CT ON CT.CASTELLER_ID = I.CASTELLER_ID
 WHERE (E.EVENT_PARE_ID IS NULL OR E.EVENT_PARE_ID=0)
 AND E.TIPUS = 0
 AND I.ESTAT = 1
+AND (E.TEMPORADA = '".$temporada."' OR '0' = '".$temporada."') 
 ORDER BY CT.MALNOM, E.EVENT_ID";
 
 $result = mysqli_query($conn, $sql);
