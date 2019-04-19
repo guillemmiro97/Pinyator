@@ -186,7 +186,29 @@ if (mysqli_num_rows($result) > 0)
 			$stamp1 = $timeInici->format('H:i');
 			$stamp2 = $time->format('H:i');		
 			
-			$tdCastell="<td class='llistes2'>".$row["CASTELL"]."  - ".$stamp1."-".$stamp2."</td>";
+			$colorCasella = "";
+			if (strpos($row["CASTELL"], "3d") !== false)
+			{
+				$colorCasella = "style='background:lightpink'";
+			}
+			elseif (strpos($row["CASTELL"], "4d") !== false)
+			{
+				$colorCasella = "style='background:lightgreen'";
+			}
+			elseif (strpos($row["CASTELL"], "2d") !== false)
+			{
+				$colorCasella = "style='background:lightblue'";
+			}
+			elseif (strpos($row["CASTELL"], "5d") !== false)
+			{
+				$colorCasella = "style='background:#ffffb3'";
+			}
+			elseif (strpos($row["CASTELL"], "7d") !== false)
+			{
+				$colorCasella = "style='background:lightsalmon'";
+			}
+			
+			$tdCastell="<td class='llistes2' ".$colorCasella.">".$row["CASTELL"]."  - ".$stamp1."-".$stamp2."</td>";
 			
 			$timeInici->add(new DateInterval('PT' . $minuts . 'M'));
 		}
