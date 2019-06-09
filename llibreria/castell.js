@@ -951,6 +951,7 @@ function SetPinyaTronc()
 
 function Buscat()
 {
+	trobat=false;
 	mySelWidth = 10;
 	var input, text, tab=0;
     input = document.getElementById("myInput");
@@ -959,20 +960,33 @@ function Buscat()
 	
 	if (text != "")
 	{
-		for (var i=0;i<boxes.length;i++)
-		{		
-			if(getCleanedString(boxes[i].malnom).toUpperCase().indexOf(text) == 0)
+		var i=0;
+		while((!trobat) && (i<boxes.length))
+		{
+			trobat = getCleanedString(boxes[i].malnom).toUpperCase() == text;
+			if (trobat)
 			{
-				if ((mySel.length == 1) && (mySel[0] == null))
-				{
-					mySel[0] = boxes[i];
-				}
-				else
-				{
-					mySel.push(boxes[i]);
-				}
-				
+				mySel[0] = boxes[i];
 				tab = boxes[i].pestanya;
+			}
+			i++;
+		}
+		if(!trobat)
+		{
+			for (i=0;i<boxes.length;i++)
+			{		
+				if(getCleanedString(boxes[i].malnom).toUpperCase().indexOf(text) == 0)
+				{
+					if ((mySel.length == 1) && (mySel[0] == null))
+					{
+						mySel[0] = boxes[i];
+					}
+					else
+					{
+						mySel.push(boxes[i]);
+					}					
+					tab = boxes[i].pestanya;
+				}
 			}
 		}
 	}
