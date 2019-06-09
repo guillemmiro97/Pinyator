@@ -141,7 +141,7 @@
 
 		$sql="SELECT POSICIO_ID, NOM
 		FROM POSICIO
-		WHERE ESNUCLI=1 OR ESCORDO=1
+		WHERE ESTRONC=0
 		ORDER BY NOM ";
 
 		$result = mysqli_query($conn, $sql);
