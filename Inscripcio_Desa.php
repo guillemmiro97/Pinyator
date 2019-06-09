@@ -1,6 +1,6 @@
 <?php
 $event_id = intval($_GET["e"]);
-$casteller_id = strval($_GET["c"]);
+$casteller_id = intval($_GET["c"]);
 $estat=0;
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";

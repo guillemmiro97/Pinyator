@@ -23,6 +23,9 @@ $segboss = intval($_POST["segboss"]);
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
+$password = GetStrDB($password);
+$nom = GetStrDB($nom);
+
 if ($id > 0)
 {
 	$sql="UPDATE USUARIS SET PASSWORD='".$password."',NOM='".$nom."'

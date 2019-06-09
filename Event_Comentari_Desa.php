@@ -12,8 +12,12 @@ $url = strval($_POST["url"]);
 if (trim($text) != "")
 {
 	include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
+	
+	$nom = GetStrDB($nom);
+	$text = GetStrDB($text);
+	$url = GetStrDB($url);
 
-	$sql="INSERT INTO EVENT_COMENTARIS(EVENT_ID, USUARI, TEXT, DATA) VALUES(".$id.",'".addslashes($nom)."','".addslashes($text)."', NOW())";
+	$sql="INSERT INTO EVENT_COMENTARIS(EVENT_ID, USUARI, TEXT, DATA) VALUES(".$id.",'".$nom."','".$text."', NOW())";
 
 	if (mysqli_query($conn, $sql)) 
 	{	

@@ -107,6 +107,12 @@ if (!empty($_GET['pestanya_4']))
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
+$nom = GetStrDB($nom);
+$ps1 = GetStrDB($ps1);
+$ps2 = GetStrDB($ps2);
+$ps3 = GetStrDB($ps3);
+$ps4 = GetStrDB($ps4);
+
 if ($id > 0)
 {
 	if ($accio == 1)

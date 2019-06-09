@@ -31,6 +31,11 @@ if (!empty($_POST["portarpeu"]))
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
+$malnom = GetStrDB($malnom);
+$nom = GetStrDB($nom);
+$cognom1 = GetStrDB($cognom1);
+$cognom2 = GetStrDB($cognom2);
+
 if ($id > 0)
 {
 	$sql="UPDATE CASTELLER SET MALNOM='".$malnom."',NOM='".$nom."',COGNOM_1='".$cognom1."',COGNOM_2='".$cognom2."'

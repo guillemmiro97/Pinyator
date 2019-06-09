@@ -32,11 +32,11 @@ if (!empty($_GET["obj"]))
 		}
 		elseif ($obj->ca <= -99)
 		{
-			$sql=$sql."UPDATE CASTELL_POSICIO SET CASTELLER_ID=".$obj->ca.", TEXT='".$obj->txt."' WHERE CASTELL_ID = ".$obj->id." AND CASELLA_ID=".$obj->cs." AND PESTANYA=".$obj->ps.";";
+			$sql=$sql."UPDATE CASTELL_POSICIO SET CASTELLER_ID=".$obj->ca.", TEXT='".GetStrDB($obj->txt)."' WHERE CASTELL_ID = ".$obj->id." AND CASELLA_ID=".$obj->cs." AND PESTANYA=".$obj->ps.";";
 		}
 		else
 		{
-			$sql=$sql."UPDATE CASTELL_POSICIO SET CASTELLER_ID=0, TEXT='".$obj->txt."' WHERE CASTELL_ID = ".$obj->id." AND CASELLA_ID=".$obj->cs." AND PESTANYA=".$obj->ps.";";
+			$sql=$sql."UPDATE CASTELL_POSICIO SET CASTELLER_ID=0, TEXT='".GetStrDB($obj->txt)."' WHERE CASTELL_ID = ".$obj->id." AND CASELLA_ID=".$obj->cs." AND PESTANYA=".$obj->ps.";";
 		}
 	}
 

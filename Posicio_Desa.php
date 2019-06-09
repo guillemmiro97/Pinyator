@@ -49,6 +49,12 @@ else
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
+$nom = GetStrDB($nom);
+$colorcamisa = GetStrDB($colorcamisa);
+$colorfons = GetStrDB($colorfons);
+$colortext = GetStrDB($colortext);
+
+
 if ($id > 0)
 {
 	$sql="UPDATE POSICIO SET NOM='".$nom."',ESNUCLI=".$esnucli.",ESCORDO=".$escordo.

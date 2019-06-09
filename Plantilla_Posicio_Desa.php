@@ -10,12 +10,13 @@ $w = intval($_GET['w']);
 $a = intval($_GET['a']);
 $f = intval($_GET['f']);
 $t = strval($_GET['t']);
-$ps = strval($_GET['ps']);
+$ps = intval($_GET['ps']);
 $sg = intval($_GET['sg']);
 $lk = intval($_GET['lk']);
 
-
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
+
+$t = GetStrDB($t);
 
 if ($cs > 0)
 {

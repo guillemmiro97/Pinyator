@@ -27,16 +27,20 @@ if (!empty($_POST["escontador"]))
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
+$nom = GetStrDB($nom);
+$hashtag = GetStrDB($hashtag);
+$temporada = GetStrDB($temporada);
+
 if ($id > 0)
 {
-	$sql="UPDATE EVENT SET NOM='".$nom."',DATA='".GetFormatedDate($data,$hora)."',TIPUS=".$tipus.",ESTAT=".$estat.",EVENT_PARE_ID=".$pare."
+	$sql="UPDATE EVENT SET NOM='".$nom."',DATA='".GetFormatedDateTime($data,$hora)."',TIPUS=".$tipus.",ESTAT=".$estat.",EVENT_PARE_ID=".$pare."
 	,ESPLANTILLA=".$esplantilla.",CONTADOR=".$contador.",HASHTAG='".$hashtag."',TEMPORADA='".$temporada."'  
 	WHERE EVENT_ID = ".$id.";";
 	$sql=$sql." UPDATE EVENT SET ESTAT=".$estat." WHERE EVENT_PARE_ID = ".$id.";";
 }
 else
 {
-	$sql="INSERT INTO EVENT(NOM,DATA,TIPUS,ESTAT,EVENT_PARE_ID,ESPLANTILLA,CONTADOR,HASHTAG,TEMPORADA) VALUES('".$nom."','".GetFormatedDate($data,$hora)."',".$tipus.",".$estat.",".$pare.",".$esplantilla.",".$contador.",'".$hashtag."','".$temporada."');";
+	$sql="INSERT INTO EVENT(NOM,DATA,TIPUS,ESTAT,EVENT_PARE_ID,ESPLANTILLA,CONTADOR,HASHTAG,TEMPORADA) VALUES('".$nom."','".GetFormatedDateTime($data,$hora)."',".$tipus.",".$estat.",".$pare.",".$esplantilla.",".$contador.",'".$hashtag."','".$temporada."');";
 }
 
 if (mysqli_multi_query($conn, $sql)) 
@@ -51,13 +55,6 @@ else if (mysqli_error($conn) != "")
 
 mysqli_close($conn);
 
-
-function GetFormatedDate($date, $time, $format = 'YmdHis')
-{
-	$combinedDT = date('Y-m-d H:i:s', strtotime("$date $time"));
-    $d = new DateTime($combinedDT);
-    return $d->format($format);
-}
 
 ?>
 <a href='Event.php'>Torna als Esdeveniments.</a>
