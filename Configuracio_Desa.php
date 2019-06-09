@@ -6,11 +6,21 @@
 <?php
 $resoluciopantalla = intval($_POST["resoluciopantalla"]);
 $temporada = strval($_POST["temporada"]);
-
+$fites = 0;
+if (!empty($_POST["fites"]))
+{
+	$fites = intval($_POST["fites"]);
+}
+$participants = 0;
+if (!empty($_POST["participants"]))
+{
+	$participants = intval($_POST["participants"]);
+}
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
-$sql="UPDATE CONFIGURACIO SET TEMPORADA='".$temporada."',RESOLUCIOPANTALLA=".$resoluciopantalla;
+$sql="UPDATE CONFIGURACIO SET TEMPORADA='".$temporada."',
+	RESOLUCIOPANTALLA=".$resoluciopantalla.",FITES=".$fites.",PARTICIPANTS=".$participants;
 
 if (mysqli_query($conn, $sql)) 
 {	

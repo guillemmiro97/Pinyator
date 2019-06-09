@@ -29,16 +29,46 @@ if (!empty($_GET['id']))
 <div style='position: fixed; z-index: -1; width: 90%; height: 80%;background-image: url("icons/Logo_Marrecs.gif");background-repeat: no-repeat; 
 background-attachment: fixed;  background-position: center; opacity:0.4'>
 </div>
-<div>
 
-<a href="Apuntat.php?reset=1" class="boto" >No sóc jo</a>
-<div style="position: absolute; right: 0px; top: 4px">
+<?php
+	$topLlista = 60;
+
+	include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
+	
+	$visualitzarFites = 0;
+	$visualitzarPenya = 0;
+				
+	$sql="SELECT FITES, PARTICIPANTS
+	FROM CONFIGURACIO";
+
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) 
+	{
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$visualitzarFites = $row["FITES"];
+			$visualitzarPenya = $row["PARTICIPANTS"];				
+		}
+	}
+?>
+
+<div style='position: absolute;'><a href="Apuntat.php?reset=1" class="boto" >No sóc jo</a>
+<?php
+	if ($visualitzarFites)
+	{
+		$topLlista = 100;
+		echo "<br><br><a href='Fites_Llista.php'>
+				<img src='icons/trofeo.png' width=48 height=48>
+			</a>";
+	}
+?>
+</div>
+<div style="position: absolute; right: 0px; top: 4px;">
 <?php
     $eventId=0;
 	$hashtag="";
 	$hasHash=0;
-	
-	include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
 	$sql="SELECT EVENT_ID, HASHTAG 
 	FROM EVENT
@@ -63,6 +93,7 @@ background-attachment: fixed;  background-position: center; opacity:0.4'>
 	echo "<iframe src='Counter.php?id=".$eventId."&h=".$hashtag."&hh=".$hasHash."' class='counterframe' id='counterCastellers'></iframe>";
 ?>
 </div>
+<div style="position: absolute; right: 6px; left: 6px; top: <?php echo $topLlista?>px;">
 <?php
 if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 {
@@ -122,4 +153,3 @@ else
 </div>
    </body>
 </html>
-

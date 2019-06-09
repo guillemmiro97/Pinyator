@@ -55,26 +55,39 @@ function Save(eventid, castellerid)
     if(event_id > 0)
 	{			
 		var elementNom="E"+eventid+"C"+castellerid;
+		var eventNom="E"+eventid;
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() 
 		{
+			var operador=0;
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				if (estat == 0)
 				{
 					document.getElementById(elementNom).style.backgroundColor = "#ff1a1a";
 					document.getElementById(elementNom).innerHTML = "No vinc";
+					operador=-1;
 				}
 				else
 				{					
 					document.getElementById(elementNom).style.backgroundColor = "#33cc33";
 					document.getElementById(elementNom).innerHTML = "Vinc";
+					operador=1;
 				}
 				
 				var frame = document.getElementById("counterCastellers");
 				if (frame != null)
 				{
 					frame.contentDocument.location.reload(true);
+				}
+				
+				var frameList = document.getElementsByName(eventNom);
+				for (var i= 0;i < frameList.length;i++)
+				{
+					if (parseInt(frameList[i].innerHTML) > 0)
+						frameList[i].innerHTML=parseInt(frameList[i].innerHTML)+operador;
+					else
+						frameList[i].innerHTML=1;
 				}
 			}
 		};	
