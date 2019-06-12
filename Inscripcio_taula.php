@@ -102,9 +102,16 @@ if (!empty($Casteller_id))
 			
 			$script .= "EventNou(".$row2["EVENT_ID"].",".$stat.",".$row2["CASTELLER_ID"].");";
 			echo "<tr>			
-			<td width='85%'>".$tInici.$comment.$eventNom."<br>".$row2["DATA"]."<br>".$acompanyants.$tFinal."</td>
-			<td><b name='E".$row2["EVENT_ID"]."'>".$apuntats."</b></td>
-			<td><button class='boto' onClick='Save(".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].")' id=".$idElement." ".$color.">".$estat."</button></td>
+			<td width='85%'>".$tInici.$comment.$eventNom."<br>".$row2["DATA"]."<br>".$acompanyants.$tFinal."</td>";
+			if ($visualitzarPenya)
+			{
+				echo "<td><b name='E".$row2["EVENT_ID"]."'>".$apuntats."</b></td>";
+			}
+			else
+			{
+				echo "<td></td>";
+			}
+			echo "<td><button class='boto' onClick='Save(".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].")' id=".$idElement." ".$color.">".$estat."</button></td>
 			</tr>";
 			
 			$Separador="<tr><td><br></td></tr>";
