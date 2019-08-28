@@ -14,6 +14,8 @@ $id = intval($_GET['id']);
 $eventid = -1;
 $autogenerat = false;
 $troncs = false;
+$arxivats = 0;
+$rating = 0;
 
 if (!empty($_GET["a"]))
 {	
@@ -139,7 +141,23 @@ else if (mysqli_error($conn) != "")
 				$resoluciopantalla = $row["RESOLUCIOPANTALLA"];
 			}
 		}
+		
+		$sql="SELECT COUNT(*) AS ARX
+			FROM EVENT AS ERR
+			INNER JOIN EVENT AS E ON E.EVENT_ID=".$eventActuacioid." AND ERR.TEMPORADA=E.TEMPORADA
+			WHERE ERR.TIPUS=0
+			AND ERR.ESTAT=2";
+			
+		$result = mysqli_query($conn, $sql);
 
+		if (mysqli_num_rows($result) > 0)
+		{
+			while($row = mysqli_fetch_assoc($result)) 
+			{
+				$arxivats = $row["ARX"];
+			}
+		}
+		
 		$ordrealtura = "";
 		if ($_SESSION["carrec"]=="2")
 		{
@@ -148,15 +166,22 @@ else if (mysqli_error($conn) != "")
 		
 		$sql="SELECT C.CASTELLER_ID, MALNOM, P.NOM, P.POSICIO_ID, IFNULL(I.ESTAT,0) AS ESTAT,
 		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA, PORTAR_PEU, LESIONAT,
-		IFNULL(IA.ESTAT,0) AS CAMISA
+		IFNULL(IA.ESTAT,0) AS CAMISA,
+		(SELECT SUM(IFNULL(IR.ESTAT,0)) AS RAT
+			FROM EVENT AS ERR 
+			LEFT JOIN INSCRITS AS IR ON IR.EVENT_ID=ERR.EVENT_ID
+			WHERE ERR.TEMPORADA=E.TEMPORADA
+			AND ERR.TIPUS=0
+			AND ERR.ESTAT=2
+			AND IR.CASTELLER_ID = C.CASTELLER_ID) AS RATING
 		FROM CASTELLER AS C 
 		INNER JOIN POSICIO AS P ON P.POSICIO_ID=".$pinyaTronc."
 		LEFT JOIN CASTELL AS CT ON CT.CASTELL_ID=".$id."
 		LEFT JOIN INSCRITS AS I ON CT.EVENT_ID=I.EVENT_ID AND I.CASTELLER_ID=C.CASTELLER_ID
 		LEFT JOIN EVENT AS E ON E.EVENT_ID=I.EVENT_ID
 		LEFT JOIN EVENT AS EA ON EA.EVENT_ID=".$eventActuacioid." AND EA.DATA >= E.DATA
-		LEFT JOIN INSCRITS AS IA ON IA.EVENT_ID=EA.EVENT_ID AND IA.CASTELLER_ID=C.CASTELLER_ID									
-		WHERE C.ESTAT = 1
+		LEFT JOIN INSCRITS AS IA ON IA.EVENT_ID=EA.EVENT_ID AND IA.CASTELLER_ID=C.CASTELLER_ID
+		WHERE (C.ESTAT = 1 OR I.ESTAT = 1)
 		AND (P.ESTRONC = 1 OR P.ESCORDO = 1 OR P.ESNUCLI = 1)
 		ORDER BY P.NOM, ".$ordrealtura." C.MALNOM ";
 
@@ -199,9 +224,17 @@ else if (mysqli_error($conn) != "")
 					$camisa="<img src='icons/camisa.png'>";
 				}
 				
+				if($arxivats > 0)
+				{
+					$rating = (($row["RATING"]/$arxivats)*100);
+				}
+				
 				$cstl="<font class='lblNom' id='lbl".$row["CASTELLER_ID"]."' title='".$row["MALNOM"]." - ".$row["ALTURA"]."'>".$row["MALNOM"]." - ".$row["ALTURA"]."</font>";
 				$info = "<a href='Casteller_Fitxa.php?id=".$row["CASTELLER_ID"]."' target='_blank'><img src='icons/info.png'></a>";
 				$text = $info." ".$cstl." ".$portarpeu.$lesionat.$camisa;
+				
+				$text .= "<div><progress value='".$rating."' max='100' style='height:6px;' title='".round($rating)."'>
+						</progress></div>";						
 				
 				$onClick = " onClick='SetCasteller(this,".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].")' ";
 				
