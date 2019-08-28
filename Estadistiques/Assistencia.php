@@ -13,6 +13,7 @@ $temporada=strval($_GET["t"]);
 
 $i = 1;
 $assaigs=array();
+$assaigsNom=array();
 $temporades=array();
 $str="";
 
@@ -69,6 +70,7 @@ $str="";
 	if (mysqli_num_rows($result) > 0) 
 	{
 		array_push($assaigs, array_fill(1, mysqli_num_rows($result), array_fill(1, count($temporades), 0)));
+		array_push($assaigsNom, array_fill(1, mysqli_num_rows($result), array_fill(1, count($temporades), 0)));
 		
 		/*for($x = 1; $x < count($assaigs); $x++)
 		{
@@ -90,13 +92,15 @@ function drawBasic() {
 	  {
 		echo "data.addColumn('number', '".$temporades[$x]."');";
 		echo "data.addColumn({type: 'number', role: 'annotation'});";
+		echo "data.addColumn({type: 'string', role: 'tooltip'});";
 	  }
 
       echo "data.addRows([";
 		// output data of each row
 		while($row = mysqli_fetch_assoc($result)) 
 		{
-			$assaigs[$row["rownum"]][$row["rownumT"]] = $row["Y"];		
+			$assaigs[$row["rownum"]][$row["rownumT"]] = $row["Y"];
+			$assaigsNom[$row["rownum"]][$row["rownumT"]] = $row["NOM"];	
 		}
 		
 		for($x = 1; $x < count($assaigs); $x++)
@@ -106,6 +110,7 @@ function drawBasic() {
 			{
 				$str .= ",".(empty($assaigs[$x][$y])?0:$assaigs[$x][$y]);
 				$str .= ",".(empty($assaigs[$x][$y])?0:$assaigs[$x][$y]);
+				$str .= ",'".(empty($assaigsNom[$x][$y])?"":$assaigsNom[$x][$y])."'";
 			}
 
 			if ($x == 1)
