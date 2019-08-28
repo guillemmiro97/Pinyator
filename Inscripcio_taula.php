@@ -15,7 +15,13 @@ if (!empty($Casteller_id))
 		JOIN POSICIO P ON P.POSICIO_ID=C.POSICIO_PINYA_ID
 		WHERE IU.EVENT_ID=E.EVENT_ID
 		AND IU.ESTAT = 1
-		AND (P.ESNUCLI=1 OR P.ESTRONC=1 OR P.ESCORDO=1)) AS APUNTATS
+		AND (P.ESNUCLI=1 OR P.ESTRONC=1 OR P.ESCORDO=1)) AS APUNTATS,
+	(SELECT SUM(IFNULL(IU.ESTAT,0)) + SUM(IFNULL(ACOMPANYANTS, 0))
+		FROM INSCRITS IU
+		JOIN CASTELLER C ON C.CASTELLER_ID=IU.CASTELLER_ID
+		JOIN POSICIO P ON P.POSICIO_ID=C.POSICIO_PINYA_ID
+		WHERE IU.EVENT_ID=E.EVENT_ID
+		) AS APUNTATS_ALTRES
 	FROM EVENT AS E
 	LEFT JOIN EVENT AS EP ON EP.EVENT_ID = E.EVENT_PARE_ID
 	LEFT JOIN CASTELLER_INSCRITS AS I ON I.EVENT_ID = E.EVENT_ID AND I.CASTELLER_ID=".$Casteller_id."
@@ -50,9 +56,16 @@ if (!empty($Casteller_id))
 			$comment = "<a href='Event_Comentari_Public.php?id=".$row2["EVENT_ID"]."&nom=".$malnomPrincipal."'><img src='icons/comment.png'></img></a>";
 			
 			$apuntats="";
-			if (($visualitzarPenya == 1) && ($row2["APUNTATS"] > 0))
+			if ($visualitzarPenya == 1)
 			{
-				$apuntats=$row2["APUNTATS"];
+				if (($row2["APUNTATS"] > 0) && ($row2["TIPUS"] != -1))
+				{
+					$apuntats=$row2["APUNTATS"];				
+				}
+				else if (($row2["APUNTATS_ALTRES"] > 0) && ($row2["TIPUS"] == -1))
+				{
+					$apuntats=$row2["APUNTATS_ALTRES"];
+				}			
 			}
 			
 			if ($row2["PUBLIC"]>0)

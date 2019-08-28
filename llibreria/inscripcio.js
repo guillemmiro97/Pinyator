@@ -54,8 +54,8 @@ function Save(eventid, castellerid)
 
     if(event_id > 0)
 	{			
-		var elementNom="E"+eventid+"C"+castellerid;
-		var eventNom="E"+eventid;
+		var elementNom="E"+event_id+"C"+castellerid;
+		var eventNom="E"+event_id;
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() 
 		{
@@ -81,14 +81,7 @@ function Save(eventid, castellerid)
 					frame.contentDocument.location.reload(true);
 				}
 				
-				var frameList = document.getElementsByName(eventNom);
-				for (var i= 0;i < frameList.length;i++)
-				{
-					if (parseInt(frameList[i].innerHTML) > 0)
-						frameList[i].innerHTML=parseInt(frameList[i].innerHTML)+operador;
-					else
-						frameList[i].innerHTML=1;
-				}
+				ModificaSom(event_id, operador);
 			}
 		};	
 		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&s=" + estat, true);
@@ -176,7 +169,7 @@ function Esborra(event_id, casteller_id)
 
 function IncrementaAcompanyant(event_id, casteller_id) 
 {	
-    if(event_id > 0)
+    if (event_id > 0)
 	{			
 		var count = parseInt(document.getElementById("AE"+event_id+"C"+casteller_id).innerHTML)+1;
 		ModificaAcompanyant(event_id, casteller_id, count);
@@ -185,12 +178,13 @@ function IncrementaAcompanyant(event_id, casteller_id)
 
 function DecrementaAcompanyant(event_id, casteller_id) 
 {	
-    if(event_id > 0)
+    if (event_id > 0)
 	{			
 		var count = parseInt(document.getElementById("AE"+event_id+"C"+casteller_id).innerHTML)-1;
 		ModificaAcompanyant(event_id, casteller_id, count);
 	}
 }
+
 
 function ModificaAcompanyant(event_id, casteller_id, count) 
 {	
@@ -201,10 +195,28 @@ function ModificaAcompanyant(event_id, casteller_id, count)
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("AE"+event_id+"C"+casteller_id).innerHTML = count;
+				var elementId = "AE"+event_id+"C"+casteller_id;
+				var operador = count - parseInt(document.getElementById(elementId).innerHTML);
+				document.getElementById(elementId).innerHTML = count;
+				ModificaSom(event_id, operador);
 			}
 		};	
 		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&a=" + count, true);
 		xmlhttp.send();
+	}
+}
+
+function ModificaSom(event_id, operador)
+{
+	if ((event_id > 0) && (operador != 0))
+	{
+		var frameList = document.getElementsByName("E"+event_id);
+		for (var i= 0;i < frameList.length;i++)
+		{
+			if (parseInt(frameList[i].innerHTML) > 0)
+				frameList[i].innerHTML=parseInt(frameList[i].innerHTML)+operador;
+			else
+				frameList[i].innerHTML=1;
+		}
 	}
 }
