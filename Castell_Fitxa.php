@@ -200,10 +200,15 @@ else if (mysqli_error($conn) != "")
 				
 				$class="";
 				$color="";
+				$classFont="Aqui";
 				if($row["ESTAT"]==0)
 				{
 					$class="castellerNoInscrit";
 					$color=" style='background-color:#F5A9BC'";
+				}
+				else if($row["ESTAT"]==1)
+				{
+					$classFont="Vinc";
 				}
 				
 				$lesionat = "";
@@ -227,9 +232,9 @@ else if (mysqli_error($conn) != "")
 				if($arxivats > 0)
 				{
 					$rating = (($row["RATING"]/$arxivats)*100);
-				}
+				}				
 				
-				$cstl="<font class='lblNom' id='lbl".$row["CASTELLER_ID"]."' title='".$row["MALNOM"]." - ".$row["ALTURA"]."'>".$row["MALNOM"]." - ".$row["ALTURA"]."</font>";
+				$cstl="<font class='".$classFont."' id='lbl".$row["CASTELLER_ID"]."' title='".$row["MALNOM"]." - ".$row["ALTURA"]."'>".$row["MALNOM"]." - ".$row["ALTURA"]."</font>";
 				$info = "<a href='Casteller_Fitxa.php?id=".$row["CASTELLER_ID"]."' target='_blank'><img src='icons/info.png'></a>";
 				$text = $info." ".$cstl." ".$portarpeu.$lesionat.$camisa;
 				

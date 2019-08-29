@@ -16,7 +16,7 @@ function Box()
 	this.castellId=-1;
 	this.castellerid=0;
 	this.malnom="";
-	this.inscrit=false; //0=No inscrit;1=Inscrit
+	this.inscrit=0; //0=No inscrit;1=Inscrit;2=Aqui
 	this.altura=0;
 	this.forca=0;
 	this.posicio=0;
@@ -32,7 +32,7 @@ function Casteller()
 {
   this.id = 0;
   this.malnom = "";
-  this.inscrit=false; //0=No inscrit;1=Inscrit
+  this.inscrit=0; //0=No inscrit;1=Inscrit;2=Aqui
   this.altura=0;
   this.forca=0;
   this.peu=1;
@@ -507,7 +507,7 @@ function DrawText(context, shape)
 			}
 			str = shape.malnom.toUpperCase() + " " + mides;
 			
-			if(!shape.inscrit)
+			if(shape.inscrit == 0)
 			{
 				context.fillStyle = "red";
 			}
@@ -515,25 +515,37 @@ function DrawText(context, shape)
 	}
 	DrawDownText(context, shape, str, x, y);
 	
-	if((shape.forma != 5) && (EsPlantilla()) && (IsInmySelById(shape.id, shape.castellId)))
-	{
-		context.fillStyle = "red";
-		str = GetSelPosById(shape.id, shape.castellId);
-		DrawDownText2(context, shape, str, 8, 6, 12);
-	}
+	if ((shape.inscrit == 1) && (!isDownloading)) //Si esta apuntat pero no ha arribat
+	{//Pintem una linia sota del nom
+		context.beginPath();
+		context.moveTo(14,shape.h-3);
+		context.lineTo(shape.w-14,shape.h-3);
+		context.closePath();	
+		context.stroke();
+	}	
 	
-	if((shape.forma != 5) && (EsPlantilla()) && (shape.linkat > 0))
-	{
-		context.fillStyle = GetColorTextById(shape.posicio, shape.camisa);
-		str = shape.linkat;
-		DrawDownText2(context, shape, str, shape.w-10, shape.h-6, 10);
-	}
-	
-	if((shape.forma != 5) && (EsPlantilla()) && (shape.seguent > 0))
-	{
-		context.fillStyle = GetColorTextById(shape.posicio, shape.camisa);
-		str = shape.seguent;
-		DrawDownText2(context, shape, str, 8, shape.h-6, 10);
+	if ((shape.forma != 5) && (EsPlantilla()))
+	{/* Numeros petits en les Plantilles */
+		if (IsInmySelById(shape.id, shape.castellId))
+		{
+			context.fillStyle = "red";
+			str = GetSelPosById(shape.id, shape.castellId);
+			DrawDownText2(context, shape, str, 8, 6, 12);
+		}
+
+		if (shape.linkat > 0)
+		{
+			context.fillStyle = GetColorTextById(shape.posicio, shape.camisa);
+			str = shape.linkat;
+			DrawDownText2(context, shape, str, shape.w-10, shape.h-6, 10);
+		}
+
+		if (shape.seguent > 0)
+		{
+			context.fillStyle = GetColorTextById(shape.posicio, shape.camisa);
+			str = shape.seguent;
+			DrawDownText2(context, shape, str, 8, shape.h-6, 10);
+		}
 	}
 }
 

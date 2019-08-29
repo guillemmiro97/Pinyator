@@ -463,6 +463,7 @@ function ResetmySel()
 			mySel[i].castellerid = 0;
 			mySel[i].malnom="";
 			mySel[i].text="";
+			mySel[i].inscrit=0;
 			mySel[i].altura=0;
 			mySel[i].forca=0;
 			mySel[i].peu=1;
@@ -569,7 +570,7 @@ function ResetCasteller()
 	
 	casteller.id = 0;
 	casteller.malnom = "";
-	casteller.inscrit = false;
+	casteller.inscrit = 0;
 	casteller.altura = 0;
 	casteller.forca = 0;
 	casteller.lesionat = 0;
@@ -609,8 +610,10 @@ function PintaCastellerLlista(id, inscrit)
 			item.classList.remove("castellerSeleccionat");
 			item.style.backgroundColor = "#FFF";
 
-			if (inscrit)
+			if (inscrit>0)
+			{
 				item.classList.remove("castellerNoInscrit");
+			}
 			else
 			{
 				item.classList.add("castellerNoInscrit");
@@ -618,10 +621,14 @@ function PintaCastellerLlista(id, inscrit)
 			}
 			
 			if (IsCastellerAfegit(id, 0))
+			{
 				item.classList.remove("active");
+			}
 			else
+			{
 				item.classList.add("active");
 			}
+		}
 	}
 }
 

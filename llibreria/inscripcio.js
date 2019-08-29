@@ -111,24 +111,20 @@ function PrimerSave(event_id, casteller_id)
 
 function Vinc(event_id, casteller_id) 
 {	
-    if(event_id > 0)
-	{			
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = function() 
-		{
-			document.getElementById("txtErrors").innerHTML = xmlhttp.responseText;
-			if (this.readyState == 4 && this.status == 200) 
-			{				
-				document.getElementById(casteller_id).innerHTML = "Vinc";
-				document.getElementById(casteller_id).style.backgroundColor = "#33cc33";
-			}
-		};	
-		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&s=" + 1, true);
-		xmlhttp.send();
-	}
+	ModificaEstatInscripcio(event_id, casteller_id, "Vinc", "#33cc33", 1);
 }
 
 function NoVinc(event_id, casteller_id) 
+{	
+	ModificaEstatInscripcio(event_id, casteller_id, "No vinc", "#ff1a1a", 0);
+}
+
+function Aqui(event_id, casteller_id) 
+{	
+    ModificaEstatInscripcio(event_id, casteller_id, "Aqui", "#B0E0E6", 2);
+}
+
+function ModificaEstatInscripcio(event_id, casteller_id, str, color, estat) 
 {	
     if(event_id > 0)
 	{			
@@ -138,11 +134,11 @@ function NoVinc(event_id, casteller_id)
 			document.getElementById("txtErrors").innerHTML = xmlhttp.responseText;
 			if (this.readyState == 4 && this.status == 200) 
 			{				
-				document.getElementById(casteller_id).innerHTML = "No vinc";
-				document.getElementById(casteller_id).style.backgroundColor = "#ff1a1a";
+				document.getElementById(casteller_id).innerHTML = str;
+				document.getElementById(casteller_id).style.backgroundColor = color;
 			}
 		};	
-		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&s=" + 0, true);
+		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&s=" + estat, true);
 		xmlhttp.send();
 	}
 }

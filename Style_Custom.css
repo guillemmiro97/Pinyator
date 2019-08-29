@@ -406,6 +406,10 @@ div.castellerSeleccionat{
 	background-color: #81F781;
 }
 
+font.Vinc{
+	text-decoration: underline;
+}
+
 /**************************** SWITCH ****************************/
 
 .switch {

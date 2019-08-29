@@ -3,6 +3,7 @@
 $NoVincColor = "#ff1a1a";
 $VincColor = "#33cc33";
 $NoVistColor = "#FFFF00";
+$AquiColor = "#B0E0E6";
 
 if ($public)
 {
@@ -49,7 +50,7 @@ if (mysqli_num_rows($result) > 0)
     <th class="llistes">MALNOM</th>
 	<th class="llistes">CO.</th>
     <th class="llistes">Estat</th>	
-	<?php if ($esEditable == 1) echo "<th class='llistes'>Vinc</th><th class='llistes'>NO Vinc</th><th class='llistes'>Clear</th>";?>
+	<?php if ($esEditable == 1) echo "<th class='llistes'>Vinc</th><th class='llistes'>NO Vinc</th><th class='llistes'>Aquí</th><th class='llistes'>Clear</th>";?>
   </tr>
 <?php
 
@@ -61,7 +62,7 @@ IFNULL(I.ACOMPANYANTS,0) AS ACOMPANYANTS
 FROM CASTELLER AS C
 LEFT JOIN EVENT AS E ON E.EVENT_ID=".$id."
 LEFT JOIN INSCRITS AS I ON C.CASTELLER_ID=I.CASTELLER_ID AND I.EVENT_ID=E.EVENT_ID
-WHERE (C.ESTAT = 1 OR I.ESTAT = 1)
+WHERE (C.ESTAT = 1 OR I.ESTAT > 0)
 ORDER BY ".$ordenacio;
 
 $result = mysqli_query($conn, $sql);
@@ -90,6 +91,11 @@ if (mysqli_num_rows($result) > 0)
 			$Estat = "Vinc";
 			$color = "style='background-color:".$VincColor.";'";
 		}
+		elseif ($a == 2)
+		{
+			$Estat = "Aqui";
+			$color = "style='background-color:".$AquiColor.";'";
+		}
 		elseif ($a == -1)
 		{
 			$Estat = "????";
@@ -112,6 +118,7 @@ if (mysqli_num_rows($result) > 0)
 		{	
 			echo "<td class='llistes'><button class='boto' style='background-color:".$VincColor."' onClick='Vinc(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbsp+&nbsp</button></td>";
 			echo "<td class='llistes'><button class='boto' style='background-color:".$NoVincColor."' onClick='NoVinc(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbsp-&nbsp</button></td>";
+			echo "<td class='llistes'><button class='boto' style='background-color:".$AquiColor."' onClick='Aqui(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbspA&nbsp</button></td>";
 			echo "<td class='llistes'><button class='boto' style='background-color:".$NoVistColor.";color:black' onClick='Esborra(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbsp?&nbsp</button></td>";
 		}
 		echo "</tr>";
