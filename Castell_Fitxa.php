@@ -3,8 +3,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pinyator - Castell</title>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Head.php";?>
-  <script src="llibreria/castell.js?1.1"></script>
-  <script src="llibreria/disseny.js?1.1"></script>  
+  <script src="llibreria/castell.js?1.2"></script>
+  <script src="llibreria/disseny.js?1.2"></script>  
 </head>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
 <body>
