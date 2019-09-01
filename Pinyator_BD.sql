@@ -1,23 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.8.3
--- https://www.phpmyadmin.net/
---
--- Servidor: localhost:3306
--- Tiempo de generación: 11-04-2019 a las 21:34:51
--- Versión del servidor: 5.6.41-log
--- Versión de PHP: 7.2.7
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Base de datos: `marrecs_Pinyator`
 --
@@ -28,8 +8,8 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `CASTELL`
 --
 
-CREATE TABLE `CASTELL` (
-  `Castell_ID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `CASTELL` (
+  `Castell_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` varchar(50) NOT NULL,
   `Event_ID` int(11) NOT NULL,
   `Data_Creacio` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -40,8 +20,9 @@ CREATE TABLE `CASTELL` (
   `Pestanya_3` varchar(50) NOT NULL,
   `Pestanya_4` varchar(50) NOT NULL,
   `ORDRE` int(11) DEFAULT NULL,
-  `PUBLIC` bit(1) DEFAULT b'0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `PUBLIC` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`Castell_ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -49,8 +30,8 @@ CREATE TABLE `CASTELL` (
 -- Estructura de tabla para la tabla `CASTELLER`
 --
 
-CREATE TABLE `CASTELLER` (
-  `Casteller_ID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `CASTELLER` (
+  `Casteller_ID` int(11) NOT NULL AUTO_INCREMENT,
   `MalNom` varchar(50) NOT NULL,
   `Altura` int(11) NOT NULL,
   `Forca` int(11) NOT NULL,
@@ -64,8 +45,10 @@ CREATE TABLE `CASTELLER` (
   `Lesionat` bit(1) NOT NULL DEFAULT b'0',
   `Portar_Peu` bit(1) NOT NULL DEFAULT b'1',
   `FAMILIA2_ID` int(11) DEFAULT NULL,
-  `POSICIO_TRONC_ID` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `POSICIO_TRONC_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Casteller_ID`),
+  UNIQUE KEY `MalNom` (`MalNom`)
+);
 
 -- --------------------------------------------------------
 
@@ -73,7 +56,7 @@ CREATE TABLE `CASTELLER` (
 -- Estructura Stand-in para la vista `CASTELLER_INSCRITS`
 -- (Véase abajo para la vista actual)
 --
-CREATE TABLE `CASTELLER_INSCRITS` (
+CREATE TABLE IF NOT EXISTS `CASTELLER_INSCRITS` (
 `EVENT_ID` int(11)
 ,`ESTAT` int(11)
 ,`CODI` varchar(50)
@@ -87,7 +70,7 @@ CREATE TABLE `CASTELLER_INSCRITS` (
 -- Estructura de tabla para la tabla `CASTELL_POSICIO`
 --
 
-CREATE TABLE `CASTELL_POSICIO` (
+CREATE TABLE IF NOT EXISTS `CASTELL_POSICIO` (
   `CASELLA_ID` int(11) NOT NULL,
   `Castell_ID` int(11) NOT NULL,
   `Casteller_ID` int(11) NOT NULL,
@@ -102,8 +85,10 @@ CREATE TABLE `CASTELL_POSICIO` (
   `text` varchar(250) NOT NULL,
   `Pestanya` int(11) NOT NULL,
   `Linkat` int(11) DEFAULT NULL,
-  `Seguent` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Seguent` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CASELLA_ID`,`Castell_ID`),
+  KEY `CASTELL_POSICIO__CASTELL_ID` (`Castell_ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -111,10 +96,12 @@ CREATE TABLE `CASTELL_POSICIO` (
 -- Estructura de tabla para la tabla `CONFIGURACIO`
 --
 
-CREATE TABLE `CONFIGURACIO` (
+CREATE TABLE IF NOT EXISTS `CONFIGURACIO` (
   `TEMPORADA` varchar(100) NOT NULL,
-  `RESOLUCIOPANTALLA` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `RESOLUCIOPANTALLA` int(11) NOT NULL,
+  `PARTICIPANTS` int(11) NOT NULL DEFAULT '0',
+  `FITES` int(11) NOT NULL DEFAULT '0'
+);
 
 --
 -- Volcado de datos para la tabla `CONFIGURACIO`
@@ -129,8 +116,8 @@ INSERT INTO `CONFIGURACIO` (`TEMPORADA`, `RESOLUCIOPANTALLA`) VALUES
 -- Estructura de tabla para la tabla `EVENT`
 --
 
-CREATE TABLE `EVENT` (
-  `Event_ID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `EVENT` (
+  `Event_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` varchar(100) NOT NULL,
   `Data` datetime NOT NULL,
   `Tipus` int(11) NOT NULL,
@@ -139,8 +126,9 @@ CREATE TABLE `EVENT` (
   `ESPLANTILLA` bit(1) DEFAULT NULL,
   `CONTADOR` bit(1) DEFAULT b'0',
   `HASHTAG` varchar(100) DEFAULT NULL,
-  `TEMPORADA` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `TEMPORADA` varchar(100) NOT NULL,
+  PRIMARY KEY (`Event_ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -148,13 +136,33 @@ CREATE TABLE `EVENT` (
 -- Estructura de tabla para la tabla `EVENT_COMENTARIS`
 --
 
-CREATE TABLE `EVENT_COMENTARIS` (
-  `ID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `EVENT_COMENTARIS` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `event_id` int(11) NOT NULL,
   `usuari` varchar(100) NOT NULL,
   `text` text NOT NULL,
-  `data` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data` datetime NOT NULL,
+  PRIMARY KEY (`ID`)
+);
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `fites`
+--
+
+CREATE TABLE IF NOT EXISTS `fites` (
+  `FITES_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NOM` varchar(100) NOT NULL,
+  `PERCENTATGE` int(11) NOT NULL DEFAULT '0',
+  `ESTAT` int(11) NOT NULL DEFAULT '0',
+  `TEMPORADA` varchar(100) NOT NULL,
+  `ORDRE` int(11) NOT NULL DEFAULT '0',
+  `DATA_COMPLETAT` date DEFAULT NULL,
+  `RECOMPENSA` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`FITES_ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -162,12 +170,13 @@ CREATE TABLE `EVENT_COMENTARIS` (
 -- Estructura de tabla para la tabla `INSCRITS`
 --
 
-CREATE TABLE `INSCRITS` (
+CREATE TABLE IF NOT EXISTS `INSCRITS` (
   `Event_ID` int(11) NOT NULL,
   `Casteller_ID` int(11) NOT NULL,
   `Estat` int(11) NOT NULL,
-  `ACOMPANYANTS` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `ACOMPANYANTS` int(11) NOT NULL,
+  PRIMARY KEY (`Event_ID`,`Casteller_ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -175,8 +184,8 @@ CREATE TABLE `INSCRITS` (
 -- Estructura de tabla para la tabla `PLANTILLA`
 --
 
-CREATE TABLE `PLANTILLA` (
-  `Plantilla_ID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `PLANTILLA` (
+  `Plantilla_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` varchar(20) NOT NULL,
   `Estat` int(11) NOT NULL,
   `W` int(11) NOT NULL DEFAULT '1000',
@@ -184,8 +193,9 @@ CREATE TABLE `PLANTILLA` (
   `Pestanya_1` varchar(50) NOT NULL,
   `Pestanya_2` varchar(50) NOT NULL,
   `Pestanya_3` varchar(50) NOT NULL,
-  `Pestanya_4` varchar(50) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Pestanya_4` varchar(50) NOT NULL,
+  PRIMARY KEY (`Plantilla_ID`)
+);
 
 --
 -- Volcado de datos para la tabla `PLANTILLA`
@@ -257,7 +267,7 @@ INSERT INTO `PLANTILLA` (`Plantilla_ID`, `Nom`, `Estat`, `W`, `H`, `Pestanya_1`,
 -- Estructura de tabla para la tabla `PLANTILLA_POSICIO`
 --
 
-CREATE TABLE `PLANTILLA_POSICIO` (
+CREATE TABLE IF NOT EXISTS `PLANTILLA_POSICIO` (
   `CASELLA_ID` int(11) NOT NULL,
   `Plantilla_ID` int(11) NOT NULL,
   `Posicio_ID` int(11) NOT NULL,
@@ -271,8 +281,9 @@ CREATE TABLE `PLANTILLA_POSICIO` (
   `text` varchar(250) NOT NULL,
   `Pestanya` int(11) NOT NULL,
   `Linkat` int(11) DEFAULT NULL,
-  `Seguent` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Seguent` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CASELLA_ID`,`Plantilla_ID`)
+);
 
 --
 -- Volcado de datos para la tabla `PLANTILLA_POSICIO`
@@ -9017,8 +9028,8 @@ INSERT INTO `PLANTILLA_POSICIO` (`CASELLA_ID`, `Plantilla_ID`, `Posicio_ID`, `Co
 -- Estructura de tabla para la tabla `POSICIO`
 --
 
-CREATE TABLE `POSICIO` (
-  `Posicio_ID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `POSICIO` (
+  `Posicio_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` varchar(20) NOT NULL,
   `EsNucli` tinyint(1) NOT NULL,
   `EsCordo` tinyint(1) NOT NULL,
@@ -9027,8 +9038,9 @@ CREATE TABLE `POSICIO` (
   `COLORTEXT` char(7) NOT NULL,
   `ESFOLRE` bit(1) DEFAULT NULL,
   `ESCANALLA` tinyint(1) DEFAULT NULL,
-  `COLORCAMISA` char(7) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `COLORCAMISA` char(7) NOT NULL,
+  PRIMARY KEY (`Posicio_ID`)
+);
 
 --
 -- Volcado de datos para la tabla `POSICIO`
@@ -9065,8 +9077,8 @@ INSERT INTO `POSICIO` (`Posicio_ID`, `Nom`, `EsNucli`, `EsCordo`, `EsTronc`, `CO
 -- Estructura de tabla para la tabla `USUARIS`
 --
 
-CREATE TABLE `USUARIS` (
-  `idusuari` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `USUARIS` (
+  `idusuari` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(20) NOT NULL,
   `password` varchar(10) NOT NULL,
   `Seguretat` int(11) NOT NULL DEFAULT '0',
@@ -9075,8 +9087,9 @@ CREATE TABLE `USUARIS` (
   `SEGCASTELLER` int(11) DEFAULT NULL,
   `SEGBOSS` int(11) DEFAULT NULL,
   `SEGCASTELL` int(11) DEFAULT NULL,
-  `SEGEVENT` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `SEGEVENT` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idusuari`)
+);
 
 --
 -- Volcado de datos para la tabla `USUARIS`
@@ -9092,121 +9105,4 @@ INSERT INTO `USUARIS` (`idusuari`, `nom`, `password`, `Seguretat`, `CARREC`, `SE
 --
 DROP TABLE IF EXISTS `CASTELLER_INSCRITS`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `CASTELLER_INSCRITS`  AS  select `i`.`Event_ID` AS `EVENT_ID`,`i`.`Estat` AS `ESTAT`,`c`.`Codi` AS `CODI`,`i`.`Casteller_ID` AS `CASTELLER_ID`,`i`.`ACOMPANYANTS` AS `ACOMPANYANTS` from (`INSCRITS` `i` join `CASTELLER` `c` on((`c`.`Casteller_ID` = `i`.`Casteller_ID`))) ;
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `CASTELL`
---
-ALTER TABLE `CASTELL`
-  ADD PRIMARY KEY (`Castell_ID`);
-
---
--- Indices de la tabla `CASTELLER`
---
-ALTER TABLE `CASTELLER`
-  ADD PRIMARY KEY (`Casteller_ID`),
-  ADD UNIQUE KEY `MalNom` (`MalNom`);
-
---
--- Indices de la tabla `CASTELL_POSICIO`
---
-ALTER TABLE `CASTELL_POSICIO`
-  ADD PRIMARY KEY (`CASELLA_ID`,`Castell_ID`),
-  ADD KEY `CASTELL_POSICIO__CASTELL_ID` (`Castell_ID`);
-
---
--- Indices de la tabla `EVENT`
---
-ALTER TABLE `EVENT`
-  ADD PRIMARY KEY (`Event_ID`);
-
---
--- Indices de la tabla `EVENT_COMENTARIS`
---
-ALTER TABLE `EVENT_COMENTARIS`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indices de la tabla `INSCRITS`
---
-ALTER TABLE `INSCRITS`
-  ADD PRIMARY KEY (`Event_ID`,`Casteller_ID`);
-
---
--- Indices de la tabla `PLANTILLA`
---
-ALTER TABLE `PLANTILLA`
-  ADD PRIMARY KEY (`Plantilla_ID`);
-
---
--- Indices de la tabla `PLANTILLA_POSICIO`
---
-ALTER TABLE `PLANTILLA_POSICIO`
-  ADD PRIMARY KEY (`CASELLA_ID`,`Plantilla_ID`);
-
---
--- Indices de la tabla `POSICIO`
---
-ALTER TABLE `POSICIO`
-  ADD PRIMARY KEY (`Posicio_ID`);
-
---
--- Indices de la tabla `USUARIS`
---
-ALTER TABLE `USUARIS`
-  ADD PRIMARY KEY (`idusuari`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `CASTELL`
---
-ALTER TABLE `CASTELL`
-  MODIFY `Castell_ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `CASTELLER`
---
-ALTER TABLE `CASTELLER`
-  MODIFY `Casteller_ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `EVENT`
---
-ALTER TABLE `EVENT`
-  MODIFY `Event_ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `EVENT_COMENTARIS`
---
-ALTER TABLE `EVENT_COMENTARIS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `PLANTILLA`
---
-ALTER TABLE `PLANTILLA`
-  MODIFY `Plantilla_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
-
---
--- AUTO_INCREMENT de la tabla `POSICIO`
---
-ALTER TABLE `POSICIO`
-  MODIFY `Posicio_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
--- AUTO_INCREMENT de la tabla `USUARIS`
---
-ALTER TABLE `USUARIS`
-  MODIFY `idusuari` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+CREATE VIEW `CASTELLER_INSCRITS`  AS  select `i`.`Event_ID` AS `EVENT_ID`,`i`.`Estat` AS `ESTAT`,`c`.`Codi` AS `CODI`,`i`.`Casteller_ID` AS `CASTELLER_ID`,`i`.`ACOMPANYANTS` AS `ACOMPANYANTS` from (`INSCRITS` `i` join `CASTELLER` `c` on((`c`.`Casteller_ID` = `i`.`Casteller_ID`))) ;
