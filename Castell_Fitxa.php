@@ -14,7 +14,7 @@ $id = intval($_GET['id']);
 $eventid = -1;
 $autogenerat = false;
 $troncs = false;
-$arxivats = 0;
+$dataArxivat = "";
 $rating = 0;
 
 if (!empty($_GET["a"]))
@@ -142,19 +142,22 @@ else if (mysqli_error($conn) != "")
 			}
 		}
 		
-		$sql="SELECT COUNT(*) AS ARX
+		$sql="SELECT ERR.DATA
 			FROM EVENT AS ERR
-			INNER JOIN EVENT AS E ON E.EVENT_ID=".$eventActuacioid." AND ERR.TEMPORADA=E.TEMPORADA
+			INNER JOIN EVENT AS E ON E.EVENT_ID=".$eventid." AND ERR.TEMPORADA=E.TEMPORADA
 			WHERE ERR.TIPUS=0
-			AND ERR.ESTAT=2";
+			AND ERR.ESTAT=2
+			GROUP BY ERR.DATA
+			ORDER BY ERR.DATA DESC
+			LIMIT 10";
 			
 		$result = mysqli_query($conn, $sql);
 
 		if (mysqli_num_rows($result) > 0)
 		{
-			while($row = mysqli_fetch_assoc($result)) 
+			while($row = mysqli_fetch_assoc($result))
 			{
-				$arxivats = $row["ARX"];
+				$dataArxivat = $row["DATA"];
 			}
 		}
 		
@@ -167,13 +170,14 @@ else if (mysqli_error($conn) != "")
 		$sql="SELECT C.CASTELLER_ID, MALNOM, P.NOM, P.POSICIO_ID, IFNULL(I.ESTAT,0) AS ESTAT,
 		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA, PORTAR_PEU, LESIONAT,
 		IFNULL(IA.ESTAT,0) AS CAMISA,
-		(SELECT SUM(IFNULL(IR.ESTAT,0)) AS RAT
+		(SELECT SUM(IF(IR.ESTAT>0,1,0)) AS RAT
 			FROM EVENT AS ERR 
 			LEFT JOIN INSCRITS AS IR ON IR.EVENT_ID=ERR.EVENT_ID
 			WHERE ERR.TEMPORADA=E.TEMPORADA
 			AND ERR.TIPUS=0
 			AND ERR.ESTAT=2
-			AND IR.CASTELLER_ID = C.CASTELLER_ID) AS RATING
+			AND IR.CASTELLER_ID = C.CASTELLER_ID
+			AND ERR.DATA>='".$dataArxivat."') AS RATING
 		FROM CASTELLER AS C 
 		INNER JOIN POSICIO AS P ON P.POSICIO_ID=".$pinyaTronc."
 		LEFT JOIN CASTELL AS CT ON CT.CASTELL_ID=".$id."
@@ -229,16 +233,16 @@ else if (mysqli_error($conn) != "")
 					$camisa="<img src='icons/camisa.png'>";
 				}
 				
-				if($arxivats > 0)
+				if($row["RATING"] > 0)
 				{
-					$rating = (($row["RATING"]/$arxivats)*100);
+					$rating = $row["RATING"];
 				}				
 				
 				$cstl="<font class='".$classFont."' id='lbl".$row["CASTELLER_ID"]."' title='".$row["MALNOM"]." - ".$row["ALTURA"]."'>".$row["MALNOM"]." - ".$row["ALTURA"]."</font>";
 				$info = "<a href='Casteller_Fitxa.php?id=".$row["CASTELLER_ID"]."' target='_blank'><img src='icons/info.png'></a>";
 				$text = $info." ".$cstl." ".$portarpeu.$lesionat.$camisa;
 				
-				$text .= "<div><progress value='".$rating."' max='100' style='height:6px;' title='".round($rating)."'>
+				$text .= "<div><progress value='".$rating."' max='10' style='height:6px;' title='".round($rating)."'>
 						</progress></div>";						
 				
 				$onClick = " onClick='SetCasteller(this,".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].")' ";
