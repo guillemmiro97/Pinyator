@@ -585,7 +585,7 @@ function SetCasteller(elem, altura, forca, peu, lesionat, camisa)
 	if(casteller.id > 0)
 	{
 		casteller.malnom = elem.title;
-		casteller.inscrit = IsCastellerInscrit(casteller.id);
+		casteller.inscrit = EstatCasteller(casteller.id);
 		casteller.altura = altura;
 		casteller.forca = forca;
 		casteller.peu = peu;
@@ -608,11 +608,16 @@ function PintaCastellerLlista(id, inscrit)
 		if (item != null)
 		{		
 			item.classList.remove("castellerSeleccionat");
+			item.classList.remove("castellerAqui");
 			item.style.backgroundColor = "#FFF";
 
 			if (inscrit>0)
 			{
 				item.classList.remove("castellerNoInscrit");
+				if (inscrit == 2)
+				{
+					item.classList.add("castellerAqui");
+				}
 			}
 			else
 			{
@@ -634,12 +639,28 @@ function PintaCastellerLlista(id, inscrit)
 
 function IsCastellerInscrit(id)
 {
+	return EstatCasteller(id) > 0;
+}
+
+function EstatCasteller(id)
+{
 	var inscrit=0;
 	if(id > 0)
 	{
 		var item = document.getElementById(id);
 
-		inscrit = !item.classList.contains("castellerNoInscrit");
+		if (item.classList.contains("castellerNoInscrit"))
+		{
+			inscrit = 0;
+		}
+		else if (item.classList.contains("castellerAqui"))
+		{
+			inscrit = 2;
+		}
+		else
+		{
+			inscrit = 1;
+		}
 	}	
 	return inscrit;
 }
