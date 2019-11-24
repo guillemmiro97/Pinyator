@@ -105,10 +105,12 @@ array_push($castellers, $objTotal);
 $casteller = "";
 
 $sql="SELECT E.EVENT_ID,
-CT.MALNOM AS CASTELLER, CT.ESTAT
+CT.MALNOM AS CASTELLER,
+CASE WHEN (P.ESNUCLI=1 OR P.ESTRONC=1 OR P.ESCORDO=1) THEN 1 ELSE 0 END AS ESTAT 
 FROM EVENT E
 JOIN INSCRITS AS I ON I.EVENT_ID = E.EVENT_ID
 JOIN CASTELLER CT ON CT.CASTELLER_ID = I.CASTELLER_ID
+LEFT JOIN POSICIO AS P ON P.POSICIO_ID=CT.POSICIO_PINYA_ID
 WHERE (E.EVENT_PARE_ID IS NULL OR E.EVENT_PARE_ID=0)
 AND E.TIPUS = 0
 AND I.ESTAT > 0
@@ -135,7 +137,9 @@ if (mysqli_num_rows($result) > 0)
 		$objCasteller->Dies[$row["EVENT_ID"]] = 1;
 		$objCasteller->Total = $objCasteller->Total + 1;
 		if($objCasteller->Estat==1)
+		{
 			$objTotal->DiesActius[$row["EVENT_ID"]] = $objTotal->DiesActius[$row["EVENT_ID"]] + 1;
+		}
 		$objTotal->Dies[$row["EVENT_ID"]] = $objTotal->Dies[$row["EVENT_ID"]] + 1;
 	}	
 }
@@ -196,16 +200,23 @@ foreach($castellers as $cas)
 		{
 			$style = "style='background-color:red;color:red'";
 		}
+		
 		if($esTotal)
 		{
 			$diaActiu=$cas->DiesActius[$event];
 			if($dia != $diaActiu)
-				echo "<td title='".$diaActiu." actius actuals de ".$dia." en total'>".$dia."(".$diaActiu.")</td>";
+			{
+				echo "<td title='".$diaActiu." actius actuals de ".$dia." en total'>(".$diaActiu.")".$dia."</td>";
+			}
 			else
+			{
 				echo "<td>".$dia."</td>";
+			}
 		}
 		else
+		{
 			echo "<td ".$style.">".$dia."</td>";
+		}
 	}
 	
 	echo "</tr>";
