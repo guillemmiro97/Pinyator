@@ -238,6 +238,7 @@ else if (mysqli_error($conn) != "")
 					$camisa="<img src='icons/camisa.png'>";
 				}
 				
+				$rating = 0;
 				if($row["RATING"] > 0)
 				{
 					$rating = $row["RATING"];
