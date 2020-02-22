@@ -26,6 +26,7 @@ function Box()
 	this.seguent=0;
 	this.linkat=0;
 	this.camisa=false;
+	this.novell=false;
 }
 
 function Casteller() 
@@ -38,10 +39,11 @@ function Casteller()
   this.peu=1;
   this.lesionat=0;
   this.camisa=false;
+  this.novell=false;
 }
 
 //Initialize a new Box, add it, and invalidate the canvas
-function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, forma, text, linkat, seguent, castellid, castellerid, malnom, inscrit, altura, forca, peu, lesionat, camisa)
+function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, forma, text, linkat, seguent, castellid, castellerid, malnom, inscrit, altura, forca, peu, lesionat, camisa, novell)
 {
 	var rect = new Box();
 	rect.x = x;
@@ -69,6 +71,7 @@ function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, form
 		rect.peu=peu;
 		rect.lesionat=lesionat;
 		rect.camisa=camisa;
+		rect.novell=novell;
 		PintaCastellerLlista(castellerid, rect.inscrit);
 	}
 	boxes.push(rect);
@@ -444,13 +447,24 @@ function DrawCustomShape(context, shape, filled)
 	if((shape.peu==0) && (!isDownloading))
 	{
 		var img=document.getElementById("peu"+shape.castellerid);
+		if (shape.novell==1)
+			img=document.getElementById("peu_novell");
 		if (img != null)		
 			context.drawImage(img,0,0);
 	}
 	
 	if((shape.lesionat==1) && (!isDownloading))
-	{
+	{		
 		var img=document.getElementById("lesionat"+shape.castellerid);
+		if (shape.novell==1)
+			img=document.getElementById("lesionat_novell");
+		if (img != null)
+			context.drawImage(img,shape.w-20,0);
+	}
+	
+	if((shape.novell==1) && (shape.lesionat==0) && (!isDownloading))
+	{
+		var img=document.getElementById("novell");
 		if (img != null)
 			context.drawImage(img,shape.w-20,0);
 	}

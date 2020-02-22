@@ -432,6 +432,10 @@ font.Vinc{
   -webkit-transition: .4s;
   transition: .4s;
 }
+.slider.slidergreen
+{
+
+}
 
 .slider:before {
   position: absolute;
@@ -447,6 +451,9 @@ font.Vinc{
 
 input:checked + .slider {
   background-color: #4069B2;
+}
+input:checked + .slidergreen {
+  background-color: #40FF00;
 }
 
 input:focus + .slider {

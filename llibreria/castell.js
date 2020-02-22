@@ -203,6 +203,7 @@ function myDown(e)
 					casteller.peu=mySel[0].peu;
 					casteller.lesionat=mySel[0].lesionat;
 					casteller.camisa=mySel[0].camisa;
+					casteller.novell=mySel[0].novell;
 					
 					ShowPopupCasella();
 				}
@@ -254,6 +255,7 @@ function CopiaCastellermySel(mySelect, objCasteller)
 	mySelect.peu=objCasteller.peu;
 	mySelect.lesionat=objCasteller.lesionat;
 	mySelect.camisa=objCasteller.camisa;
+	mySelect.novell=objCasteller.novell;
 }
 
 function AfegeixCasellesLinkades(id, objCasteller, castellId)
@@ -308,6 +310,7 @@ function MouCastellers(casella, objCasteller)
 			casteller.peu=casella.peu;
 			casteller.lesionat=casella.lesionat;
 			casteller.camisa=casella.camisa;
+			casteller.novell=casella.novell;
 			
 			var mySelect = boxes[i];
 			mySel.push(mySelect);
@@ -469,6 +472,7 @@ function ResetmySel()
 			mySel[i].peu=1;
 			mySel[i].lesionat=0;
 			mySel[i].camisa=false;
+			mySel[i].novell=false;
 		}
 	}
 }
@@ -576,9 +580,10 @@ function ResetCasteller()
 	casteller.lesionat = 0;
 	casteller.peu = 1;
 	casteller.camisa = false;
+	casteller.novell = false;
 }
 
-function SetCasteller(elem, altura, forca, peu, lesionat, camisa)
+function SetCasteller(elem, altura, forca, peu, lesionat, camisa, novell)
 {
 	ResetCasteller();
 	casteller.id = elem.id;	
@@ -591,6 +596,7 @@ function SetCasteller(elem, altura, forca, peu, lesionat, camisa)
 		casteller.peu = peu;
 		casteller.lesionat = lesionat;
 		casteller.camisa = camisa;
+		casteller.novell = novell;
 		elem.classList.add("castellerSeleccionat");
 		elem.style.backgroundColor = "#81F781";
 		MarcaCastellerPinya();

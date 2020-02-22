@@ -72,7 +72,9 @@ else if (mysqli_error($conn) != "")
 	echo "<br>Error: " . $sql . "<br>" . mysqli_error($conn);
 }
 
-
+echo "<img id='novell' src='icons/novell.png' style='display:none;'>";
+echo "<img id='peu_novell' src='icons/peu_novell.png' style='display:none;'>";
+echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:none;'>";
 ?>
 	<div  class="sidenav" id="navlateral">
 		<h4><?php echo $titol ?></h4>
@@ -169,7 +171,7 @@ else if (mysqli_error($conn) != "")
 		
 		$sql="SELECT C.CASTELLER_ID, MALNOM, P.NOM, P.POSICIO_ID, IFNULL(I.ESTAT,0) AS ESTAT,
 		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA, PORTAR_PEU, LESIONAT,
-		IFNULL(IA.ESTAT,0) AS CAMISA,
+		IFNULL(IA.ESTAT,0) AS CAMISA, NOVELL,
 		(SELECT SUM(IF(IR.ESTAT>0,1,0)) AS RAT
 			FROM EVENT AS ERR 
 			LEFT JOIN INSCRITS AS IR ON IR.EVENT_ID=ERR.EVENT_ID
@@ -224,18 +226,36 @@ else if (mysqli_error($conn) != "")
 				if($row["LESIONAT"]==1)
 				{
 					$lesionat="<img id='lesionat".$row["CASTELLER_ID"]."' src='icons/lesionat.png'>";
+					if($row["NOVELL"]==1)
+					{
+						$lesionat="<img id='lesionat".$row["CASTELLER_ID"]."' src='icons/lesionat_novell.png'>";
+					}
 				}
 				
 				$portarpeu = "";
 				if($row["PORTAR_PEU"]==0)
 				{
 					$portarpeu="<img id='peu".$row["CASTELLER_ID"]."' src='icons/peu_vermell.png'>";
+					if($row["NOVELL"]==1)
+					{
+						$portarpeu="<img id='peu".$row["CASTELLER_ID"]."' src='icons/peu_novell.png'>";
+					}
+				}
+				
+				$infoIcon = "icons/info.png";
+				if($row["NOVELL"]==1)
+				{
+					$infoIcon="icons/info_novell.png";
 				}
 				
 				$camisa = "";
 				if($row["CAMISA"]==1)
 				{
 					$camisa="<img src='icons/camisa.png'>";
+					if($row["NOVELL"]==1)
+					{
+						$camisa="<img src='icons/camisa_novell.png'>";
+					}
 				}
 				
 				$rating = 0;
@@ -245,13 +265,13 @@ else if (mysqli_error($conn) != "")
 				}				
 				
 				$cstl="<font class='".$classFont."' id='lbl".$row["CASTELLER_ID"]."' title='".$row["MALNOM"]." - ".$row["ALTURA"]."'>".$row["MALNOM"]." - ".$row["ALTURA"]."</font>";
-				$info = "<a href='Casteller_Fitxa.php?id=".$row["CASTELLER_ID"]."' target='_blank'><img src='icons/info.png'></a>";
+				$info = "<a href='Casteller_Fitxa.php?id=".$row["CASTELLER_ID"]."' target='_blank'><img src='".$infoIcon."'></a>";
 				$text = $info." ".$cstl." ".$portarpeu.$lesionat.$camisa;
 				
 				$text .= "<div><progress value='".$rating."' max='10' style='height:6px;' title='".round($rating)."'>
 						</progress></div>";						
 				
-				$onClick = " onClick='SetCasteller(this,".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].")' ";
+				$onClick = " onClick='SetCasteller(this,".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].",".$row["NOVELL"].")' ";
 				
 				
 				echo "<div class='accordionItem ".$class."' id=".$row["CASTELLER_ID"]." title='".$row["MALNOM"]."' ".$onClick.$color.">".$text."</div>";
@@ -375,7 +395,8 @@ else if (mysqli_error($conn) != "")
 		CP.CASTELLER_ID, CP.TEXT, IFNULL(C.MALNOM, 0) AS MALNOM, IFNULL(I.ESTAT,0) AS ESTAT,
 		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA,
 		IFNULL(C.PORTAR_PEU, 1) AS PORTAR_PEU, IFNULL(C.LESIONAT, 0) AS LESIONAT,
-		ESTRONC, ESNUCLI, PESTANYA, IFNULL(LINKAT, 0) AS LINKAT, IFNULL(IA.ESTAT,0) AS CAMISA,
+		ESTRONC, ESNUCLI, PESTANYA, IFNULL(LINKAT, 0) AS LINKAT, 
+		IFNULL(IA.ESTAT,0) AS CAMISA, NOVELL,
 		(SELECT MAX(CORDO) 
 			FROM CASTELL_POSICIO AS CPR 
 			INNER JOIN POSICIO AS PR ON PR.POSICIO_ID=CPR.POSICIO_ID 
@@ -498,7 +519,8 @@ else if (mysqli_error($conn) != "")
 				
 				echo "addRect(".$x.",".$y.",".$w.",".$h.",".$row["CORDO"].",".$row["POSICIO_ID"].",0,
 				".$row["CASTELL_ID"].",".$row["CASELLA_ID"].",".$row["PESTANYA"].",".$forma.",'".$row["TEXT"]."',".$row["LINKAT"].",-1,".$castellId.",
-				".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].");\n";
+				".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",
+				".$row["LESIONAT"].",".$row["CAMISA"].",".$row["NOVELL"].");\n";
 				
 				$linkat = $row["LINKAT"];
 				
@@ -543,7 +565,7 @@ else if (mysqli_error($conn) != "")
 		CP.CASTELLER_ID,IFNULL(C.MALNOM, 0) AS MALNOM, IFNULL(I.ESTAT,0) AS ESTAT,
 		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA, PESTANYA,
 		IFNULL(C.PORTAR_PEU, 1) AS PORTAR_PEU, IFNULL(C.LESIONAT, 0) AS LESIONAT,
-		IFNULL(IA.ESTAT,0) AS CAMISA
+		IFNULL(IA.ESTAT,0) AS CAMISA, IFNULL(C.NOVELL,0) AS NOVELL
 		FROM CASTELL_POSICIO AS CP 
 		INNER JOIN CASTELL AS CT ON CT.CASTELL_ID=CP.CASTELL_ID
 		LEFT JOIN CASTELLER AS C ON C.CASTELLER_ID=CP.CASTELLER_ID 
@@ -564,7 +586,7 @@ else if (mysqli_error($conn) != "")
 			{
 				echo "addRect(".$row["X"].",".$row["Y"].",".$row["W"].",".$row["H"].",".$row["CORDO"].",".$row["POSICIO_ID"].",".$row["ANGLE"].",".$id.",".$row["CASELLA_ID"]."
 				,".$row["PESTANYA"].",".$row["FORMA"].",'".$row["TEXT"]."',".$row["LINKAT"].",".$row["SEGUENT"].",".$id.",".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["FORCA"]."
-				,".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].");\n";
+				,".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].",".$row["NOVELL"].");\n";
 			}
 			echo " CollapsaTot();\n";
 			echo "</script>";

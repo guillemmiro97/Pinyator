@@ -30,6 +30,7 @@
 	$lesionat = 0;
 	$portarpeu = 1;
 	$urlInscripcio = "";
+	$novell = 0;
 				
 	echo "<form method='post' action='Casteller_Desa.php'>";
 
@@ -37,7 +38,7 @@
 	{
 		$sql="SELECT CASTELLER_ID, MALNOM, NOM, COGNOM_1, COGNOM_2, 
 		POSICIO_PINYA_ID, POSICIO_TRONC_ID, CODI, FAMILIA_ID, 
-		ALTURA, FORCA, ESTAT, LESIONAT, PORTAR_PEU, FAMILIA2_ID
+		ALTURA, FORCA, ESTAT, LESIONAT, PORTAR_PEU, FAMILIA2_ID, NOVELL
 		FROM CASTELLER
 		WHERE CASTELLER_ID = ".$id."
 		ORDER BY MALNOM ";
@@ -63,6 +64,7 @@
 				$portarpeu = $row["PORTAR_PEU"];
 				$lesionat = $row["LESIONAT"];
 				$urlInscripcio = "src='Inscripcio.php?id=".$url."'";
+				$novell = $row["NOVELL"];
 			}
 		}
 		else if (mysqli_error($conn) != "")
@@ -91,7 +93,7 @@
 			<br><br>			
 			<table>
 				<tr>
-					<th>Lesionat</th><th>Portar peu</th>
+					<th>Lesionat</th><th>Portar peu</th><th>Novell/a</th>
 				</tr>	
 				<tr>
 					<td width=100px>
@@ -104,6 +106,12 @@
 						<label class="switch">texte
 							<input type="checkbox" name="portarpeu" value=1 <?php if ($portarpeu == 1) echo " checked";?>>
 							<span class="slider round"></span>
+						</label>
+					</td>
+					<td width=100px>
+						<label class="switch">texte
+							<input type="checkbox" name="novell" value=1 <?php if ($novell == 1) echo " checked";?>>
+							<span class="slider slidergreen round"></span>
 						</label>
 					</td>
 				</tr>
