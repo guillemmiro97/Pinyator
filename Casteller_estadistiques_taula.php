@@ -1,7 +1,23 @@
-
+<html>
+<?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
+<body>
 <?php
+
+if (!empty($_GET['id']))
+{	
+	$Casteller_id = intval($_GET['id']);
+}
+$temporada = "";
+if (!empty($_GET['t']))
+{	
+	$temporada = "AND E.TEMPORADA = '".strval($_GET['t'])."'";
+}
+
+include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
+
 if (!empty($Casteller_id))
 {
+	
 	$sql="SELECT COUNT(E.EVENT_ID) AS EVENTS, SUM(IF(I.ESTAT > 0, 1, 0)) AS INSCRITS,
 	E.TIPUS	
 	FROM EVENT AS E
@@ -9,6 +25,7 @@ if (!empty($Casteller_id))
 	WHERE 1=1
 	AND E.TIPUS >= 0
 	AND E.ESTAT > 0
+	".$temporada."
 	GROUP BY E.TIPUS";
 	
 	$result2 = mysqli_query($conn, $sql);
@@ -16,7 +33,7 @@ if (!empty($Casteller_id))
 	if (mysqli_num_rows($result2) > 0) 
 	{
 		$PosicioId = 0;		
-		echo "<table><tr><th>Tipus</th><th>Esdeveniments</th><th>Inscrit</th></tr>";		
+		echo "<table><tr><th>Tipus</th><th>Esdev.</th><th>Inscrit</th></tr>";		
 		// output data of each row
 		while($row2 = mysqli_fetch_assoc($result2)) 
 		{
@@ -50,6 +67,8 @@ if (!empty($Casteller_id))
 	LEFT JOIN POSICIO P ON P.POSICIO_ID = CP.POSICIO_ID
 	WHERE CP.CASTELLER_ID=".$Casteller_id."
 	AND E.TIPUS = 0
+	AND CP.CORDO <= 4
+	".$temporada."
 	GROUP BY P.NOM, C.NOM, CP.CORDO
 	ORDER BY C.NOM, P.NOM, CP.CORDO";
 	
@@ -122,3 +141,5 @@ if (!empty($Casteller_id))
 	}
 }
 ?>	
+</body>
+</html>

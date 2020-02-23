@@ -81,7 +81,7 @@
 		</table>
 	</div> 
 	<div id="panellLateral" style="position:absolute;padding-top:10px;width:320px;height:100%">
-	<iframe id="mainFrame" <?php echo $urlInscripcio ?> width="100%" height="90%" style="border:0" ></iframe>
+		<iframe id="mainFrame" <?php echo $urlInscripcio ?> width="100%" height="90%" style="border:0" ></iframe>
 	</div>
 	<div style="position:absolute;left:320px;width:500px">
 		<div class="form_group">
@@ -93,7 +93,7 @@
 			<br><br>			
 			<table>
 				<tr>
-					<th>Lesionat</th><th>Portar peu</th><th>Novell/a</th>
+					<th>Lesió</th><th>Portar peu</th><th>Novell/a</th>
 				</tr>	
 				<tr>
 					<td width=100px>
@@ -129,7 +129,7 @@
 			<table style="width:100%;">
 				<tr>
 					<td style="padding-right:20px">
-						<label>Altura</label>
+						<label>Alçada</label>
 						<input type="number" class="form_edit" name="altura" value="<?php echo $altura ?>">
 					</td>
 					<td>
@@ -259,8 +259,7 @@
 				echo "<option value=".$row["CASTELLER_ID"]." ".$selected.">".$row["MALNOM"]."</option>";
 			}
 		}
-		mysqli_free_result($result);
-		mysqli_close($conn);
+		mysqli_free_result($result);		
 		
 ?>
 			</select>
@@ -276,6 +275,41 @@
 		</div>
 	</div>
 	</form>
+	<div id="panellLateral2" style="position:absolute;right:10px;padding-top:10px;width:350px;height:100%">
+		<label>TEMPORADA</label>
+		<select class="form_edit" id="temporada" onchange="ModificaiFrame()">
+		<?php
+
+			echo "<option value='0'>TOTES</option>";
+			$sql="SELECT DISTINCT E.TEMPORADA, C.TEMPORADA AS ACTUAL
+			FROM EVENT E, CONFIGURACIO C
+			ORDER BY E.TEMPORADA ";
+
+			$result = mysqli_query($conn, $sql);
+
+			if (mysqli_num_rows($result) > 0) 
+			{
+				while($row = mysqli_fetch_assoc($result))
+				{	
+					$selected = "";
+					if ($row["ACTUAL"] == $row["TEMPORADA"])
+						$selected = "selected";
+					echo "<option value='".$row["TEMPORADA"]."' ".$selected.">".$row["TEMPORADA"]."</option>";
+					$temporadaActual = $row["ACTUAL"];
+				}
+			}
+			mysqli_close($conn);
+		?>
+		</select>
+		<iframe id="frameEstadistiques" src="Casteller_estadistiques_taula.php?id=<?php echo $id."&t=".$temporadaActual ?>" width="100%" height="90%" style="border:0" ></iframe>
+	</div>
+	
+	<script>
+		function ModificaiFrame()
+		{
+			document.getElementById('frameEstadistiques').src = "Casteller_estadistiques_taula.php?id=<?php echo $id ?>&t=" + document.getElementById('temporada').value;
+		}
+	</script>
 </body>
 </html>
 
