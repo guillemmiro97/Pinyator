@@ -124,6 +124,11 @@ function Aqui(event_id, casteller_id)
     ModificaEstatInscripcio(event_id, casteller_id, "Aqui", "#B0E0E6", 2);
 }
 
+function Marxa(event_id, casteller_id) 
+{	
+    ModificaEstatInscripcio(event_id, casteller_id, "Marxa", "#E303FC", 3);
+}
+
 function ModificaEstatInscripcio(event_id, casteller_id, str, color, estat) 
 {	
     if(event_id > 0)

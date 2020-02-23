@@ -663,6 +663,10 @@ function EstatCasteller(id)
 		{
 			inscrit = 2;
 		}
+		else if (item.classList.contains("castellerMarxa"))
+		{
+			inscrit = 3;
+		}
 		else
 		{
 			inscrit = 1;

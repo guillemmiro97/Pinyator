@@ -532,11 +532,20 @@ function DrawText(context, shape)
 	if ((shape.inscrit == 1) && (!isDownloading)) //Si esta apuntat pero no ha arribat
 	{//Pintem una linia sota del nom
 		context.beginPath();
-		context.moveTo(14,shape.h-3);
-		context.lineTo(shape.w-14,shape.h-3);
+		context.moveTo(14,shape.h-4);
+		context.lineTo(shape.w-14,shape.h-4);
 		context.closePath();	
 		context.stroke();
 	}	
+	
+	if ((shape.inscrit == 3) && (!isDownloading)) //Si esta apuntat pero ha marxat
+	{//Pintem una linia sobre del nom
+		context.beginPath();
+		context.moveTo(14,shape.h/2);
+		context.lineTo(shape.w-14,shape.h/2);
+		context.closePath();	
+		context.stroke();
+	}
 	
 	if ((shape.forma != 5) && (EsPlantilla()))
 	{/* Numeros petits en les Plantilles */

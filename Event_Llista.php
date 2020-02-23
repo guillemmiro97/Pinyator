@@ -4,6 +4,7 @@ $NoVincColor = "#ff1a1a";
 $VincColor = "#33cc33";
 $NoVistColor = "#FFFF00";
 $AquiColor = "#B0E0E6";
+$MarxaColor = "#E303FC";
 
 if ($public)
 {
@@ -45,12 +46,12 @@ if (mysqli_num_rows($result) > 0)
 
 ?>
 <label id="txtErrors"></label>
- <table class="llistes">
+ <table class="llistes" id="llistaGlobal">
   <tr class="llistes">
     <th class="llistes">MALNOM</th>
 	<th class="llistes">CO.</th>
     <th class="llistes">Estat</th>	
-	<?php if ($esEditable == 1) echo "<th class='llistes'>Vinc</th><th class='llistes'>NO Vinc</th><th class='llistes'>Aquí</th><th class='llistes'>Clear</th>";?>
+	<?php if ($esEditable == 1) echo "<th class='llistes'>Vinc</th><th class='llistes'>NO Vinc</th><th class='llistes'>Aquí</th><th class='llistes'>Marxa</th><th class='llistes'>Clear</th>";?>
   </tr>
 <?php
 
@@ -96,6 +97,11 @@ if (mysqli_num_rows($result) > 0)
 			$Estat = "Aqui";
 			$color = "style='background-color:".$AquiColor.";'";
 		}
+		elseif ($a == 3)
+		{
+			$Estat = "Marxa";
+			$color = "style='background-color:".$MarxaColor.";'";
+		}
 		elseif ($a == -1)
 		{
 			$Estat = "????";
@@ -119,6 +125,7 @@ if (mysqli_num_rows($result) > 0)
 			echo "<td class='llistes'><button class='boto' style='background-color:".$VincColor."' onClick='Vinc(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbsp+&nbsp</button></td>";
 			echo "<td class='llistes'><button class='boto' style='background-color:".$NoVincColor."' onClick='NoVinc(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbsp-&nbsp</button></td>";
 			echo "<td class='llistes'><button class='boto' style='background-color:".$AquiColor."' onClick='Aqui(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbspA&nbsp</button></td>";
+			echo "<td class='llistes'><button class='boto' style='background-color:".$MarxaColor."' onClick='Marxa(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbspM&nbsp</button></td>";
 			echo "<td class='llistes'><button class='boto' style='background-color:".$NoVistColor.";color:black' onClick='Esborra(".$row["EVENT_ID"].", ".$row["CASTELLER_ID"].")'>&nbsp?&nbsp</button></td>";
 		}
 		echo "</tr>";
@@ -133,5 +140,12 @@ mysqli_close($conn);
 ?>	  
 	  
 	</table> 
+	<script>
+		if ( ( window.innerWidth <= 600 ) && ( window.innerHeight <= 800 ) )
+		{
+			var elem = document.getElementById("llistaGlobal");
+			elem.style.fontSize=12;
+		}
+	</script>
 
 

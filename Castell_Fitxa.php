@@ -221,6 +221,11 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 					$classFont="Aqui";
 					$class="castellerAqui";
 				}
+				else if($row["ESTAT"]==3)
+				{
+					$classFont="Aqui";
+					$class="castellerMarxa";
+				}
 				
 				$lesionat = "";
 				if($row["LESIONAT"]==1)
@@ -246,6 +251,11 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 				if($row["NOVELL"]==1)
 				{
 					$infoIcon="icons/info_novell.png";
+				}
+				
+				if($row["ESTAT"]==3)
+				{
+					$infoIcon="icons/info_marxa.png";
 				}
 				
 				$camisa = "";
