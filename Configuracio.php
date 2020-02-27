@@ -16,10 +16,11 @@ td {padding:15px}
 	$resolucioPantalla = "";
 	$visualitzarFites = 0;
 	$visualitzarPenya = 0;
+	$visualitzarDiferencies = 0;
 				
 	echo "<form method='post' action='Configuracio_Desa.php'>";
 
-	$sql="SELECT TEMPORADA, RESOLUCIOPANTALLA, FITES, PARTICIPANTS
+	$sql="SELECT TEMPORADA, RESOLUCIOPANTALLA, FITES, PARTICIPANTS, DIFERENCIES
 	FROM CONFIGURACIO";
 
 	$result = mysqli_query($conn, $sql);
@@ -31,7 +32,8 @@ td {padding:15px}
 			$temporada = $row["TEMPORADA"];
 			$resolucioPantalla = $row["RESOLUCIOPANTALLA"];
 			$visualitzarFites = $row["FITES"];
-			$visualitzarPenya = $row["PARTICIPANTS"];				
+			$visualitzarPenya = $row["PARTICIPANTS"];
+			$visualitzarDiferencies = $row["DIFERENCIES"];				
 		}
 	}
 	else if (mysqli_error($conn) != "")
@@ -66,6 +68,14 @@ td {padding:15px}
 					<label>Visualitzar participants</label>
 					<label class="switch">texte
 						<input type="checkbox" name="participants" value=1 <?php if ($visualitzarPenya == 1) echo " checked";?>>
+						<span class="slider round"></span>
+					</label>
+				</td>
+			</tr><tr>
+				<td>
+					<label>Visualitzar diferències</label>
+					<label class="switch">texte
+						<input type="checkbox" name="diferencies" value=1 <?php if ($visualitzarDiferencies == 1) echo " checked";?>>
 						<span class="slider round"></span>
 					</label>
 				</td>

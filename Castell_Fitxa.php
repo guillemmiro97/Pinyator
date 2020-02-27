@@ -15,6 +15,7 @@ $eventid = -1;
 $autogenerat = false;
 $troncs = false;
 $dataArxivat = "";
+$eventUltimDia = "";
 $rating = 0;
 
 if (!empty($_GET["a"]))
@@ -27,6 +28,7 @@ if (!empty($_GET["t"]))
 	$troncs=intval($_GET["t"]);
 }	
 
+$diferencies = 0;
 $resoluciopantalla=1200;
 $estronc=0;
 $pinyaTronc="C.POSICIO_PINYA_ID";
@@ -131,7 +133,7 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 			}
 		}		
 		
-		$sql="SELECT RESOLUCIOPANTALLA
+		$sql="SELECT RESOLUCIOPANTALLA, DIFERENCIES
 		FROM CONFIGURACIO";
 
 		$result = mysqli_query($conn, $sql);
@@ -141,15 +143,23 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 			while($row = mysqli_fetch_assoc($result)) 
 			{
 				$resoluciopantalla = $row["RESOLUCIOPANTALLA"];
+				$diferencies = $row["DIFERENCIES"];
 			}
 		}
 		
-		$sql="SELECT ERR.DATA
+		if ($diferencies == 1)
+		{
+			echo "<script> visualitzaDiferencies=1; </script>";
+			
+		}
+		
+		$sql="SELECT ERR.DATA, ERR.EVENT_ID
 			FROM EVENT AS ERR
-			INNER JOIN EVENT AS E ON E.EVENT_ID=".$eventid." AND ERR.TEMPORADA=E.TEMPORADA
+			INNER JOIN EVENT AS E ON ERR.TEMPORADA=E.TEMPORADA AND E.DATA > ERR.DATA
 			WHERE ERR.TIPUS=0
-			AND ERR.ESTAT=2
-			GROUP BY ERR.DATA
+			/*AND ERR.ESTAT=2*/
+			AND E.EVENT_ID=".$eventid."
+			GROUP BY ERR.DATA, ERR.EVENT_ID
 			ORDER BY ERR.DATA DESC
 			LIMIT 10";
 			
@@ -158,8 +168,12 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 		if (mysqli_num_rows($result) > 0)
 		{
 			while($row = mysqli_fetch_assoc($result))
-			{
+			{	
 				$dataArxivat = $row["DATA"];
+				if ($eventUltimDia == "")
+				{
+					$eventUltimDia = $row["EVENT_ID"];
+				}	
 			}
 		}
 		
@@ -316,8 +330,7 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 			}
 			echo $colors."</script>";
 		}
-		
-		
+				
 
 		if (! $autogenerat)
 		{
@@ -575,7 +588,15 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 		CP.CASTELLER_ID,IFNULL(C.MALNOM, 0) AS MALNOM, IFNULL(I.ESTAT,0) AS ESTAT,
 		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA, PESTANYA,
 		IFNULL(C.PORTAR_PEU, 1) AS PORTAR_PEU, IFNULL(C.LESIONAT, 0) AS LESIONAT,
-		IFNULL(IA.ESTAT,0) AS CAMISA, IFNULL(C.NOVELL,0) AS NOVELL
+		IFNULL(IA.ESTAT,0) AS CAMISA, IFNULL(C.NOVELL,0) AS NOVELL,
+		IFNULL((SELECT IFNULL(CPA.CASTELLER_ID, 0)
+			FROM CASTELL CTA
+			JOIN CASTELL AS CTAU ON CTAU.NOM=CTA.NOM AND CTAU.EVENT_ID = ".$eventUltimDia."
+			JOIN CASTELL_POSICIO CPA ON CPA.CASTELL_ID = CTAU.CASTELL_ID
+			WHERE CTA.CASTELL_ID = CP.CASTELL_ID
+			AND CPA.CASELLA_ID = CP.CASELLA_ID
+			LIMIT 1
+			), 0) AS ULTIMCASTELLER
 		FROM CASTELL_POSICIO AS CP 
 		INNER JOIN CASTELL AS CT ON CT.CASTELL_ID=CP.CASTELL_ID
 		LEFT JOIN CASTELLER AS C ON C.CASTELLER_ID=CP.CASTELLER_ID 
@@ -585,7 +606,7 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 		LEFT JOIN EVENT AS EA ON EA.EVENT_ID=".$eventActuacioid." AND EA.DATA >= E.DATA
 		LEFT JOIN INSCRITS AS IA ON IA.EVENT_ID=EA.EVENT_ID AND IA.CASTELLER_ID=C.CASTELLER_ID	
 		WHERE CP.CASTELL_ID = ".$id;
-
+		
 		$result = mysqli_query($conn, $sql);
 
 		if (mysqli_num_rows($result) > 0) 
@@ -596,7 +617,7 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 			{
 				echo "addRect(".$row["X"].",".$row["Y"].",".$row["W"].",".$row["H"].",".$row["CORDO"].",".$row["POSICIO_ID"].",".$row["ANGLE"].",".$id.",".$row["CASELLA_ID"]."
 				,".$row["PESTANYA"].",".$row["FORMA"].",'".$row["TEXT"]."',".$row["LINKAT"].",".$row["SEGUENT"].",".$id.",".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["FORCA"]."
-				,".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].",".$row["NOVELL"].");\n";
+				,".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].",".$row["NOVELL"].",".$row["ULTIMCASTELLER"].");\n";
 			}
 			echo " CollapsaTot();\n";
 			echo "</script>";

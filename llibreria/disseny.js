@@ -27,6 +27,7 @@ function Box()
 	this.linkat=0;
 	this.camisa=false;
 	this.novell=false;
+	this.ultimCasteller=0;
 }
 
 function Casteller() 
@@ -43,7 +44,9 @@ function Casteller()
 }
 
 //Initialize a new Box, add it, and invalidate the canvas
-function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, forma, text, linkat, seguent, castellid, castellerid, malnom, inscrit, altura, forca, peu, lesionat, camisa, novell)
+function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, 
+	forma, text, linkat, seguent, castellid, castellerid, malnom, inscrit, 
+	altura, forca, peu, lesionat, camisa, novell, ultimCasteller)
 {
 	var rect = new Box();
 	rect.x = x;
@@ -62,6 +65,7 @@ function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, form
 	rect.seguent=seguent;
 	rect.castellId=castellid;
 	rect.castellerid=castellerid;
+	rect.ultimCasteller=ultimCasteller;
 	if (castellerid > 0)
 	{		
 		rect.malnom=malnom;
@@ -185,6 +189,8 @@ var INTERVAL = 200;  // how often, in milliseconds, we check to see if a redraw 
 var angleTrapezi = 10;
 
 var mostrar = false;
+
+var visualitzaDiferencies=0;
 
 var isDownloading = false;
 
@@ -584,6 +590,13 @@ function DrawDownText(context, shape, str, x, y)
 
 function DrawDownText2(context, shape, str, x, y, fontSize)
 {	
+	if ((shape.ultimCasteller != shape.castellerid) 
+		&& (str != "") && (!isDownloading)
+		&& (visualitzaDiferencies == 1))
+	{
+		str = str+"*";
+	}
+	
 	context.font = "bold "+fontSize+"px Arial";
 	
 	var shapeW=shape.w - angleTrapezi;
