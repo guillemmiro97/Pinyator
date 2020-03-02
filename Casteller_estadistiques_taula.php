@@ -109,6 +109,7 @@ if (!empty($Casteller_id))
 	LEFT JOIN POSICIO P ON P.POSICIO_ID = CP.POSICIO_ID
 	WHERE CP.CASTELLER_ID=".$Casteller_id."
 	AND E.TIPUS = 1
+	".$temporada."
 	GROUP BY P.NOM, C.NOM, CP.CORDO
 	ORDER BY C.NOM, P.NOM, CP.CORDO";
 	
