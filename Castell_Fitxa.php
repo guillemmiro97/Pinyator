@@ -32,11 +32,13 @@ $diferencies = 0;
 $resoluciopantalla=1200;
 $estronc=0;
 $pinyaTronc="C.POSICIO_PINYA_ID";
+$altura="C.ALTURA";
 $switchPinyaTronc="";
 if ($_SESSION["carrec"]=="2")
 {
 	$estronc=1;
 	$pinyaTronc="C.POSICIO_TRONC_ID";
+	$altura="C.ALTURA_TRONCS";
 	$switchPinyaTronc=" checked";
 }
 
@@ -177,14 +179,8 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 			}
 		}
 		
-		$ordrealtura = "";
-		if ($_SESSION["carrec"]=="2")
-		{
-			$ordrealtura="ALTURA, ";
-		}
-		
 		$sql="SELECT C.CASTELLER_ID, MALNOM, P.NOM, P.POSICIO_ID, IFNULL(I.ESTAT,0) AS ESTAT,
-		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA, PORTAR_PEU, LESIONAT,
+		IFNULL(".$altura.", 0) AS ALTURA, PORTAR_PEU, LESIONAT,
 		IFNULL(IA.ESTAT,0) AS CAMISA, NOVELL,
 		(SELECT SUM(IF(IR.ESTAT>0,1,0)) AS RAT
 			FROM EVENT AS ERR 
@@ -203,7 +199,7 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 		LEFT JOIN INSCRITS AS IA ON IA.EVENT_ID=EA.EVENT_ID AND IA.CASTELLER_ID=C.CASTELLER_ID
 		WHERE (C.ESTAT = 1 OR I.ESTAT = 1)
 		AND (P.ESTRONC = 1 OR P.ESCORDO = 1 OR P.ESNUCLI = 1)
-		ORDER BY P.NOM, ".$ordrealtura." C.MALNOM ";
+		ORDER BY P.NOM, ".$altura.", C.MALNOM ";
 
 		$result = mysqli_query($conn, $sql);
 
@@ -295,7 +291,7 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 				$text .= "<div><progress value='".$rating."' max='10' style='height:6px;' title='".round($rating)."'>
 						</progress></div>";						
 				
-				$onClick = " onClick='SetCasteller(this,".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].",".$row["NOVELL"].")' ";
+				$onClick = " onClick='SetCasteller(this,".$row["ALTURA"].",".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].",".$row["NOVELL"].")' ";
 				
 				
 				echo "<div class='accordionItem ".$class."' id=".$row["CASTELLER_ID"]." title='".$row["MALNOM"]."' ".$onClick.$color.">".$text."</div>";
@@ -416,10 +412,10 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 		
 		$sql="SELECT CP.CASELLA_ID,CTT.CASTELL_ID,CTT.NOM AS CASTELL_NOM,CORDO,CP.POSICIO_ID,
 		CP.CASTELLER_ID, CP.TEXT, IFNULL(C.MALNOM, 0) AS MALNOM, IFNULL(I.ESTAT,0) AS ESTAT,
-		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA,
+		IFNULL(".$altura.", 0) AS ALTURA,
 		IFNULL(C.PORTAR_PEU, 1) AS PORTAR_PEU, IFNULL(C.LESIONAT, 0) AS LESIONAT,
 		ESTRONC, ESNUCLI, PESTANYA, IFNULL(LINKAT, 0) AS LINKAT, 
-		IFNULL(IA.ESTAT,0) AS CAMISA, NOVELL,
+		IFNULL(IA.ESTAT,0) AS CAMISA, IFNULL(NOVELL, 0) AS NOVELL,
 		(SELECT MAX(CORDO) 
 			FROM CASTELL_POSICIO AS CPR 
 			INNER JOIN POSICIO AS PR ON PR.POSICIO_ID=CPR.POSICIO_ID 
@@ -542,7 +538,7 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 				
 				echo "addRect(".$x.",".$y.",".$w.",".$h.",".$row["CORDO"].",".$row["POSICIO_ID"].",0,
 				".$row["CASTELL_ID"].",".$row["CASELLA_ID"].",".$row["PESTANYA"].",".$forma.",'".$row["TEXT"]."',".$row["LINKAT"].",-1,".$castellId.",
-				".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["FORCA"].",".$row["PORTAR_PEU"].",
+				".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["PORTAR_PEU"].",
 				".$row["LESIONAT"].",".$row["CAMISA"].",".$row["NOVELL"].");\n";
 				
 				$linkat = $row["LINKAT"];
@@ -586,7 +582,7 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 		$sql="SELECT CASELLA_ID,CORDO,CP.POSICIO_ID,CP.X,CP.Y,CP.H,CP.W,ANGLE,
 		FORMA,TEXT,SEGUENT,LINKAT,
 		CP.CASTELLER_ID,IFNULL(C.MALNOM, 0) AS MALNOM, IFNULL(I.ESTAT,0) AS ESTAT,
-		IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA, PESTANYA,
+		IFNULL(".$altura.", 0) AS ALTURA, PESTANYA,
 		IFNULL(C.PORTAR_PEU, 1) AS PORTAR_PEU, IFNULL(C.LESIONAT, 0) AS LESIONAT,
 		IFNULL(IA.ESTAT,0) AS CAMISA, IFNULL(C.NOVELL,0) AS NOVELL,
 		IFNULL((SELECT IFNULL(CPA.CASTELLER_ID, 0)
@@ -616,7 +612,7 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 			while($row = mysqli_fetch_assoc($result)) 
 			{
 				echo "addRect(".$row["X"].",".$row["Y"].",".$row["W"].",".$row["H"].",".$row["CORDO"].",".$row["POSICIO_ID"].",".$row["ANGLE"].",".$id.",".$row["CASELLA_ID"]."
-				,".$row["PESTANYA"].",".$row["FORMA"].",'".$row["TEXT"]."',".$row["LINKAT"].",".$row["SEGUENT"].",".$id.",".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["FORCA"]."
+				,".$row["PESTANYA"].",".$row["FORMA"].",'".$row["TEXT"]."',".$row["LINKAT"].",".$row["SEGUENT"].",".$id.",".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"]."
 				,".$row["PORTAR_PEU"].",".$row["LESIONAT"].",".$row["CAMISA"].",".$row["NOVELL"].",".$row["ULTIMCASTELLER"].");\n";
 			}
 			echo " CollapsaTot();\n";

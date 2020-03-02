@@ -18,7 +18,6 @@ function Box()
 	this.malnom="";
 	this.inscrit=0; //0=No inscrit;1=Inscrit;2=Aqui
 	this.altura=0;
-	this.forca=0;
 	this.posicio=0;
 	this.pestanya=1;
 	this.peu=1;
@@ -36,7 +35,6 @@ function Casteller()
   this.malnom = "";
   this.inscrit=0; //0=No inscrit;1=Inscrit;2=Aqui
   this.altura=0;
-  this.forca=0;
   this.peu=1;
   this.lesionat=0;
   this.camisa=false;
@@ -46,7 +44,7 @@ function Casteller()
 //Initialize a new Box, add it, and invalidate the canvas
 function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya, 
 	forma, text, linkat, seguent, castellid, castellerid, malnom, inscrit, 
-	altura, forca, peu, lesionat, camisa, novell, ultimCasteller)
+	altura, peu, lesionat, camisa, novell, ultimCasteller)
 {
 	var rect = new Box();
 	rect.x = x;
@@ -71,7 +69,6 @@ function addRect(x, y, w, h, cordo, posicio, angle, dibuixId, id, pestanya,
 		rect.malnom=malnom;
 		rect.inscrit=inscrit;
 		rect.altura=altura;
-		rect.forca=forca;
 		rect.peu=peu;
 		rect.lesionat=lesionat;
 		rect.camisa=camisa;

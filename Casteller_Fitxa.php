@@ -25,7 +25,7 @@
 	$responsable1 = 0;
 	$responsable2 = 0;
 	$altura = 0;
-	$forca = 0;
+	$alturaTroncs = 0;
 	$estat = 0;
 	$lesionat = 0;
 	$portarpeu = 1;
@@ -38,7 +38,7 @@
 	{
 		$sql="SELECT CASTELLER_ID, MALNOM, NOM, COGNOM_1, COGNOM_2, 
 		POSICIO_PINYA_ID, POSICIO_TRONC_ID, CODI, FAMILIA_ID, 
-		ALTURA, FORCA, ESTAT, LESIONAT, PORTAR_PEU, FAMILIA2_ID, NOVELL
+		ALTURA, ALTURA_TRONCS, ESTAT, LESIONAT, PORTAR_PEU, FAMILIA2_ID, NOVELL
 		FROM CASTELLER
 		WHERE CASTELLER_ID = ".$id."
 		ORDER BY MALNOM ";
@@ -59,7 +59,7 @@
 				$responsable1 = $row["FAMILIA_ID"];
 				$responsable2 = $row["FAMILIA2_ID"];
 				$altura = $row["ALTURA"];
-				$forca = $row["FORCA"];
+				$alturaTroncs = $row["ALTURA_TRONCS"];
 				$estat = $row["ESTAT"];
 				$portarpeu = $row["PORTAR_PEU"];
 				$lesionat = $row["LESIONAT"];
@@ -133,8 +133,8 @@
 						<input type="number" class="form_edit" name="altura" value="<?php echo $altura ?>">
 					</td>
 					<td>
-						<label>Força</label>
-						<input type="number" class="form_edit" name="forca" value="<?php echo $forca ?>">
+						<label>Alçada troncs</label>
+						<input type="number" class="form_edit" name="alturaTroncs" value="<?php echo $alturaTroncs ?>">
 					</td>
 				</tr>
 			</table>

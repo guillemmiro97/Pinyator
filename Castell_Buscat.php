@@ -107,7 +107,7 @@ echo "<input type='text' id='myInput' class='form_edit' onkeyup='Buscat()' place
 	$sql="SELECT CASELLA_ID,CORDO,CP.POSICIO_ID,CP.X,CP.Y,CP.H,CP.W,ANGLE,
 	FORMA,TEXT,SEGUENT,LINKAT,  P.COLORFONS, P.COLORTEXT,
 	CP.CASTELLER_ID,IFNULL(C.MALNOM, 0) AS MALNOM, IF(I.ESTAT > 0, 2, 0) AS ESTAT,
-	IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.FORCA, 0) AS FORCA, PESTANYA,
+	IFNULL(C.ALTURA, 0) AS ALTURA, IFNULL(C.ALTURA_TRONCS, 0) AS ALTURA_TRONCS, PESTANYA,
 	IFNULL(C.PORTAR_PEU, 1) AS PORTAR_PEU, IFNULL(C.LESIONAT, 0) AS LESIONAT
 	FROM CASTELL_POSICIO AS CP 
 	INNER JOIN CASTELL AS CT ON CT.CASTELL_ID=CP.CASTELL_ID
@@ -125,7 +125,7 @@ echo "<input type='text' id='myInput' class='form_edit' onkeyup='Buscat()' place
 		while($row = mysqli_fetch_assoc($result)) 
 		{
 			echo "addRect(".$row["X"].",".$row["Y"].",".$row["W"].",".$row["H"].",".$row["CORDO"].",".$row["POSICIO_ID"].",".$row["ANGLE"].",".$id.",".$row["CASELLA_ID"]."
-			,".$row["PESTANYA"].",".$row["FORMA"].",'".$row["TEXT"]."',".$row["LINKAT"].",".$row["SEGUENT"].",".$id.",".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["FORCA"]."
+			,".$row["PESTANYA"].",".$row["FORMA"].",'".$row["TEXT"]."',".$row["LINKAT"].",".$row["SEGUENT"].",".$id.",".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["ALTURA_TRONCS"]."
 			,".$row["PORTAR_PEU"].",".$row["LESIONAT"].");\n";
 		}
 		echo " Buscat(); </script>";

@@ -199,7 +199,6 @@ function myDown(e)
 					casteller.malnom=mySel[0].malnom;
 					casteller.inscrit=mySel[0].inscrit;
 					casteller.altura=mySel[0].altura;
-					casteller.forca=mySel[0].forca;
 					casteller.peu=mySel[0].peu;
 					casteller.lesionat=mySel[0].lesionat;
 					casteller.camisa=mySel[0].camisa;
@@ -251,7 +250,6 @@ function CopiaCastellermySel(mySelect, objCasteller)
 	mySelect.text = objCasteller.malnom;
 	mySelect.inscrit=objCasteller.inscrit;
 	mySelect.altura=objCasteller.altura;
-	mySelect.forca=objCasteller.forca;
 	mySelect.peu=objCasteller.peu;
 	mySelect.lesionat=objCasteller.lesionat;
 	mySelect.camisa=objCasteller.camisa;
@@ -306,7 +304,6 @@ function MouCastellers(casella, objCasteller)
 			casteller.malnom=casella.malnom;
 			casteller.inscrit=casella.inscrit;
 			casteller.altura=casella.altura;
-			casteller.forca=casella.forca;
 			casteller.peu=casella.peu;
 			casteller.lesionat=casella.lesionat;
 			casteller.camisa=casella.camisa;
@@ -468,7 +465,6 @@ function ResetmySel()
 			mySel[i].text="";
 			mySel[i].inscrit=0;
 			mySel[i].altura=0;
-			mySel[i].forca=0;
 			mySel[i].peu=1;
 			mySel[i].lesionat=0;
 			mySel[i].camisa=false;
@@ -576,14 +572,13 @@ function ResetCasteller()
 	casteller.malnom = "";
 	casteller.inscrit = 0;
 	casteller.altura = 0;
-	casteller.forca = 0;
 	casteller.lesionat = 0;
 	casteller.peu = 1;
 	casteller.camisa = false;
 	casteller.novell = false;
 }
 
-function SetCasteller(elem, altura, forca, peu, lesionat, camisa, novell)
+function SetCasteller(elem, altura, peu, lesionat, camisa, novell)
 {
 	ResetCasteller();
 	casteller.id = elem.id;	
@@ -592,7 +587,6 @@ function SetCasteller(elem, altura, forca, peu, lesionat, camisa, novell)
 		casteller.malnom = elem.title;
 		casteller.inscrit = EstatCasteller(casteller.id);
 		casteller.altura = altura;
-		casteller.forca = forca;
 		casteller.peu = peu;
 		casteller.lesionat = lesionat;
 		casteller.camisa = camisa;
