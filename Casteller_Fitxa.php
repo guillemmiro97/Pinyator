@@ -118,17 +118,19 @@
 	}
 ?>
 
-	<div id="panellLateral" style="position:absolute;width:320px;height:100%">
-		<iframe id="mainFrame" <?php echo $urlInscripcio ?> width="100%" height="90%" style="border:0" ></iframe>
-	</div>
-		
 	<div class="tab">
-	  <button class="tablinks" onclick="openTab(event, 'Dades')">Dades</button>
+	  <button class="tablinks" onclick="openTab(event, 'Assistencia')">Assistència</button>
+	  <button class="tablinks active" onclick="openTab(event, 'Dades')">Dades</button>
 	  <button class="tablinks" onclick="openTab(event, 'Estadistiques')">Estadístiques</button>
 	</div>
+
+	<div id="panellLateral" style="position:absolute;width:320px;height:100%">
+		<iframe id="mainFrame" <?php echo $urlInscripcio ?> width="100%" height="90%" style="border:0" ></iframe>
+	</div>		
+
 	
 <form method="post" action="Casteller_Desa.php">
-	<div id="Dades" class="tabcontent active">
+	<div id="Dades" class="tabcontent" style="display:block">
 		<div class="form_group">
 			<label>ID - </label><?php echo "  <a href='Inscripcio.php?id=".$url."'>Link als seus esdeveniments</a>"?>
 			<input type="text" class="form_edit" name="id" value="<?php echo $id ?>" readonly>

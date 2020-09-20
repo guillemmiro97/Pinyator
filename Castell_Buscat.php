@@ -26,7 +26,7 @@ echo "<input type='text' id='myInput' class='form_edit' onkeyup='Buscat()' place
 		$ps4="";
 				
 
-		$sql="SELECT NOM, POSICIO_ID, COLORFONS, COLORTEXT
+		$sql="SELECT NOM, POSICIO_ID, COLORFONS, COLORTEXT, COLORCAMISA
 		FROM POSICIO
 		ORDER BY NOM";
 
@@ -37,7 +37,7 @@ echo "<input type='text' id='myInput' class='form_edit' onkeyup='Buscat()' place
 			$colors = "<script>";
 			while($row = mysqli_fetch_assoc($result)) 
 			{
-				$colors = $colors." AddColorPosicio(".$row["POSICIO_ID"].",'".$row["COLORFONS"]."','".$row["COLORTEXT"]."');";
+				$colors = $colors." AddColorPosicio(".$row["POSICIO_ID"].",'".$row["COLORFONS"]."','".$row["COLORTEXT"]."','".$row["COLORCAMISA"]."');";
 			}
 			echo $colors."</script>";
 		}
@@ -125,8 +125,8 @@ echo "<input type='text' id='myInput' class='form_edit' onkeyup='Buscat()' place
 		while($row = mysqli_fetch_assoc($result)) 
 		{
 			echo "addRect(".$row["X"].",".$row["Y"].",".$row["W"].",".$row["H"].",".$row["CORDO"].",".$row["POSICIO_ID"].",".$row["ANGLE"].",".$id.",".$row["CASELLA_ID"]."
-			,".$row["PESTANYA"].",".$row["FORMA"].",'".$row["TEXT"]."',".$row["LINKAT"].",".$row["SEGUENT"].",".$id.",".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"].",".$row["ALTURA_TRONCS"]."
-			,".$row["PORTAR_PEU"].",".$row["LESIONAT"].");\n";
+			,".$row["PESTANYA"].",".$row["FORMA"].",'".$row["TEXT"]."',".$row["LINKAT"].",".$row["SEGUENT"].",".$id.",".$row["CASTELLER_ID"].",'".$row["MALNOM"]."',".$row["ESTAT"].",".$row["ALTURA"]."
+			,".$row["PORTAR_PEU"].",".$row["LESIONAT"].",0,0,0);\n";
 		}
 		echo " Buscat(); </script>";
 	}
