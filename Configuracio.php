@@ -59,6 +59,8 @@ td {padding:15px}
 			</tr><tr>
 				<td>
 					<a href="Documentacio.php" class="boto">Documentació</a>
+					<a href="Usuari.php" class="boto">Usuaris</a>
+					<a href="Posicio.php" class="boto">Poscions</a>
 				</td>
 			</tr><tr>
 				<td>

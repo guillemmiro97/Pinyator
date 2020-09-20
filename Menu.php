@@ -10,9 +10,6 @@ $plantilla="";
 $castell="";
 $planificacio="";
 $login="";
-$llistats="";
-$usuaris="";
-$posicions="";
 $estadistiques="";
 $configuracio="";
 
@@ -21,9 +18,6 @@ if($menu==2) $event="class='active'";
 if($menu==3) $plantilla="class='active'";
 if($menu==4) $castell="class='active'";
 if($menu==-1) $login="class='active'";
-if($menu==5) $llistats="class='active'";
-if($menu==6) $usuaris="class='active'";
-if($menu==7) $posicions="class='active'";
 if($menu==8) $estadistiques="class='active'";
 if($menu==9) $planificacio="class='active'";
 if($menu==10) $configuracio="class='active'";
@@ -65,7 +59,6 @@ else if (EsURLAdmin() && !EsAdmin())
 	{	
 		echo  "<a ".$plantilla." href='Plantilla.php'>Plantilles</a>
 			<a ".$castell." href='Castell.php'>Assaig/Actuació</a>
-			<a ".$posicions." href='Posicio.php'>Posicions</a>
 			<a ".$estadistiques." href='Estadistiques.php'>Estadístiques</a>";		  
 	}
 	if (EsBossLv2())
@@ -74,7 +67,6 @@ else if (EsURLAdmin() && !EsAdmin())
 	}	
 	if (EsAdmin())
 	{	
-		echo "<a ".$usuaris." href='Usuari.php'>Usuaris</a>";
 		echo "<a ".$configuracio." href='Configuracio.php'>Configuració</a>";
 	}	
 	
@@ -231,7 +223,7 @@ function EsURLCasteller()
 
 function EsURLCastell()
 {
-	return (ContainsUrl("Plantilles") || ContainsUrl("Castell.") || ContainsUrl("Castell_") || ContainsUrl("Posicio") || ContainsUrl("Estadistiques"));	
+	return (ContainsUrl("Plantilles") || ContainsUrl("Castell.") || ContainsUrl("Castell_") || ContainsUrl("Estadistiques"));	
 }
 
 function EsURLBoss()
@@ -242,7 +234,7 @@ function EsURLBoss()
 
 function EsURLAdmin()
 {
-	return ContainsUrl("Usuari.php") || ContainsUrl("Configuracio.php");
+	return ContainsUrl("Usuari.php") || ContainsUrl("Configuracio.php") || ContainsUrl("Posicio") ;
 }
 
 ?>
