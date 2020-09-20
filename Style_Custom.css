@@ -622,7 +622,7 @@ input:checked + .slider:before {
 }
 
 
-/* COUNTER */
+/************* COUNTER *****************/
 .counter
 {
     background: linear-gradient(white, black);
@@ -646,4 +646,39 @@ input:checked + .slider:before {
 	width:160;
 	border:none;
 	background:none;
+}
+
+/*********************************/
+.starOn {
+  color: gold;
+}
+.starOff {
+  color: gray;
+}
+.starHalf {
+  color: orange;
+}
+.starTitleOrange{
+  color: orange;
+  font-size:22px;
+}
+.starTitleBlue{
+  color: blue;
+  font-size:22px;
+}
+
+/******************************************/
+.dot {
+  background-color: #5BC0DE;
+  border-radius: 50%;
+  vertical-align: middle;
+  text-align: center;
+}
+.dot img{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
 }

@@ -21,12 +21,19 @@ if (!empty($_POST["diferencies"]))
 {
 	$diferencies = intval($_POST["diferencies"]);
 }
+$percentAssistencia = 0;
+if (!empty($_POST["percentAssistencia"]))
+{
+	$percentAssistencia = intval($_POST["percentAssistencia"]);
+}
+
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
 $sql="UPDATE CONFIGURACIO SET TEMPORADA='".$temporada."',
 	RESOLUCIOPANTALLA=".$resoluciopantalla.",FITES=".$fites.",
-	PARTICIPANTS=".$participants.",DIFERENCIES=".$diferencies;
+	PARTICIPANTS=".$participants.",DIFERENCIES=".$diferencies.",
+	PERCENATGEASSISTENCIA=".$percentAssistencia;
 
 if (mysqli_query($conn, $sql)) 
 {	

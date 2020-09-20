@@ -17,10 +17,12 @@ td {padding:15px}
 	$visualitzarFites = 0;
 	$visualitzarPenya = 0;
 	$visualitzarDiferencies = 0;
+	$visualitzarPercentatgeAssistencia = 0;
 				
 	echo "<form method='post' action='Configuracio_Desa.php'>";
 
-	$sql="SELECT TEMPORADA, RESOLUCIOPANTALLA, FITES, PARTICIPANTS, DIFERENCIES
+	$sql="SELECT TEMPORADA, RESOLUCIOPANTALLA, FITES, PARTICIPANTS, DIFERENCIES,
+	PERCENATGEASSISTENCIA
 	FROM CONFIGURACIO";
 
 	$result = mysqli_query($conn, $sql);
@@ -33,7 +35,8 @@ td {padding:15px}
 			$resolucioPantalla = $row["RESOLUCIOPANTALLA"];
 			$visualitzarFites = $row["FITES"];
 			$visualitzarPenya = $row["PARTICIPANTS"];
-			$visualitzarDiferencies = $row["DIFERENCIES"];				
+			$visualitzarDiferencies = $row["DIFERENCIES"];
+			$visualitzarPercentatgeAssistencia = $row["PERCENATGEASSISTENCIA"];				
 		}
 	}
 	else if (mysqli_error($conn) != "")
@@ -52,6 +55,10 @@ td {padding:15px}
 						<input type="checkbox" name="fites" value=1 <?php if ($visualitzarFites == 1) echo " checked";?>>
 						<span class="slider round"></span>
 					</label>
+				</td>
+			</tr><tr>
+				<td>
+					<a href="Documentacio.php" class="boto">Documentació</a>
 				</td>
 			</tr><tr>
 				<td>
@@ -76,6 +83,14 @@ td {padding:15px}
 					<label>Visualitzar diferències</label>
 					<label class="switch">texte
 						<input type="checkbox" name="diferencies" value=1 <?php if ($visualitzarDiferencies == 1) echo " checked";?>>
+						<span class="slider round"></span>
+					</label>
+				</td>
+			</tr><tr>
+				<td>
+					<label>Visualitzar % assistència</label>
+					<label class="switch">texte
+						<input type="checkbox" name="percentAssistencia" value=1 <?php if ($visualitzarPercentatgeAssistencia == 1) echo " checked";?>>
 						<span class="slider round"></span>
 					</label>
 				</td>

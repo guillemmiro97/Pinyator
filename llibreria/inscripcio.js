@@ -7,6 +7,15 @@ function Event()
 
 var events=[];
 
+var total=0;
+var actual=0;
+ 
+ function DesaAssistenciaCasteller(t, a)
+ {
+	total=t;
+	actual=a;
+ }
+
 function EventNou(event_id,estat,casteller_id)
 {
   var event = new Event;
@@ -82,6 +91,7 @@ function Save(eventid, castellerid)
 				}
 				
 				ModificaSom(event_id, operador);
+				ModificaRanking(operador);
 			}
 		};	
 		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&s=" + estat, true);
@@ -167,7 +177,6 @@ function Esborra(event_id, casteller_id)
 	}
 }
 
-
 function IncrementaAcompanyant(event_id, casteller_id) 
 {	
     if (event_id > 0)
@@ -218,6 +227,37 @@ function ModificaSom(event_id, operador)
 				frameList[i].innerHTML=parseInt(frameList[i].innerHTML)+operador;
 			else
 				frameList[i].innerHTML=1;
+		}
+	}
+}
+
+function ModificaRanking(operador)
+{
+	if (operador != 0)
+	{
+		actual = actual + operador;
+		percentatgeAssistencia = ((actual/total)*100);
+		
+		for (var i= 0;i < 10;i++)
+		{
+			var star = document.getElementById("star"+i);
+			if((i*10) < percentatgeAssistencia)
+			{
+				star.style.display = "";
+			}
+			else
+			{
+				star.style.display = "none";
+			}
+						
+			if ((percentatgeAssistencia-(i*10))>5)
+			{
+				star.style.width = "";
+			}
+			else
+			{
+				star.style.width = "14px";
+			}
 		}
 	}
 }
