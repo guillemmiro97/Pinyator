@@ -3,8 +3,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pinyator - Castell</title>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Head.php";?>
-  <script src="llibreria/castell.js?1.3"></script>
-  <script src="llibreria/disseny.js?1.2"></script>  
+  <script src="llibreria/castell.js?1.4"></script>
+  <script src="llibreria/disseny.js?1.3"></script>  
 </head>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
 <body>
@@ -363,6 +363,14 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 
 		</div>
 	</div>
+	<div id = "activitat" style="margin-left: 204px; visibility: hidden;
+    background-color: red;
+    color: #fff;
+    border-radius: 6px;
+    padding: 2px 4px;
+    position: fixed;
+    z-index: 1;">
+	</div> 
 	<div class="canvascontent" style="margin-left: 204px;">
 		<div class="popup" id="dibuix">
 			<table>
@@ -624,6 +632,11 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 		}
 	}
 	mysqli_close($conn);
+	$usuari = "SALVI";
+	echo "<script>
+	RegistraActivitat(".$id.");
+	setInterval(ConsultaActivitat, 5000);
+	</script>"
 ?>
 </body>
 </html>

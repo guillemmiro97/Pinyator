@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
 	include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";	  
 
-	$sql = "SELECT CARREC, SEGADMIN, SEGCASTELLER, SEGEVENT, SEGCASTELL, SEGBOSS 
+	$sql = "SELECT NOM, CARREC, SEGADMIN, SEGCASTELLER, SEGEVENT, SEGCASTELL, SEGBOSS 
 	FROM USUARIS 
 	WHERE nom = '".$myusername."' and password = '".$mypassword."'";
 	$result = mysqli_query($conn, $sql);
@@ -27,7 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	{			
 		while($row = mysqli_fetch_assoc($result)) 
 		{
-			$_SESSION["usuari"] = $myusername;
+			$_SESSION["usuari"] = $row["NOM"];
 			$_SESSION["carrec"] = $row["CARREC"];
 			
 			$_SESSION["casteller"] = $row["SEGCASTELLER"] ;

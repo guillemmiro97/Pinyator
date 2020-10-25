@@ -28,6 +28,11 @@ document.onkeydown = function(event)
 	}    
 };
 
+window.onbeforeunload = function (e) 
+{
+	EliminaActivitat(activitat_castellId);
+};
+
 function boxJSON() 
 {
   this.id = 0;
@@ -53,6 +58,7 @@ function init()
 }
 
 var elementActualId=0;
+var activitat_castellId=0;
 
 
 function ShowPopupCasella()
@@ -1030,4 +1036,71 @@ function Buscat()
 	}
 
 	invalidate();
+}
+
+function EsAndroid()
+{
+	var strAgent = navigator.userAgent;
+	return (strAgent.search('Android') > -1);
+}
+
+function RegistraActivitat(id)
+{	
+	if (!EsAndroid())
+	{		
+		activitat_castellId=id;
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				Log(this.responseText);
+			}
+		}
+		xmlhttp.open("GET", "Castell_Activitat.php?a=1&id="+id, true);
+		xmlhttp.send();
+	}
+}
+
+function ConsultaActivitat()
+{
+	if (!EsAndroid() && (activitat_castellId > 0))
+	{		
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				if (this.responseText != "")
+				{
+					document.getElementById("activitat").style.visibility = "";
+					document.getElementById("activitat").innerHTML = this.responseText;
+				}
+				else
+				{
+					document.getElementById("activitat").style.visibility = "hidden";
+					document.getElementById("activitat").innerHTML = "";
+				}
+			}
+		}
+		xmlhttp.open("GET", "Castell_Activitat.php?a=2&id="+activitat_castellId, true);
+		xmlhttp.send();
+	}
+}
+
+function EliminaActivitat(id)
+{
+	if (!EsAndroid())
+	{		
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				Log(this.responseText);
+			}
+		}
+		xmlhttp.open("GET", "Castell_Activitat.php?a=-1&id="+id, true);
+		xmlhttp.send();
+	}
 }
