@@ -1,11 +1,12 @@
+<script src="https://cdn.jsdelivr.net/mojs/latest/mo.min.js"></script>
 
 <?php
-if (!empty($Casteller_id))
+if (!empty($Casteller_id_taula))
 {	
 	$script = "";
 	
 	$sql="SELECT E.EVENT_ID, E.NOM AS EVENT_NOM, E.EVENT_PARE_ID,
-	date_format(E.DATA, '%d-%m-%Y %H:%i') AS DATA, ".$Casteller_id." AS CASTELLER_ID, IFNULL(I.ESTAT,-1) AS ESTAT,
+	date_format(E.DATA, '%d-%m-%Y %H:%i') AS DATA, ".$Casteller_id_taula." AS CASTELLER_ID, IFNULL(I.ESTAT,-1) AS ESTAT,
 	IFNULL(EP.DATA, E.DATA) AS ORDENACIO, 
 	IFNULL(I.ACOMPANYANTS, 0) AS ACOMPANYANTS, E.TIPUS,
 	(SELECT SUM(C.PUBLIC) FROM CASTELL AS C WHERE C.EVENT_ID=E.EVENT_ID) AS PUBLIC,
@@ -23,7 +24,7 @@ if (!empty($Casteller_id))
 		) AS APUNTATS_ALTRES
 	FROM EVENT AS E
 	LEFT JOIN EVENT AS EP ON EP.EVENT_ID = E.EVENT_PARE_ID
-	LEFT JOIN CASTELLER_INSCRITS AS I ON I.EVENT_ID = E.EVENT_ID AND I.CASTELLER_ID=".$Casteller_id."
+	LEFT JOIN CASTELLER_INSCRITS AS I ON I.EVENT_ID = E.EVENT_ID AND I.CASTELLER_ID=".$Casteller_id_taula."
 	WHERE E.ESTAT = 1	
 	ORDER BY ORDENACIO, E.EVENT_PARE_ID, E.DATA";
 	
@@ -44,7 +45,7 @@ if (!empty($Casteller_id))
 			echo "	<th width='1%'></th>";
 		}
 	
-		echo "	<th width='20%'>Estat</th>
+		echo "	<th width='20%'></th>
 			</tr>";
 		$Separador="";
 		// output data of each row
@@ -79,18 +80,25 @@ if (!empty($Casteller_id))
 			if ($stat == -1)
 			{
 				$stat = 0;
-				$script .= "PrimerSave(".$row2["EVENT_ID"].",".$row2["CASTELLER_ID"].");";
+				$script .= "PrimerSaveLike(".$row2["EVENT_ID"].",".$row2["CASTELLER_ID"].");";
 			}
+			
+			$checked="";
+			$imgLike="Logo_Colla_null.gif";
 			
 			if ($stat== 0)
 			{
 				$color = "style='background-color:#ff1a1a;'";
 				$estat="No vinc";
+				$checked="";
+				$imgLike="Logo_Colla_null.gif";
 			}
 			elseif ($stat > 0)
 			{
 				$color = "style='background-color:#33cc33;'";//green
 				$estat="Vinc";
+				$checked="checked";
+				$imgLike="Logo_Colla.gif";
 			}
 
 			$tInici = "";
@@ -123,9 +131,18 @@ if (!empty($Casteller_id))
 			{
 				echo "<td></td>";
 			}
-			echo "<td><button class='boto' onClick='Save(".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].")' id=".$idElement." ".$color.">".$estat."</button></td>
-			</tr>";
-			
+			//echo "<td><button class='boto' onClick='Save(".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].")' id=".$idElement." ".$color.">".$estat."</button></td>
+			//</tr>";
+			//<img id='IMG".$idElement."' src='icons/Logo_Colla_null.gif' width=48 height=48>
+			//<img id='IMG".$idElement."' src='icons/Logo_Colla_null.gif' width=48 height=48>
+			echo "<td>
+					<div>
+						<div class='like-cnt ".$checked."' id='".$idElement."' onClick='OnClickLike(".$idElement.", ".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].", ".$Casteller_id.", ".$row2["TIPUS"].")'>
+							<img id='IMG".$idElement."' src='icons/".$imgLike."' width=48 height=48>
+						</div>
+					</div>
+				  </td>
+				</tr>";
 			$Separador="<tr><td><br></td></tr>";
 		}
 		echo "</table>";		

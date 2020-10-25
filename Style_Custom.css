@@ -1,4 +1,10 @@
-﻿body
+﻿
+/*
+El color de la colla és el Blau Ter: CMYK: 90, 63, 24, 8 | RGB: 37, 86, 134 | Hex: #255686
+El taronja és el color secundari: CMYK: 0, 60, 98, 0 | RGB: 241, 124, 0 | Hex: #F17C00
+*/
+
+body
 {
   margin-left:10px;
   padding-left:10px;
@@ -674,11 +680,29 @@ input:checked + .slider:before {
   vertical-align: middle;
   text-align: center;
 }
-.dot img{
+.dot img
+{
   margin: 0;
   position: absolute;
   top: 50%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%)
+}
+
+/********************************************/
+
+.like-cnt
+{  
+  /*background: #cce6ff; */    
+  width: 52px; 
+  height: 52px;  
+  border-radius: 50%;
+  vertical-align: middle;
+  text-align: center;
+  z-index:10;
+}
+.like-cnt img
+{
+  transform: translate(1%, 6%)
 }

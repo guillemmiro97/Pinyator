@@ -21,7 +21,7 @@ if (!empty($_GET['id']))
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" sizes="111x192" href="icons\logo192.png">
   <link rel="icon" sizes="111x192" href="icons\logo192.png">
-  <script src="llibreria/inscripcio.js?v=1.5"></script>
+  <script src="llibreria/inscripcio.js?v=1.6"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
@@ -63,7 +63,7 @@ background-attachment: fixed;  background-position: center; opacity:0.4'>
 <?php
 /***+++++++++++ DOCUMENTACIÓ +++++++++++***/
 	$topLlista = 100;
-	echo "<div class='dot' style='position:absolute; left:0px; top:38px; width:52; height:52;'>
+	echo "<div class='dot' style='position:absolute; left:0px; top:38px; width:52; height:52; box-shadow: 0px 3px #888888;'>
 			<a href='Documentacio_Llista.php'>
 				<img src='icons/Logo_Colla.gif' width=48 height=48>
 			</a>
@@ -197,6 +197,7 @@ if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 	
 	echo "<h3>Llista esdeveniments disponibles:</h3>";
 	
+	$Casteller_id_taula = $Casteller_id;
 	include "$_SERVER[DOCUMENT_ROOT]/pinyator/Inscripcio_taula.php";
 	
 	$sql="SELECT DISTINCT C.CODI, C.MALNOM, C.CASTELLER_ID
@@ -213,7 +214,7 @@ if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 		{
 			$malnom = $row["MALNOM"];
 			echo "<h3>".$malnom."</h3>";
-			$Casteller_id = $row["CASTELLER_ID"];
+			$Casteller_id_taula = $row["CASTELLER_ID"];
 			include "$_SERVER[DOCUMENT_ROOT]/pinyator/Inscripcio_taula.php";
 		}
 	}

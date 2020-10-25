@@ -118,6 +118,23 @@ function PrimerSave(event_id, casteller_id)
 	}
 }
 
+function PrimerSaveLike(event_id, casteller_id) 
+{	
+    if(event_id > 0)
+	{			
+		var elementNom="E"+event_id+"C"+casteller_id;
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{				
+
+			}
+		};	
+		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&s=" + 0, true);
+		xmlhttp.send();
+	}
+}
 
 function Vinc(event_id, casteller_id) 
 {	
@@ -235,12 +252,15 @@ function ModificaRanking(operador)
 {
 	if (operador != 0)
 	{
+		var lastStar;
+		increment = 0;
 		actual = actual + operador;
 		percentatgeAssistencia = ((actual/total)*100);
 		
 		for (var i= 0;i < 10;i++)
 		{
 			var star = document.getElementById("star"+i);
+			
 			if((i*10) < percentatgeAssistencia)
 			{
 				star.style.display = "";
@@ -253,11 +273,135 @@ function ModificaRanking(operador)
 			if ((percentatgeAssistencia-(i*10))>5)
 			{
 				star.style.width = "";
+				increment = 0;
 			}
 			else
 			{
 				star.style.width = "14px";
+				increment = 7;
+			}
+			
+			if (star.style.display == "")
+			{
+				lastStar = star;
+				leftPosition = getOffset(lastStar).leftCenter+increment;
 			}
 		}
+		
+		if (operador == 1)
+		{
+			var burst = new mojs.Burst({
+				left: leftPosition, 
+				top: getOffset(lastStar).topCenter,
+				radius:   { 4: 32 },
+				angle:    45,
+				count:    14,
+				children: {
+				radius:       2.5,
+				fill:         'gold',
+				scale:        { 1: 0, easing: 'quad.in' },
+				pathScale:    [ .8, null ],
+				degreeShift:  [ 13, null ],
+				duration:     [ 500, 700 ],
+				easing:       'quint.out'}});
+
+			burst.replay();
+		}
+}
+}
+
+function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
+{
+	var check_status = like_cnt.classList.contains("checked");
+	var imgId = "IMG" + like_cnt.id;
+	var img = document.getElementById(imgId);
+	var operador=0;
+	
+	var estat=0;
+	var event_id=eventid;
+	var casteller_id=castellerid;
+	
+	for(i=0;i<events.length;i++)
+	{
+		if ((events[i].event_id==eventid) && (events[i].casteller_id==castellerid))
+		{
+		    if (!check_status)
+			{ 
+				estat = 1;
+				events[i].estat=estat;
+			}
+			else
+			{
+				estat = 0;
+				events[i].estat=estat;
+			}
+		}		
+	}	
+	
+	if(!check_status)
+	{
+		var burst = new mojs.Burst({
+			left: getOffset(like_cnt).leftCenter, 
+			top: getOffset(like_cnt).topCenter,
+			radius:   { 4: 32 },
+			angle:    45,
+			count:    14,
+			children: {
+			radius:       2.5,
+			fill:         '#FD7932',
+			scale:        { 1: 0, easing: 'quad.in' },
+			pathScale:    [ .8, null ],
+			degreeShift:  [ 13, null ],
+			duration:     [ 500, 700 ],
+			easing:       'quint.out'}});
+
+
+		like_cnt.classList.add("checked");
+		img.src='icons/Logo_Colla.gif';
+		burst.replay();
+		operador=1;
 	}
+	else
+	{
+		img.src='icons/Logo_Colla_null.gif';
+		like_cnt.classList.remove("checked");
+		operador=-1;
+	}
+	if(event_id > 0)
+	{			
+		var eventNom="E"+event_id;
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() 
+		{
+			
+			if (this.readyState == 4 && this.status == 200) 
+			{
+
+				var frame = document.getElementById("counterCastellers");
+				if (frame != null)
+				{
+					frame.contentDocument.location.reload(true);
+				}
+
+				ModificaSom(event_id, operador);
+				if ((castellerid == casteller_ranking) && (tipus==0/*assaig*/))
+				{
+					ModificaRanking(operador);
+				}
+			}
+		};	
+		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&s=" + estat, true);
+		xmlhttp.send();
+	}
+}
+
+function getOffset(el) 
+{
+  const rect = el.getBoundingClientRect();
+  return {
+    left: rect.left + window.scrollX,
+    top: rect.top + window.scrollY,
+	leftCenter: rect.left + window.scrollX + (rect.width/2),
+    topCenter: rect.top + window.scrollY + (rect.height/2)
+  };
 }
