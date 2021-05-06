@@ -29,6 +29,8 @@ $esplantilla=0;
 $escontador=0;
 $hashtag="";
 $temporada="";
+$max_participants=0;
+$max_acompanyants=0;
 
 $autofocus="";
 
@@ -42,7 +44,8 @@ if ($id > 0)
 	date_format(E.DATA, '%Y-%m-%d') AS DATA,
 	date_format(E.DATA, '%H:%i') AS HORA,
 	E.TIPUS, E.ESTAT, E.EVENT_PARE_ID, E.ESPLANTILLA,
-	E.HASHTAG, E.CONTADOR, E.TEMPORADA
+	E.HASHTAG, E.CONTADOR, E.TEMPORADA, E.MAX_PARTICIPANTS,
+	E.MAX_ACOMPANYANTS
 	FROM EVENT AS E
 	WHERE E.EVENT_ID = ".$id."
 	ORDER BY E.DATA, E.NOM ";
@@ -63,6 +66,8 @@ if ($id > 0)
 			$escontador = $row["CONTADOR"];
 			$hashtag = $row["HASHTAG"];
 			$temporada = $row["TEMPORADA"];
+			$max_participants = $row["MAX_PARTICIPANTS"];
+			$max_acompanyants = $row["MAX_ACOMPANYANTS"];
 		}
 	}
 	else if (mysqli_error($conn) != "")
@@ -176,7 +181,21 @@ if (!empty($_GET["e"]))
 			</td>
 		</tr>
 	</table>
-  <br><br>
+  <br><br> 
+   	<table>
+		<tr>
+			<th>Màx. participants</th><th>Màx. acompanyants</th>
+		</tr>	
+		<tr>
+			<td width=200px>
+				<input type="text" class="form_edit" name="max_participants" value="<?php echo $max_participants ?>">
+			</td>
+			<td width=200px>
+				<input type="text" class="form_edit" name="max_acompanyants" value="<?php echo $max_acompanyants ?>">
+			</td>
+		</tr>
+	</table>
+<br><br>
   <label for="sel1">Selecciona esdeveniment pare:</label>
   <select class="form_edit" name="eventpareid">
 	<option value=0>Sense pare</oprion>

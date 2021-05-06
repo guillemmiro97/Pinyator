@@ -13,6 +13,8 @@ $estat = intval($_POST["estat"]);
 $pare = intval($_POST["eventpareid"]);
 $hashtag = strval($_POST["hashtag"]);
 $temporada = strval($_POST["temporada"]);
+$max_participants = strval($_POST["max_participants"]);
+$max_acompanyants = strval($_POST["max_acompanyants"]);
 $esplantilla = 0;
 $contador = 0;
 
@@ -34,13 +36,14 @@ $temporada = GetStrDB($temporada);
 if ($id > 0)
 {
 	$sql="UPDATE EVENT SET NOM='".$nom."',DATA='".GetFormatedDateTime($data,$hora)."',TIPUS=".$tipus.",ESTAT=".$estat.",EVENT_PARE_ID=".$pare."
-	,ESPLANTILLA=".$esplantilla.",CONTADOR=".$contador.",HASHTAG='".$hashtag."',TEMPORADA='".$temporada."'  
+	,ESPLANTILLA=".$esplantilla.",CONTADOR=".$contador.",HASHTAG='".$hashtag."',TEMPORADA='".$temporada."'
+	,MAX_PARTICIPANTS=".$max_participants.",MAX_ACOMPANYANTS=".$max_acompanyants."  
 	WHERE EVENT_ID = ".$id.";";
 	$sql=$sql." UPDATE EVENT SET ESTAT=".$estat." WHERE EVENT_PARE_ID = ".$id.";";
 }
 else
 {
-	$sql="INSERT INTO EVENT(NOM,DATA,TIPUS,ESTAT,EVENT_PARE_ID,ESPLANTILLA,CONTADOR,HASHTAG,TEMPORADA) VALUES('".$nom."','".GetFormatedDateTime($data,$hora)."',".$tipus.",".$estat.",".$pare.",".$esplantilla.",".$contador.",'".$hashtag."','".$temporada."');";
+	$sql="INSERT INTO EVENT(NOM,DATA,TIPUS,ESTAT,EVENT_PARE_ID,ESPLANTILLA,CONTADOR,HASHTAG,TEMPORADA,MAX_PARTICIPANTS,MAX_ACOMPANYANTS) VALUES('".$nom."','".GetFormatedDateTime($data,$hora)."',".$tipus.",".$estat.",".$pare.",".$esplantilla.",".$contador.",'".$hashtag."','".$temporada."',".$max_participants.",".$max_acompanyants.");";
 }
 
 if (mysqli_multi_query($conn, $sql)) 

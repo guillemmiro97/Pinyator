@@ -27,7 +27,8 @@
     <th class='llistes'>Dia</th>
 	<?php if (EsEventLv2())echo "<th class='llistes'>Castells</th>"; ?>	
 	<th class='llistes'>Inscrits</th>
-	<th class='llistes'>Comentaris</th>	
+	<th class='llistes'>Comentaris</th>
+	<th class='llistes'>Màx. Part.</th>
 	<th class='llistes'>Plantilla</th>
 	<th class='llistes'>Estat</th>
 	<?php if (EsEventLv2()) echo "<th class='llistes'>Acció</th>" ?>	
@@ -47,7 +48,7 @@ E.ESTAT, E.EVENT_PARE_ID, E.ESPLANTILLA,
 COUNT(I.ESTAT) AS CONTESTES_QTA,
 (SUM(IF(I.ESTAT > 0, 1, 0)) + SUM(IFNULL(I.ACOMPANYANTS,0))) AS INSCRITS_QTA,
 (SELECT IFNULL(COUNT(*), 0) FROM CASTELL C WHERE C.EVENT_ID=E.EVENT_ID) AS CASTELLS_QTA,
-IFNULL(EP.DATA, E.DATA) AS ORDENACIO,
+IFNULL(EP.DATA, E.DATA) AS ORDENACIO, E.MAX_PARTICIPANTS,
 (SELECT IFNULL(COUNT(*), 0) FROM EVENT_COMENTARIS EC WHERE EC.EVENT_ID=E.EVENT_ID) AS COMENTARIS,
 (SELECT SUM(IF(IU.ESTAT > 0, 1, 0)) 
 		FROM INSCRITS IU 
@@ -129,6 +130,7 @@ if (mysqli_num_rows($result) > 0)
 		}
 		echo "<td class='llistes'><a href='Event_LlistaPrivat.php?".$link."'>(".$row["UTILS"].")".$row["INSCRITS_QTA"]."/".$row["CONTESTES_QTA"]."</a></td>
 		<td class='llistes'><a href='Event_Comentari_Privat.php?id=".$row["EVENT_ID"]."'>".$row["COMENTARIS"]."</a></td>
+		<td class='llistes'>".$row["MAX_PARTICIPANTS"]."</td>
 		<td class='llistes'>".$esPlantilla."</td>
 		<td class='llistes'>".$estatNom."</td>";
 		if(EsEventLv2())

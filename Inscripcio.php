@@ -21,7 +21,7 @@ if (!empty($_GET['id']))
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" sizes="111x192" href="icons\logo192.png">
   <link rel="icon" sizes="111x192" href="icons\logo192.png">
-  <script src="llibreria/inscripcio.js?v=1.6"></script>
+  <script src="llibreria/inscripcio.js?v=1.7"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
@@ -140,7 +140,7 @@ if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 	
 	if ($visualitzarPercentAssistecia)
 	{			
-		echo "<a href='inscripcio_LlistaPercentatge.php?id=".$Casteller_uuid."'>";
+		echo "<a href='Inscripcio_LlistaPercentatge.php?id=".$Casteller_uuid."'>";
 		
 		$sql="SELECT COUNT(E.ESTAT) AS NUM, COUNT(I.CASTELLER_ID) AS CAST
 		FROM EVENT E

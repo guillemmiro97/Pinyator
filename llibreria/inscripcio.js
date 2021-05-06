@@ -3,6 +3,9 @@ function Event()
 	event_id=0;
 	estat=0;
 	casteller_id=0;
+	apuntats=0;
+	maxParticipants=0;
+	maxAcompanyants=0;
 }
 
 var events=[];
@@ -16,12 +19,15 @@ var actual=0;
 	actual=a;
  }
 
-function EventNou(event_id,estat,casteller_id)
+function EventNou(event_id,estat,casteller_id,apuntats,maxParticipants,maxAcompanyants)
 {
   var event = new Event;
   event.event_id = event_id;
   event.estat = estat;
   event.casteller_id=casteller_id;
+  event.apuntats=apuntats;
+  event.maxParticipants=maxParticipants;
+  event.maxAcompanyants=maxAcompanyants;
   events.push(event);
 }
 
@@ -199,16 +205,36 @@ function IncrementaAcompanyant(event_id, casteller_id)
     if (event_id > 0)
 	{			
 		var count = parseInt(document.getElementById("AE"+event_id+"C"+casteller_id).innerHTML)+1;
-		ModificaAcompanyant(event_id, casteller_id, count);
+		var allowed = true;
+		var i=0;
+		var trobat = false;
+		while((i<events.length) && (!trobat))
+		{
+			trobat = ((events[i].event_id==event_id) && (events[i].casteller_id==casteller_id));
+			if (trobat)
+			{			
+				allowed = (events[i].apuntats < events[i].maxParticipants) || (events[i].maxParticipants == 0);
+				allowed = allowed && (count <= events[i].maxAcompanyants || events[i].maxAcompanyants == 0);
+			}
+			i++;			
+		}
+
+		if (allowed)
+		{			
+			ModificaAcompanyant(event_id, casteller_id, count);
+		}
 	}
 }
 
 function DecrementaAcompanyant(event_id, casteller_id) 
 {	
     if (event_id > 0)
-	{			
-		var count = parseInt(document.getElementById("AE"+event_id+"C"+casteller_id).innerHTML)-1;
-		ModificaAcompanyant(event_id, casteller_id, count);
+	{		
+		var count = parseInt(document.getElementById("AE"+event_id+"C"+casteller_id).innerHTML);
+		if (count > 0)
+		{
+			ModificaAcompanyant(event_id, casteller_id, count-1);
+		}
 	}
 }
 
@@ -222,10 +248,18 @@ function ModificaAcompanyant(event_id, casteller_id, count)
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				var elementId = "AE"+event_id+"C"+casteller_id;
-				var operador = count - parseInt(document.getElementById(elementId).innerHTML);
-				document.getElementById(elementId).innerHTML = count;
-				ModificaSom(event_id, operador);
+				var str = this.response.trim();
+				if (str == "")
+				{
+					var elementId = "AE"+event_id+"C"+casteller_id;
+					var operador = count - parseInt(document.getElementById(elementId).innerHTML);
+					document.getElementById(elementId).innerHTML = count;
+					ModificaSom(event_id, operador);
+				}
+				else if (str == "NotAllowed")
+				{
+					location.reload();
+				} 
 			}
 		};	
 		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&a=" + count, true);
@@ -237,20 +271,36 @@ function ModificaSom(event_id, operador)
 {
 	if ((event_id > 0) && (operador != 0))
 	{
+		var valor = 0;
 		var frameList = document.getElementsByName("E"+event_id);
 		for (var i= 0;i < frameList.length;i++)
 		{
 			if (parseInt(frameList[i].innerHTML) > 0)
-				frameList[i].innerHTML=parseInt(frameList[i].innerHTML)+operador;
+			{
+				valor=parseInt(frameList[i].innerHTML)+operador;
+			}
 			else
-				frameList[i].innerHTML=1;
+			{
+				valor = 1;
+			}
+			frameList[i].innerHTML=valor;
+		}
+		
+		for (var i= 0;i < events.length;i++)
+		{
+			if(events[i].event_id==event_id)
+			{	
+				events[i].apuntats = valor;
+			}
+			i++;			
 		}
 	}
 }
 
 function ModificaRanking(operador)
 {
-	if (operador != 0)
+	var star = document.getElementById("star1");
+	if ((operador != 0) && (star))
 	{
 		var lastStar;
 		increment = 0;
@@ -260,7 +310,7 @@ function ModificaRanking(operador)
 		for (var i= 0;i < 10;i++)
 		{
 			var star = document.getElementById("star"+i);
-			
+
 			if((i*10) < percentatgeAssistencia)
 			{
 				star.style.display = "";
@@ -307,7 +357,7 @@ function ModificaRanking(operador)
 
 			burst.replay();
 		}
-}
+	}
 }
 
 function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
@@ -317,6 +367,8 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 	var img = document.getElementById(imgId);
 	var operador=0;
 	
+	var allowed = true;
+	
 	var estat=0;
 	var event_id=eventid;
 	var casteller_id=castellerid;
@@ -324,11 +376,15 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 	for(i=0;i<events.length;i++)
 	{
 		if ((events[i].event_id==eventid) && (events[i].casteller_id==castellerid))
-		{
+		{			
 		    if (!check_status)
 			{ 
-				estat = 1;
-				events[i].estat=estat;
+				allowed = (events[i].apuntats < events[i].maxParticipants) || (events[i].maxParticipants == 0);
+				if (allowed)
+				{
+					estat = 1;
+					events[i].estat=estat;
+				}
 			}
 			else
 			{
@@ -338,35 +394,6 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 		}		
 	}	
 	
-	if(!check_status)
-	{
-		var burst = new mojs.Burst({
-			left: getOffset(like_cnt).leftCenter, 
-			top: getOffset(like_cnt).topCenter,
-			radius:   { 4: 32 },
-			angle:    45,
-			count:    14,
-			children: {
-			radius:       2.5,
-			fill:         '#FD7932',
-			scale:        { 1: 0, easing: 'quad.in' },
-			pathScale:    [ .8, null ],
-			degreeShift:  [ 13, null ],
-			duration:     [ 500, 700 ],
-			easing:       'quint.out'}});
-
-
-		like_cnt.classList.add("checked");
-		img.src='icons/Logo_Colla.gif';
-		burst.replay();
-		operador=1;
-	}
-	else
-	{
-		img.src='icons/Logo_Colla_null.gif';
-		like_cnt.classList.remove("checked");
-		operador=-1;
-	}
 	if(event_id > 0)
 	{			
 		var eventNom="E"+event_id;
@@ -376,22 +403,65 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 			
 			if (this.readyState == 4 && this.status == 200) 
 			{
+				var str = this.response.trim();
+				if (str == "")
+				{					
+					if(!check_status)
+					{
+						if (allowed)
+						{
+							var burst = new mojs.Burst({
+								left: getOffset(like_cnt).leftCenter, 
+								top: getOffset(like_cnt).topCenter,
+								radius:   { 4: 32 },
+								angle:    45,
+								count:    14,
+								children: {
+								radius:       2.5,
+								fill:         '#FD7932',
+								scale:        { 1: 0, easing: 'quad.in' },
+								pathScale:    [ .8, null ],
+								degreeShift:  [ 13, null ],
+								duration:     [ 500, 700 ],
+								easing:       'quint.out'}});
 
-				var frame = document.getElementById("counterCastellers");
-				if (frame != null)
-				{
-					frame.contentDocument.location.reload(true);
+
+							like_cnt.classList.add("checked");
+							img.src='icons/Logo_Colla.gif';
+							burst.replay();
+							operador=1;
+						}
+					}
+					else
+					{
+						img.src='icons/Logo_Colla_null.gif';
+						like_cnt.classList.remove("checked");
+						operador=-1;
+					}				
+					
+					var frame = document.getElementById("counterCastellers");
+					if (frame != null)
+					{
+						frame.contentDocument.location.reload(true);
+					}
+
+					ModificaSom(event_id, operador);
+					if ((castellerid == casteller_ranking) && (tipus==0/*assaig*/))
+					{
+						ModificaRanking(operador);
+					}
 				}
-
-				ModificaSom(event_id, operador);
-				if ((castellerid == casteller_ranking) && (tipus==0/*assaig*/))
+				else if (str == "NotAllowed")
 				{
-					ModificaRanking(operador);
+					location.reload();
 				}
 			}
 		};	
-		xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&s=" + estat, true);
-		xmlhttp.send();
+		if(allowed)
+		{
+			xmlhttp.open("GET", "Inscripcio_Desa.php?e=" + event_id + "&c=" + casteller_id + "&s=" + estat, true);
+			xmlhttp.send();
+		}
 	}
 }
 

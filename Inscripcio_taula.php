@@ -7,8 +7,9 @@ if (!empty($Casteller_id_taula))
 	
 	$sql="SELECT E.EVENT_ID, E.NOM AS EVENT_NOM, E.EVENT_PARE_ID,
 	date_format(E.DATA, '%d-%m-%Y %H:%i') AS DATA, ".$Casteller_id_taula." AS CASTELLER_ID, IFNULL(I.ESTAT,-1) AS ESTAT,
-	IFNULL(EP.DATA, E.DATA) AS ORDENACIO, 
+	IFNULL(EP.DATA, E.DATA) AS ORDENACIO, E.MAX_PARTICIPANTS,
 	IFNULL(I.ACOMPANYANTS, 0) AS ACOMPANYANTS, E.TIPUS,
+	E.MAX_ACOMPANYANTS,
 	(SELECT SUM(C.PUBLIC) FROM CASTELL AS C WHERE C.EVENT_ID=E.EVENT_ID) AS PUBLIC,
 	(SELECT SUM(IF(IU.ESTAT > 0, 1,0))
 		FROM INSCRITS IU
@@ -55,26 +56,32 @@ if (!empty($Casteller_id_taula))
 			
 			$comment = "<a href='Event_Comentari_Public.php?id=".$row2["EVENT_ID"]."&nom=".$malnomPrincipal."'><img src='icons/comment.png'></img></a>";
 			
+			$max_participants = $row2["MAX_PARTICIPANTS"];
+			$max_acompanyants = $row2["MAX_ACOMPANYANTS"];
+			
 			$apuntats=0;
-			if ($visualitzarPenya == 1)
+			if (($row2["APUNTATS"] > 0) && ($row2["TIPUS"] != -1))
 			{
-				if (($row2["APUNTATS"] > 0) && ($row2["TIPUS"] != -1))
-				{
-					$apuntats=$row2["APUNTATS"];				
-				}
-				else if (($row2["APUNTATS_ALTRES"] > 0) && ($row2["TIPUS"] == -1))
-				{
-					$apuntats=$row2["APUNTATS_ALTRES"];
-				}			
+				$apuntats=$row2["APUNTATS"];				
+			}
+			else if (($row2["APUNTATS_ALTRES"] > 0) && ($row2["TIPUS"] == -1))
+			{
+				$apuntats=$row2["APUNTATS_ALTRES"];
+			}			
+			
+			$str_max = "";
+			if ($max_participants > 0)
+			{
+				$str_max = "(màx ".$max_participants.")";
 			}
 			
 			if ($row2["PUBLIC"]>0)
 			{	
-				$eventNom = "<a href='Actuacio.php?id=".$row2["EVENT_ID"]."'><b>".$row2["EVENT_NOM"]."</b></a>";
+				$eventNom = "<a href='Actuacio.php?id=".$row2["EVENT_ID"]."'><b>".$row2["EVENT_NOM"]." ".$str_max."</b></a>";
 			}
 			else
 			{
-				$eventNom = "<b>".$row2["EVENT_NOM"]."</b>";
+				$eventNom = "<b>".$row2["EVENT_NOM"]." ".$str_max."</b>";
 			}
 			$stat  = $row2["ESTAT"];
 			if ($stat == -1)
@@ -120,7 +127,7 @@ if (!empty($Casteller_id_taula))
 				$acompanyants .= "<button class='boto' onClick='DecrementaAcompanyant(".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].")'>&nbsp-&nbsp</button>";
 			}
 			
-			$script .= "EventNou(".$row2["EVENT_ID"].",".$stat.",".$row2["CASTELLER_ID"].");";
+			$script .= "EventNou(".$row2["EVENT_ID"].",".$stat.",".$row2["CASTELLER_ID"].",".$apuntats.",".$max_participants.",".$max_acompanyants.");";
 			echo "<tr>			
 			<td width='85%'>".$tInici.$comment.$eventNom."<br>".$row2["DATA"]."<br>".$acompanyants.$tFinal."</td>";
 			if ($visualitzarPenya)
