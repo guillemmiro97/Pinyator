@@ -22,15 +22,31 @@ if (!empty($_GET['id']))
   <link rel="apple-touch-icon" sizes="111x192" href="icons\logo192.png">
   <link rel="icon" sizes="111x192" href="icons\logo192.png">
   <script src="llibreria/inscripcio.js?v=1.7"></script>
+  <script src="llibreria/Cookies.js?v=1.1"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
 <br>
+
 <script>
 $(document).unload = function(){window.location.reload();};
-
 </script>
+
 <body style='background-color:#cce6ff;'>
+
+
+<div class = "missatge" id="missatgeM" style="display: table; height:100%;display: table-cell; vertical-align: middle;"onclick="HideMessage('missatgeM');" >
+	<p>
+        <b>Si et vols apuntar a un esdeveniment, només has de clicar a la "M" de Marrecs.</b>
+		<br>
+        <a class="ok" onclick="PonerCookie('apuntatCookie', 'missatgeM');"><b>OK</b></a>
+	</p>
+</div>
+
+<script>
+	iniCookie('apuntatCookie', 'missatgeM');
+</script>  
+
 <div style='position: fixed; z-index: -1; width: 90%; height: 80%;background-image: url("icons/Logo_Marrecs.gif");background-repeat: no-repeat; 
 background-attachment: fixed;  background-position: center; opacity:0.4'>
 </div>

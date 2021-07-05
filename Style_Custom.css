@@ -557,7 +557,7 @@ input:checked + .slider:before {
 
 
 /* COOKIES */
-#barraaceptacion {
+.missatgeCookie {
     display:none;
     position:fixed;
     left:0px;
@@ -572,27 +572,38 @@ input:checked + .slider:before {
     z-index:99999;
 }
  
-.inner {
-    width:100%;
-    position:absolute;
-    padding-left:5px;
-    font-family:verdana;
-    font-size:12px;
-    top:4%;
+.missatgeCookie .ok {
+	display: inline-block;
+	padding: 2px 6px;
+	font-size: 14px;
+	line-height: 1.8;
+	vertical-align: bottom;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 4px;
+	color: #FFF;
+	background-color: #4069B2;
+	border-color:#1D51B2;
+	border: none;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	-moz-user-select: none;
+	background-image: none;
+	font-weight: bold; 
 }
- 
-.inner a.ok {
-    padding:4px;
-    color:#00ff2e;
-    text-decoration:none;
-}
- 
-.inner a.info {
+.missatgeCookie a.info {
     padding-left:5px;
     text-decoration:none;
     color:#faff00;
 }
-
 
 /****/
 
@@ -706,3 +717,59 @@ input:checked + .slider:before {
 {
   transform: translate(1%, 6%)
 }
+
+
+/* Missatge */
+.missatge {
+    display:none;
+    position:fixed;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    width:100%;
+    text-align:center;
+    min-height:40px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color:#fff;
+    z-index:99999;
+}
+
+.missatge p {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+}
+ 
+.missatge .ok {
+	display: inline-block;
+	padding: 2px 6px;
+	font-size: 14px;
+	line-height: 1.8;
+	vertical-align: bottom;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 4px;
+	color: #FFF;
+	background-color: #4069B2;
+	border-color:#1D51B2;
+	border: none;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	-moz-user-select: none;
+	background-image: none;
+	font-weight: bold; 
+}
+
+
+/****/
