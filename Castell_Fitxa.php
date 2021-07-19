@@ -155,6 +155,8 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 			
 		}
 		
+		$eventUltimDia = $eventid;
+		
 		$sql="SELECT ERR.DATA, ERR.EVENT_ID
 			FROM EVENT AS ERR
 			INNER JOIN EVENT AS E ON ERR.TEMPORADA=E.TEMPORADA AND E.DATA > ERR.DATA
@@ -172,10 +174,10 @@ echo "<img id='lesionat_novell' src='icons/lesionat_novell.png' style='display:n
 			while($row = mysqli_fetch_assoc($result))
 			{	
 				$dataArxivat = $row["DATA"];
-				if ($eventUltimDia == "")
+				if ($eventUltimDia == $eventid)
 				{
 					$eventUltimDia = $row["EVENT_ID"];
-				}	
+				}
 			}
 		}
 		
