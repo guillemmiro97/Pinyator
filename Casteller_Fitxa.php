@@ -77,12 +77,13 @@
 	$portarpeu = 1;
 	$urlInscripcio = "";
 	$novell = 0;
+	$vacunaCOVID = 0;
 
 	if ($id > 0)
 	{
 		$sql="SELECT CASTELLER_ID, MALNOM, NOM, COGNOM_1, COGNOM_2, 
 		POSICIO_PINYA_ID, POSICIO_TRONC_ID, CODI, FAMILIA_ID, 
-		ALTURA, ALTURA_TRONCS, ESTAT, LESIONAT, PORTAR_PEU, FAMILIA2_ID, NOVELL
+		ALTURA, ALTURA_TRONCS, ESTAT, LESIONAT, PORTAR_PEU, FAMILIA2_ID, NOVELL, VACUNA_COVID
 		FROM CASTELLER
 		WHERE CASTELLER_ID = ".$id."
 		ORDER BY MALNOM ";
@@ -109,6 +110,7 @@
 				$lesionat = $row["LESIONAT"];
 				$urlInscripcio = "src='Inscripcio.php?id=".$url."'";
 				$novell = $row["NOVELL"];
+				$vacunaCOVID = $row["VACUNA_COVID"];
 			}
 		}
 		else if (mysqli_error($conn) != "")
@@ -140,7 +142,7 @@
 			<br><br>			
 			<table>
 				<tr>
-					<th>Lesió</th><th>Portar peu</th><th>Novell/a</th>
+					<th>Lesió</th><th>Portar peu</th><th>Novell/a</th><th>Vacuna COVID</th>
 				</tr>	
 				<tr>
 					<td width=100px>
@@ -158,6 +160,12 @@
 					<td width=100px>
 						<label class="switch">texte
 							<input type="checkbox" name="novell" value=1 <?php if ($novell == 1) echo " checked";?>>
+							<span class="slider slidergreen round"></span>
+						</label>
+					</td>
+					<td width=100px>
+						<label class="switch">texte
+							<input type="checkbox" name="covid" value=1 <?php if ($vacunaCOVID == 1) echo " checked";?>>
 							<span class="slider slidergreen round"></span>
 						</label>
 					</td>

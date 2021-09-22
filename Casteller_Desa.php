@@ -18,6 +18,7 @@ $alturaTroncs = intval($_POST["alturaTroncs"]);
 $lesionat = 0;
 $portarpeu = 0;
 $novell = 0;
+$vacunaCOVID = 0;
 $estat = 1;
 $accio = strval($_POST["Desa"]);
 
@@ -33,6 +34,9 @@ if (!empty($_POST["portarpeu"]))
 if (!empty($_POST["novell"]))
 	$novell=intval($_POST["novell"]);
 
+if (!empty($_POST["covid"]))
+	$vacunaCOVID=intval($_POST["covid"]);
+
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
 
 $malnom = GetStrDB($malnom);
@@ -45,14 +49,14 @@ if ($id > 0)
 	$sql="UPDATE CASTELLER SET MALNOM='".$malnom."',NOM='".$nom."',COGNOM_1='".$cognom1."',COGNOM_2='".$cognom2."'
 	,POSICIO_PINYA_ID=".$posicioPinya.",POSICIO_TRONC_ID=".$posicioTronc."
 	,FAMILIA_ID=".$responsable1.",FAMILIA2_ID=".$responsable2.",ALTURA=".$altura.",ALTURA_TRONCS=".$alturaTroncs."
-	,ESTAT=".$estat.",LESIONAT=".$lesionat.",PORTAR_PEU=".$portarpeu.",NOVELL=".$novell."
+	,ESTAT=".$estat.",LESIONAT=".$lesionat.",PORTAR_PEU=".$portarpeu.",NOVELL=".$novell.",VACUNA_COVID=".$vacunaCOVID."
 	WHERE CASTELLER_ID = ".$id;
 	//$sql="UPDATE CASTELLER SET CODI= UUID() WHERE (CODI IS NULL OR CODI='')AND CASTELLER_ID = ".$id;
 }
 else
 {
-	$sql="INSERT INTO CASTELLER(MALNOM, NOM, COGNOM_1, COGNOM_2, POSICIO_PINYA_ID, POSICIO_TRONC_ID, CODI, FAMILIA_ID, FAMILIA2_ID, ESTAT, ALTURA, ALTURA_TRONCS, LESIONAT, PORTAR_PEU, NOVELL) 
-	VALUES('".$malnom."','".$nom."','".$cognom1."','".$cognom2."',".$posicioPinya.",".$posicioTronc.", UUID(),".$responsable1.",".$responsable2.",1,".$altura.",".$alturaTroncs.",".$lesionat.",".$portarpeu.",".$novell.")";
+	$sql="INSERT INTO CASTELLER(MALNOM, NOM, COGNOM_1, COGNOM_2, POSICIO_PINYA_ID, POSICIO_TRONC_ID, CODI, FAMILIA_ID, FAMILIA2_ID, ESTAT, ALTURA, ALTURA_TRONCS, LESIONAT, PORTAR_PEU, NOVELL, VACUNA_COVID) 
+	VALUES('".$malnom."','".$nom."','".$cognom1."','".$cognom2."',".$posicioPinya.",".$posicioTronc.", UUID(),".$responsable1.",".$responsable2.",1,".$altura.",".$alturaTroncs.",".$lesionat.",".$portarpeu.",".$novell.",".$vacunaCOVID.")";
 }
 
 if (mysqli_query($conn, $sql)) 
