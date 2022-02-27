@@ -44,6 +44,8 @@
             <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\llibreria\plantilla.js" />
             <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\llibreria\popup_esborra.js" />
             <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\llibreria\table2CSV.js" />
+            <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\llibreria\Cookies.js" />
+            <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\llibreria\popup.js" />
         </Folder>
         <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Actuacio.php" />
         <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Apuntat.php" />
@@ -120,5 +122,12 @@
         <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Usuari_Desa.php" />
         <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Usuari_Esborra.php" />
         <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Usuari_Fitxa.php" />
+        <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Documentacio_Llista.php" />
+        <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Documentacio.php" />
+        <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Documentacio_Desa.php" />
+        <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Documentacio_Esborra.php" />
+        <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Documentacio_Fitxa.php" />
+        <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Event_Copia.php" />
+        <File name="C:\Archivos de programa\EasyPHP-DevServer-14.1VC9\data\localweb\Pinyator\Popup.php" />
     </Project>
 </NotepadPlus>

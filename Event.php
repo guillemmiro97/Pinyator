@@ -3,7 +3,7 @@
   <title>Pinyator - Esdeveniment</title>
 <meta charset="utf-8">
 <?php $menu=2; include "$_SERVER[DOCUMENT_ROOT]/pinyator/Head.php";?>
-<script src="llibreria/popup_esborra.js"></script>
+<script src="llibreria/popup.js"></script>
 </head>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
 <body class="popup">
@@ -108,7 +108,7 @@ if (mysqli_num_rows($result) > 0)
 		}
 		else
 		{
-			$linkCastells = "<a href='Castell_Nou.php?id=".$row["EVENT_ID"]."' class='boto' >Nou castell</a>";
+			$linkCastells = "<a href='Castell_Nou.php?id=".$row["EVENT_ID"]."' class='boto' >+</a>";
 		}
 
 		if(EsEventLv2())
@@ -135,10 +135,14 @@ if (mysqli_num_rows($result) > 0)
 		<td class='llistes'>".$estatNom."</td>";
 		if(EsEventLv2())
 		{
-			if ($row["CASTELLS_QTA"] > 0)
-				echo "<td class='llistes'></td>";
-			else
-				echo "<td class='llistes'><button class='boto boto_remove' name='Event_Esborra.php?id=".$row["EVENT_ID"]."' onClick='ShowPopup(this)' >Esborra</button></td>";
+			echo "<td class='llistes'>";
+			echo "<button class='boto' name='Event_Copia.php?id=".$row["EVENT_ID"]."' onClick='ShowPopupCopia(this)'><img class='img_boto' src='icons/copy.png'></button>";
+
+			if ($row["CASTELLS_QTA"] == 0)
+			{
+				echo "<button class='boto boto_remove' name='Event_Esborra.php?id=".$row["EVENT_ID"]."' onClick='ShowPopupEsborra(this)'><img class='img_boto' src='icons/trash.png'></button>";
+			}
+			echo "</td>";
 		}
 		echo "</tr>";
     }	
@@ -152,7 +156,7 @@ mysqli_close($conn);
 ?>	  
 	  
 	</table> 
-<?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Popup_Esborrar.php";?> 
+<?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Popup.php";?> 
    </body>
 </html>
 

@@ -251,6 +251,11 @@ a.boto:hover{
 
 .boto_remove{
 	background-color: red;
+	float: right;
+}
+
+.boto_remove_popup{
+	background-color: red;
 }
 
 button.boto_remove:hover,
@@ -258,6 +263,10 @@ a.boto_remove:hover{
 	background-color: #FFC43D;
 }
 
+button.boto_remove_popup:hover,
+a.boto_remove:hover{
+	background-color: #FFC43D;
+}
 
 .boto_add{
 	background-color: green;
@@ -304,6 +313,11 @@ button.tabuladorActiu{
 	background-color: #CC782B;
 }
 
+.img_boto
+{
+	width:20px;
+	height:20px;
+}
 
 /***************  GRIDS   ********************/
 

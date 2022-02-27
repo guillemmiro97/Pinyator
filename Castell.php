@@ -3,7 +3,7 @@
   <title>Pinyator - Castells</title>
   <meta charset="utf-8">
 <?php $menu=4; include "$_SERVER[DOCUMENT_ROOT]/pinyator/Head.php";?>
-<script src="llibreria/popup_esborra.js"></script>
+<script src="llibreria/popup.js"></script>
 </head>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
 <body class="popup">
@@ -99,15 +99,13 @@
 						<th class='llistes'>Ordre</th>
 						<th class='llistes'>Castell</th>
 						<th class='llistes'>Hora</th>
-						<th class='llistes'>Públic</th>
 						<th class='llistes'>Creat</th>
-						<th class='llistes'>Esbor.</th>
+						<th class='llistes'>Acció</th>
 					</tr>";
 				echo "<tr class='llistes'>
 					<td class='llistes'><button class='boto' onClick='Ordena(".$row["EVENT_ID"].")'>Ordena</button></td>
 					<td class='llistes'><a href='Castell_Fitxa.php?id=".$row["CASTELL_ID"]."&a=1'>Troncs i nuclis</a></td>
 					<td class='llistes'><a href='Castell_Fitxa.php?id=".$row["CASTELL_ID"]."&a=1&t=1'>Troncs</a></td>
-					<td class='llistes'></td>
 					<td class='llistes'></td>
 					<td class='llistes'></td>
 				</tr>";
@@ -138,9 +136,11 @@
 					<td class='llistes'><div contenteditable id=".$row["CASTELL_ID"]." title=".$row["ORDRE"].">".$row["ORDRE"]."</div>
 					<td class='llistes'><a href='Castell_Fitxa.php?id=".$row["CASTELL_ID"]."'>".$row["NOM"]."</a></td>
 					<td class='llistes'>".$stamp1."-".$stamp2."</td>
-					<td class='llistes'><button class='boto ".$public."' name='Castell_Publica.php?id=".$row["CASTELL_ID"]."' onClick='Publicar(this)'>P</button></td>
 					<td class='llistes'>".$row["DATA_CREACIO"]."</td>
-					<td class='llistes'><button class='boto boto_remove' name='Castell_Desa.php?id=".$row["CASTELL_ID"]."&a=1' onClick='ShowPopup(this)'>X</button></td>
+					<td class='llistes'>
+						<button class='boto ".$public."' name='Castell_Publica.php?id=".$row["CASTELL_ID"]."' onClick='Publicar(this)'>P</button>
+						<button class='boto boto_remove' name='Castell_Desa.php?id=".$row["CASTELL_ID"]."&a=1' onClick='ShowPopupEsborra(this)'><img class='img_boto' src='icons/trash.png'></button>
+					</td>
 				</tr>";
 				
 			$timeInici->add(new DateInterval('PT' . $minuts . 'M'));
@@ -157,7 +157,7 @@
 
 	mysqli_close($conn);
 ?>	  
-<?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Popup_Esborrar.php";?> 
+<?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Popup.php";?> 
 	 
    </body>
 <script>

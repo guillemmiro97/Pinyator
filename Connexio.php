@@ -1,5 +1,5 @@
 <?php
-	$conn = mysqli_connect('localhost','pinyes','P1ny35','marrecs_pinyator');
+	conn = mysqli_connect('localhost','pinyes','P1ny35','marrecs_pinyator');
 	if (!$conn) 
 	{
 		die('Could not connect: ' . mysqli_error($conn));
@@ -39,4 +39,19 @@ function GetFormatedDateTime($date, $time, $format = 'YmdHis')
     return $d->format($format);
 }
 
+function GetLastId($conne)
+{
+	$sql = "SELECT LAST_INSERT_ID() as ID";
+	$result = mysqli_query($conne, $sql);
+
+	if (mysqli_num_rows($result) > 0) 
+	{		
+		// output data of each row
+		while($row = mysqli_fetch_assoc($result)) 
+		{	
+			return $row["ID"];
+		}
+	}
+	return -1;
+}
 ?>
