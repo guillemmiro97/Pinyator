@@ -31,6 +31,7 @@ $hashtag="";
 $temporada="";
 $max_participants=0;
 $max_acompanyants=0;
+$observacions="";
 
 $autofocus="";
 
@@ -45,7 +46,7 @@ if ($id > 0)
 	date_format(E.DATA, '%H:%i') AS HORA,
 	E.TIPUS, E.ESTAT, E.EVENT_PARE_ID, E.ESPLANTILLA,
 	E.HASHTAG, E.CONTADOR, E.TEMPORADA, E.MAX_PARTICIPANTS,
-	E.MAX_ACOMPANYANTS
+	E.MAX_ACOMPANYANTS, E.OBSERVACIONS
 	FROM EVENT AS E
 	WHERE E.EVENT_ID = ".$id."
 	ORDER BY E.DATA, E.NOM ";
@@ -68,6 +69,7 @@ if ($id > 0)
 			$temporada = $row["TEMPORADA"];
 			$max_participants = $row["MAX_PARTICIPANTS"];
 			$max_acompanyants = $row["MAX_ACOMPANYANTS"];
+			$observacions = $row["OBSERVACIONS"];
 		}
 	}
 	else if (mysqli_error($conn) != "")
@@ -140,6 +142,19 @@ if (!empty($_GET["e"]))
 	?>
 	<input type="date" class="form_edit" name="data" value="<?php echo $data ?>" required>
 	<input type="time" class="form_edit" name="hora" value="<?php echo $hora ?>" required>
+<br><br>
+	<label>Observacions</label>
+	<textarea type="text" class="form_edit" id="observacions" name="observacions" rows="6"><?php echo $observacions ?></textarea>	
+	<table width=100%>
+		<tr>
+			<th>
+				<button type='button' class='butons' OnClick='Omple_Observacio_Dimarts()'>Dimarts</button>
+			</th>
+			<th>
+				<button type='button' class='butons' OnClick='Omple_Observacio_Divendres()'>Divendres</button>
+			</th>
+		</tr>
+	</table>
 <br><br>
 	<label>Tipus</label><br>
 	<label class="radio-inline"><input type="radio" name="tipus" <?php if($tipus==-1) echo"checked"?> value=-1>Altres</label>
@@ -235,6 +250,22 @@ if (!empty($_GET["e"]))
 </div>   
 </div> 
 </form>
+<script>
+function Omple_Observacio_Dimarts()
+{
+	str = "ESCOLA 19:00h - 20:00h";
+	str = str + "\nCANALLA 19:00h - 20.30h";
+	str = str + "\nGENERAL 20:00h - 21:30h";
+	document.getElementById("observacions").innerHTML = str;
+}
+function Omple_Observacio_Divendres()
+{
+	str = "ESCOLA 19:30h - 20:30h";
+	str = str + "\nCANALLA 19:30h - 21.00h";
+	str = str + "\nGENERAL 20:30h - 22:30h";
+	document.getElementById("observacions").innerHTML = str;
+}
+</script>
    </body>
 </html>
 

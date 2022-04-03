@@ -5,6 +5,7 @@ $estat=0;
 $allowed = true;
 
 include "$_SERVER[DOCUMENT_ROOT]/pinyator/Connexio.php";
+//sleep(5);
 
 if (isset($_GET["s"])) 
 {
@@ -142,6 +143,7 @@ else if (isset($_GET["a"]))
 		echo "NotAllowed";
 	}
 }
+
 
 mysqli_close($conn);
 

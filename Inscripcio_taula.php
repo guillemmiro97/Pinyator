@@ -22,7 +22,8 @@ if (!empty($Casteller_id_taula))
 		FROM INSCRITS IU
 		JOIN CASTELLER C ON C.CASTELLER_ID=IU.CASTELLER_ID
 		WHERE IU.EVENT_ID=E.EVENT_ID
-		) AS APUNTATS_ALTRES
+		) AS APUNTATS_ALTRES,
+	REPLACE(E.OBSERVACIONS, CHAR(13), '<br>') AS OBSERVACIONS
 	FROM EVENT AS E
 	LEFT JOIN EVENT AS EP ON EP.EVENT_ID = E.EVENT_PARE_ID
 	LEFT JOIN CASTELLER_INSCRITS AS I ON I.EVENT_ID = E.EVENT_ID AND I.CASTELLER_ID=".$Casteller_id_taula."
@@ -58,6 +59,7 @@ if (!empty($Casteller_id_taula))
 			
 			$max_participants = $row2["MAX_PARTICIPANTS"];
 			$max_acompanyants = $row2["MAX_ACOMPANYANTS"];
+			$observacions = $row2["OBSERVACIONS"];
 			
 			$apuntats=0;
 			if (($row2["APUNTATS"] > 0) && ($row2["TIPUS"] != -1))
@@ -129,7 +131,7 @@ if (!empty($Casteller_id_taula))
 			
 			$script .= "EventNou(".$row2["EVENT_ID"].",".$stat.",".$row2["CASTELLER_ID"].",".$apuntats.",".$max_participants.",".$max_acompanyants.");";
 			echo "<tr>			
-			<td width='85%'>".$tInici.$comment.$eventNom."<br>".$row2["DATA"]."<br>".$acompanyants.$tFinal."</td>";
+			<td width='85%'>".$tInici.$comment.$eventNom."<br>".$row2["DATA"]."<br><p style='font-size:14px'>".$row2["OBSERVACIONS"]."</p><br>".$acompanyants.$tFinal."</td>";
 			if ($visualitzarPenya)
 			{
 				echo "<td><b name='E".$row2["EVENT_ID"]."'>".$apuntats."</b></td>";
