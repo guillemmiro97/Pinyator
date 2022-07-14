@@ -46,6 +46,9 @@ CREATE TABLE IF NOT EXISTS `CASTELLER` (
   `Portar_Peu` bit(1) NOT NULL DEFAULT b'1',
   `FAMILIA2_ID` int(11) DEFAULT NULL,
   `POSICIO_TRONC_ID` int(11) DEFAULT NULL,
+  `NOVELL` bit(1) NOT NULL DEFAULT b'0',
+  `ALTURA_TRONCS` int(11) DEFAULT 0,
+  `VACUNA_COVID` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`Casteller_ID`),
   UNIQUE KEY `MalNom` (`MalNom`)
 );
@@ -89,6 +92,16 @@ CREATE TABLE IF NOT EXISTS `CASTELL_POSICIO` (
   PRIMARY KEY (`CASELLA_ID`,`Castell_ID`),
   KEY `CASTELL_POSICIO__CASTELL_ID` (`Castell_ID`)
 );
+-- --------------------------------------------------------
+
+--
+-- Estructura de la taula `CASTELL_REGISTRE`
+--
+
+CREATE TABLE IF NOT EXISTS `CASTELL_REGISTRE` (
+  `CASTELL_ID` int(11) NOT NULL,
+  `USUARI` varchar(30) NOT NULL
+);
 
 -- --------------------------------------------------------
 
@@ -100,7 +113,9 @@ CREATE TABLE IF NOT EXISTS `CONFIGURACIO` (
   `TEMPORADA` varchar(100) NOT NULL,
   `RESOLUCIOPANTALLA` int(11) NOT NULL,
   `PARTICIPANTS` int(11) NOT NULL DEFAULT '0',
-  `FITES` int(11) NOT NULL DEFAULT '0'
+  `FITES` int(11) NOT NULL DEFAULT '0',
+  `DIFERENCIES` bit(1) DEFAULT b'0',
+  `PERCENATGEASSISTENCIA` bit(1) NOT NULL DEFAULT b'0'
 );
 
 --
@@ -109,6 +124,17 @@ CREATE TABLE IF NOT EXISTS `CONFIGURACIO` (
 
 INSERT INTO `CONFIGURACIO` (`TEMPORADA`, `RESOLUCIOPANTALLA`) VALUES
 ('2019', 1500);
+
+CREATE TABLE IF NOT EXISTS `DOCUMENTACIO` (
+  `DOCUMENTACIO_ID` int(11) NOT NULL,
+  `NOM` varchar(100) NOT NULL,
+  `GRUP` varchar(100) NOT NULL,
+  `DATA` date NOT NULL,
+  `ESTAT` int(11) NOT NULL DEFAULT '0',
+  `LINK` varchar(400) NOT NULL,
+  `ORDRE` int(11) NOT NULL,
+  PRIMARY KEY (`DOCUMENTACIO_ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -127,6 +153,9 @@ CREATE TABLE IF NOT EXISTS `EVENT` (
   `CONTADOR` bit(1) DEFAULT b'0',
   `HASHTAG` varchar(100) DEFAULT NULL,
   `TEMPORADA` varchar(100) NOT NULL,
+  `MAX_PARTICIPANTS` int(11) NOT NULL DEFAULT '0',
+  `MAX_ACOMPANYANTS` int(11) NOT NULL DEFAULT '0',
+  `OBSERVACIONS` varchar(500) NOT NULL,
   PRIMARY KEY (`Event_ID`)
 );
 
@@ -145,6 +174,17 @@ CREATE TABLE IF NOT EXISTS `EVENT_COMENTARIS` (
   PRIMARY KEY (`ID`)
 );
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de la taula `FITA_ASSISTENCIA`
+--
+
+CREATE TABLE IF NOT EXISTS `FITA_ASSISTENCIA` (
+  `HASHTAG` varchar(100) NOT NULL,
+  `ASSISTENCIA` int(11) NOT NULL,
+  `ASSISTENCIA_ANTERIOR` int(11) NOT NULL
+);
 
 -- --------------------------------------------------------
 
