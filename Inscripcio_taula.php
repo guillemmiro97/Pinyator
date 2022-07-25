@@ -72,10 +72,6 @@ if (!empty($Casteller_id_taula))
 			}			
 			
 			$str_max = "";
-			if ($max_participants > 0)
-			{
-				$str_max = "(màx ".$max_participants.")";
-			}
 			
 			if ($row2["PUBLIC"]>0)
 			{	
