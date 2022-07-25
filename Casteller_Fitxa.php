@@ -74,7 +74,7 @@
 	$alturaTroncs = 0;
 	$estat = 0;
 	$lesionat = 0;
-	$portarpeu = 1;
+	$portarpeu = 0;
 	$urlInscripcio = "";
 	$novell = 0;
 	$vacunaCOVID = 0;
@@ -142,7 +142,7 @@
 			<br><br>			
 			<table>
 				<tr>
-					<th>Lesió</th><th>Portar peu</th><th>Novell/a</th><th>Vacuna COVID</th>
+					<th>Lesió</th><th>Engrescout/Actiu</th><th>Novell/a</th><th>Vacuna COVID</th>
 				</tr>	
 				<tr>
 					<td width=100px>
@@ -151,7 +151,7 @@
 							<span class="slider round"></span>
 						</label>
 					</td>
-					<td width=100px>
+					<td width=200px>
 						<label class="switch">texte
 							<input type="checkbox" name="portarpeu" value=1 <?php if ($portarpeu == 1) echo " checked";?>>
 							<span class="slider round"></span>
