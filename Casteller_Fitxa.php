@@ -74,7 +74,7 @@
 	$alturaTroncs = 0;
 	$estat = 0;
 	$lesionat = 0;
-	$portarpeu = 0;
+	$portarpeu = 1;
 	$urlInscripcio = "";
 	$novell = 0;
 	$vacunaCOVID = 0;
