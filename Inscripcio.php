@@ -32,7 +32,7 @@ if (!empty($_GET['id']))
 $(document).unload = function(){window.location.reload();};
 </script>
 
-<body style='background-color:#cce6ff;'>
+<body style='background-color:#FEDD19;'>
 
 
 <div class = "missatge" id="missatgeM" style="display: table; height:100%;display: table-cell; vertical-align: middle;"onclick="HideMessage('missatgeM');" >
@@ -47,7 +47,7 @@ $(document).unload = function(){window.location.reload();};
 	iniCookie('apuntatCookie', 'missatgeM');
 </script>  
 
-<div style='position: fixed; z-index: -1; width: 90%; height: 80%;background-image: url("icons/Logo_Marrecs.gif");background-repeat: no-repeat; 
+<div style='position: fixed; z-index: -1; width: 90%; height: 90%;background-image: url("icons/logo_engrescats.png");background-repeat: no-repeat;
 background-attachment: fixed;  background-position: center; opacity:0.4'>
 </div>
 
@@ -84,13 +84,6 @@ background-attachment: fixed;  background-position: center; opacity:0.4'>
 				<img src='icons/Logo_Colla.gif' width=48 height=48>
 			</a>
 		</div>";
-	if ($visualitzarFites)
-	{
-		/***+++++++++++ TROFEU FITES +++++++++++***/
-		echo "<div style='position: absolute; left: 60px; top: 40px;'><a href='Fites_Llista.php'>
-				<img src='icons/trofeo.png' width=48 height=48>
-			</a></div>";
-	}
 ?>
 </div>
 <div style="position:absolute; right:0px; top:4px;">
@@ -152,63 +145,6 @@ if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 	echo "<div style='position: absolute; right: 6px; left: 6px; top:".$topLlista."px;'>";
 	echo "<h2>".$malnom."</h2>";
 
-	/***+++++++++++ ESTRELLES +++++++++++***/
-	
-	if ($visualitzarPercentAssistecia)
-	{			
-		echo "<a href='Inscripcio_LlistaPercentatge.php?id=".$Casteller_uuid."'>";
-		
-		$sql="SELECT COUNT(E.ESTAT) AS NUM, COUNT(I.CASTELLER_ID) AS CAST
-		FROM EVENT E
-		JOIN CONFIGURACIO C ON C.TEMPORADA=E.TEMPORADA
-		LEFT JOIN INSCRITS I ON E.EVENT_ID=I.EVENT_ID 
-			AND I.CASTELLER_ID = ".$Casteller_id." AND I.ESTAT>0
-		WHERE E.TIPUS=0
-		AND E.ESTAT IN (1,2)";
-
-		$result = mysqli_query($conn, $sql);
-
-		if (mysqli_num_rows($result) > 0) 
-		{
-			while($row = mysqli_fetch_assoc($result))
-			{
-				if ($row["NUM"]>0)
-				{
-					$percentatgeAssistencia = intval(($row["CAST"]/$row["NUM"])*100);
-					echo "<script>DesaAssistenciaCasteller(".$row["NUM"].", ".$row["CAST"].")</script>";
-				}
-			}
-		}
-
-		echo "<div style='width:200px; height:20px' title='".$percentatgeAssistencia."'>";
-		$left = 0;
-		
-		for ($x = 0; $x < 10; $x++)
-		{		
-			StarOff($left);
-			$starvisible = "display:none;";
-			if(($x*10) < $percentatgeAssistencia)
-			{
-				$starvisible = "";
-			}
-						
-			if (($percentatgeAssistencia-($x*10))>5)
-			{
-				$mig = "";
-			}
-			else
-			{
-				$mig = "width:14px;";
-			}
-			echo "<div id='star".$x."' style='position:absolute; left:".$left.";".$mig."overflow:hidden;".$starvisible."'><span class='fa fa-star starOn' style='font-size:30px'></span></div>";				
-		
-
-			$left += 30;			
-		}
-		echo "</div>";
-		echo "</a>";
-	}
-	
 	/***+++++++++++ LLISTAT +++++++++++***/
 	
 	echo "<h3>Llista esdeveniments disponibles:</h3>";
