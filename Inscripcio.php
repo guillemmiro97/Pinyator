@@ -15,7 +15,7 @@ if (!empty($_GET['id']))
 }
 ?>
 
-<html>
+<html id="engrescatsApuntatHtml">
 <head>
   <title>Pinyator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,13 +26,62 @@ if (!empty($_GET['id']))
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
-<br>
 
 <script>
 $(document).unload = function(){window.location.reload();};
 </script>
 
-<body style='background-color:#FEDD19;'>
+<body id="engrescatsApuntatBody">
+<header id="engrescatsApuntatHeader">
+    <article id="headerButtons">
+        <section>
+            <a href="Apuntat.php?reset=1">
+                <div class="buttonLink">
+                    <p>No sóc jo</p>
+                </div>
+            </a>
+        </section>
+        <section>
+            <a href="Documentacio_Llista.php">
+                <div class="buttonLink">
+                    <p>Documentació</p>
+                </div>
+            </a>
+        </section>
+    </article>
+    <article id="headerSocial">
+        <section>
+            <a href="https://www.youtube.com/">
+                <div id="youtubeButton" class="buttonSocial">
+                </div>
+            </a>
+        </section>
+        <section>
+            <a href="https://www.instagram.com/">
+                <div id="instagramButton" class="buttonSocial">
+                </div>
+            </a>
+        </section>
+        <section>
+            <a href="https://es-es.facebook.com/">
+                <div id="facebookButton" class="buttonSocial">
+                </div>
+            </a>
+        </section>
+        <section>
+            <a href="https://twitter.com/?lang=es">
+                <div id="twitterButton" class="buttonSocial">
+                </div>
+            </a>
+        </section>
+        <section>
+            <a href="https://www.tiktok.com/es/">
+                <div id="ticktockButton" class="buttonSocial">
+                </div>
+            </a>
+        </section>
+    </article>
+</header>
 
 
 <div class = "missatge" id="missatgeM" style="display: table; height:100%;display: table-cell; vertical-align: middle;"onclick="HideMessage('missatgeM');" >
@@ -47,8 +96,8 @@ $(document).unload = function(){window.location.reload();};
 	iniCookie('apuntatCookie', 'missatgeM');
 </script>  
 
-<div style='position: fixed; z-index: -1; width: 90%; height: 90%;background-image: url("icons/logo_engrescats.png");background-repeat: no-repeat;
-background-attachment: fixed;  background-position: center; opacity:0.4'>
+<div style='position: fixed; z-index: -1; width: 90%; height: 90%;background-image: url("icons/logoEngrescats.svg");background-repeat: no-repeat;
+background-attachment: fixed;  background-position: center; opacity:0.4; background-size: 30%;'>
 </div>
 
 <?php
@@ -75,47 +124,6 @@ background-attachment: fixed;  background-position: center; opacity:0.4'>
 	}
 ?>
 
-<div style='position:absolute;'><a href="Apuntat.php?reset=1" class="boto" >No sóc jo</a>
-<?php
-/***+++++++++++ DOCUMENTACIÓ +++++++++++***/
-	$topLlista = 100;
-	echo "<div class='dot' style='position:absolute; left:0px; top:38px; width:52; height:52; box-shadow: 0px 3px #888888;'>
-			<a href='Documentacio_Llista.php'>
-				<img src='icons/Logo_Colla.gif' width=48 height=48>
-			</a>
-		</div>";
-?>
-</div>
-<div style="position:absolute; right:0px; top:4px;">
-<?php
-    $eventId=0;
-	$hashtag="";
-	$hasHash=0;
-
-	$sql="SELECT EVENT_ID, HASHTAG 
-	FROM EVENT
-	WHERE CONTADOR=1
-	AND ESTAT=1
-	ORDER BY DATA LIMIT 1";
-
-	$result = mysqli_query($conn, $sql);
-
-	if (mysqli_num_rows($result) > 0) 
-	{
-		$row = mysqli_fetch_assoc($result);
-		$eventId = $row["EVENT_ID"];
-		$hashtag = $row["HASHTAG"];
-		if(strpos($hashtag, '#') !== false)
-		{
-			$hashtag=str_replace("#", "", $hashtag);
-			$hasHash=1;
-		}
-	}
-
-	echo "<iframe src='Counter.php?id=".$eventId."&h=".$hashtag."&hh=".$hasHash."' class='counterframe' id='counterCastellers'></iframe>";
-?>
-</div>
-
 <?php
 if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 {
@@ -126,7 +134,7 @@ if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 	$percentatgeAssistencia=0;
 
 	
-	$sql="SELECT C.MALNOM, C.CASTELLER_ID 
+	$sql="SELECT C.MALNOM, C.CASTELLER_ID, C.Nom, C.Cognom_1, C.Cognom_2 
 	FROM CASTELLER AS C
 	WHERE C.CODI='".$Casteller_uuid."'";
 
@@ -139,39 +147,9 @@ if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 			$malnom=$row["MALNOM"];
 			$malnomPrincipal=$row["MALNOM"];
 			$Casteller_id = $row["CASTELLER_ID"];
+            $nom=$row["Nom"]." ".$row["Cognom_1"]." ".$row["Cognom_2"];
 		}
 	}
-	
-	echo "<div style='position: absolute; right: 6px; left: 6px; top:".$topLlista."px;'>";
-	echo "<h2>".$malnom."</h2>";
-
-	/***+++++++++++ LLISTAT +++++++++++***/
-	
-	echo "<h3>Llista esdeveniments disponibles:</h3>";
-	
-	$Casteller_id_taula = $Casteller_id;
-	include "$_SERVER[DOCUMENT_ROOT]/pinyator/Inscripcio_taula.php";
-	
-	$sql="SELECT DISTINCT C.CODI, C.MALNOM, C.CASTELLER_ID
-	FROM CASTELLER AS CR
-	INNER JOIN CASTELLER AS C ON C.FAMILIA_ID = CR.CASTELLER_ID OR C.FAMILIA2_ID = CR.CASTELLER_ID
-	WHERE CR.CODI='".$Casteller_uuid."'
-	ORDER BY C.MALNOM";
-
-	$result = mysqli_query($conn, $sql);
-
-	if (mysqli_num_rows($result) > 0) 
-	{
-		while($row = mysqli_fetch_assoc($result)) 
-		{
-			$malnom = $row["MALNOM"];
-			echo "<h3>".$malnom."</h3>";
-			$Casteller_id_taula = $row["CASTELLER_ID"];
-			include "$_SERVER[DOCUMENT_ROOT]/pinyator/Inscripcio_taula.php";
-		}
-	}
-	echo "</div>";
-	mysqli_close($conn);
 }
 else
 {
@@ -184,5 +162,50 @@ function StarOff($left)
 }
 	
 ?>
+
+        <main id="engrescatsApuntatMain">
+            <!-- PART DEL USER -->
+            <article>
+                <section>
+                    <div id="userIMGBack">
+                        <div id="userIMG"></div>
+                    </div>
+                </section>
+                <section>
+                    <div id="userName">
+                        <h1><?php echo $nom; ?></h1>
+                        <p>Alias: <?php echo $malnom; ?></p>
+                    </div>
+                </section>
+            </article>
+
+            <?php
+            /***+++++++++++ LLISTAT +++++++++++***/
+
+
+            $Casteller_id_taula = $Casteller_id;
+            include "$_SERVER[DOCUMENT_ROOT]/pinyator/Inscripcio_taula.php";
+
+            $sql="SELECT DISTINCT C.CODI, C.MALNOM, C.CASTELLER_ID
+            FROM CASTELLER AS CR
+            INNER JOIN CASTELLER AS C ON C.FAMILIA_ID = CR.CASTELLER_ID OR C.FAMILIA2_ID = CR.CASTELLER_ID
+            WHERE CR.CODI='".$Casteller_uuid."'
+            ORDER BY C.MALNOM";
+
+            $result = mysqli_query($conn, $sql);
+
+            if (mysqli_num_rows($result) > 0)
+            {
+                while($row = mysqli_fetch_assoc($result))
+                {
+                    $malnom = $row["MALNOM"];
+                    $Casteller_id_taula = $row["CASTELLER_ID"];
+                    include "$_SERVER[DOCUMENT_ROOT]/pinyator/Inscripcio_taula.php";
+                }
+            }
+            mysqli_close($conn);
+
+            ?>
+        </main>
    </body>
 </html>

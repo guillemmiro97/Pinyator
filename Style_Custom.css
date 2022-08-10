@@ -786,3 +786,233 @@ input:checked + .slider:before {
 
 
 /****/
+
+
+/*** ENGRESCATS STYLE ***/
+
+#engrescatsApuntatHtml {
+    height: 100%;
+}
+
+#engrescatsApuntatBody {
+    margin: 0px;
+    height: 100%;
+    padding: 0px;
+    background-color: #feee8c;
+}
+
+#engrescatsApuntatMain {
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-size: 25px;
+    color: #333333;
+    height: 90%;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+#engrescatsApuntatHeader {
+    background-color: #FEDD19;
+    height: 50px;
+    display: flex;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-size: 25px;
+    color: #333333;
+    width: 100%;
+    line-height: 1.2;
+}
+
+#engrescatsApuntatBody p {
+    margin: 0px 10px;
+    width: fit-content;
+    padding: 3px 0px;
+}
+
+#engrescatsApuntatBody a {
+    text-decoration: none;
+    color: #333333;
+}
+
+.buttonLink {
+    background-color: #FFFFFF;
+    width: fit-content;
+    border-radius: 10px;
+    margin-right:10px;
+}
+
+.buttonSocial{
+    width: 45px;
+    height: 45px;
+    background-size: cover;
+    margin-left: 10px;
+}
+
+#headerButtons, #headerSocial {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+#headerSocial{
+    justify-content: end ;
+}
+
+#youtubeButton {
+    background-image: url("icons/logoYoutube.svg");
+}
+
+#instagramButton {
+    background-image: url("icons/logoInstagram.svg");
+}
+
+#facebookButton {
+    background-image: url("icons/logoFacebook.svg");
+}
+
+#twitterButton {
+    background-image: url("icons/logoTwitter.svg");
+}
+
+#ticktockButton {
+    background-image: url("icons/logoTickTock.svg");
+}
+
+#userIMG {
+    width: 86%;
+    background-image: url("icons/logoEngrescats.svg");
+    background-size: cover;
+}
+
+#userIMGBack {
+    width: 150px;
+    height: 150px;
+    background-color: #FEDD19;
+    display: flex;
+    justify-content: center;
+    border-radius: 25px;
+    padding: 10px;
+    float: left;
+}
+
+#userName {
+    display: grid;
+    align-content: center;
+    align-items: center;
+    height: 150px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+#userName h1 {
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 50px;
+    margin: 0px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#userName p{
+    margin: 0px;
+    padding: 0px;
+}
+
+.taula{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin: 10px 40px 10px 10px;
+    border: #FEDD19 3px solid;
+}
+
+.cell{
+    background-color: #FFFFFF;
+    align-items: center;
+    display: grid;
+    justify-content: center;
+    padding: 10px;
+}
+
+.columna_Nom {
+    grid-column: 1;
+}
+
+.columna_Data {
+    grid-column: 2;
+}
+
+.columna_Hora {
+    grid-column: 3;
+}
+
+.columna_Lloc {
+    grid-column: 4;
+}
+
+.columna_Assitencia {
+    grid-column: 5;
+}
+
+.columna_Engrescats {
+    grid-column: 6;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #AC0403;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #03AC47;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #03AC47;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
