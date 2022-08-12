@@ -418,7 +418,7 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 								count:    14,
 								children: {
 								radius:       2.5,
-								fill:         '#FD7932',
+								fill:         '#03AC47',
 								scale:        { 1: 0, easing: 'quad.in' },
 								pathScale:    [ .8, null ],
 								degreeShift:  [ 13, null ],
@@ -427,14 +427,14 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 
 
 							like_cnt.classList.add("checked");
-							img.src='icons/Logo_Colla.gif';
+							img.src='icons/semaforVerd.png';
 							burst.replay();
 							operador=1;
 						}
 					}
 					else
 					{
-						img.src='icons/Logo_Colla_null.gif';
+						img.src='icons/semaforVermell.png';
 						like_cnt.classList.remove("checked");
 						operador=-1;
 					}				

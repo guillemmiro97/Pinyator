@@ -94,21 +94,21 @@ if (!empty($Casteller_id_taula))
             }
 
             $checked="";
-            $imgLike="Logo_Colla_null.gif";
+            $imgLike="semaforVermell.png";
 
             if ($stat== 0)
             {
                 $color = "style='background-color:#ff1a1a;'";
                 $estat="No vinc";
                 $checked="";
-                $imgLike="Logo_Colla_null.gif";
+                $imgLike="semaforVermell.png";
             }
             elseif ($stat > 0)
             {
                 $color = "style='background-color:#33cc33;'";//green
                 $estat="Vinc";
                 $checked="checked";
-                $imgLike="Logo_Colla.gif";
+                $imgLike="semaforVerd.png";
             }
 
             $tInici = "";
@@ -145,10 +145,11 @@ if (!empty($Casteller_id_taula))
             ";
 
             echo "<div class='cell columna_Assitencia'>
-                        <label class='switch'>
-                            <input type='checkbox' ".$checked." class='like-cnt ".$checked."' id='".$idElement."' onClick='OnClickLike(".$idElement.", ".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].", ".$Casteller_id.", ".$row2["TIPUS"].")'>
-                            <span class='slider round'></span>
-                        </label>
+                        <div>
+                          <div class='like-cnt ".$checked."' id='".$idElement."' onClick='OnClickLike(".$idElement.", ".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].", ".$Casteller_id.", ".$row2["TIPUS"].")'>
+                                  <img id='IMG".$idElement."' src='icons/".$imgLike."' width=48 height=48>
+                            </div>
+                        </div>
                   </div>";
 
             //<div>
