@@ -160,16 +160,16 @@ td.llistes2
 
 th.llistes
 {
-    border: 1px solid #4069B2;
+    border: 1px solid #FEDD19;
     text-align: left;
     padding: 6px;
-	background-color: #4069B2;
-	color: #FFF;
+	background-color: #FEDD19;
+	color: #333333;
 }
 
 td.llistes
 {
-    border: 1px solid #4069B2;
+    border: 1px solid #FEDD19;
     text-align: left;
     padding: 6px;
 }
@@ -193,7 +193,7 @@ td.llistes a.boto{
 }
 
 td.llistes a{
-	color: #4069B2;
+	color: #333333;
 }
 
 .triangle-up {

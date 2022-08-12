@@ -26,7 +26,7 @@ if(!isset($_COOKIE[$cookie_name]))
  echo "<br>";
  echo "<table class='llistes'>";
   echo "<tr class='llistes'>";
-    echo "<th class='llistes'>MALNOM</th>";
+    echo "<th class='llistes'>ENGRESCATS</th>";
   echo "</tr>";
 
 	$sql="SELECT C.MALNOM, C.CODI
