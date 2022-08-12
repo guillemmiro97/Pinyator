@@ -97,7 +97,7 @@ $(document).unload = function(){window.location.reload();};
 </script>  
 
 <div style='position: fixed; z-index: -1; width: 90%; height: 90%;background-image: url("icons/logoEngrescats.svg");background-repeat: no-repeat;
-background-attachment: fixed;  background-position: center; opacity:0.4; background-size: 30%;'>
+background-attachment: fixed;  background-position: center; opacity:0.4; background-size: 27%;'>
 </div>
 
 <?php
