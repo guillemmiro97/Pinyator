@@ -51,31 +51,31 @@ $(document).unload = function(){window.location.reload();};
     </article>
     <article id="headerSocial">
         <section>
-            <a href="https://www.youtube.com/">
+            <a href="https://www.youtube.com/channel/UClYwGl4Cz0G99akjFT0BKDw">
                 <div id="youtubeButton" class="buttonSocial">
                 </div>
             </a>
         </section>
         <section>
-            <a href="https://www.instagram.com/">
+            <a href="https://www.instagram.com/engrescatsurl/?hl=es">
                 <div id="instagramButton" class="buttonSocial">
                 </div>
             </a>
         </section>
         <section>
-            <a href="https://es-es.facebook.com/">
+            <a href="https://es-es.facebook.com/engrescats.delaurl?fref=mentions">
                 <div id="facebookButton" class="buttonSocial">
                 </div>
             </a>
         </section>
         <section>
-            <a href="https://twitter.com/?lang=es">
+            <a href="https://twitter.com/engrescatsurl?lang=es">
                 <div id="twitterButton" class="buttonSocial">
                 </div>
             </a>
         </section>
         <section>
-            <a href="https://www.tiktok.com/es/">
+            <a href="https://www.tiktok.com/@engrescats.url">
                 <div id="ticktockButton" class="buttonSocial">
                 </div>
             </a>
@@ -174,7 +174,7 @@ function StarOff($left)
                 <section>
                     <div id="userName">
                         <h1><?php echo $nom; ?></h1>
-                        <p>Alias: <?php echo $malnom; ?></p>
+                        <p>Àlies: <?php echo $malnom; ?></p>
                     </div>
                 </section>
             </article>

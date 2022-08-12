@@ -919,8 +919,9 @@ input:checked + .slider:before {
 .taula{
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    margin: 10px 40px 10px 10px;
-    border: #FEDD19 3px solid;
+    margin: 10px 40px 0px 10px;
+    border: #FEDD19 4px solid;
+    font-size: 20px;
 }
 
 .cell{
@@ -929,10 +930,13 @@ input:checked + .slider:before {
     display: grid;
     justify-content: center;
     padding: 10px;
+    text-align: center;
 }
 
 .columna_Nom {
     grid-column: 1;
+    display: grid;
+    grid-template-columns: repeat(100, 1fr);
 }
 
 .columna_Data {
@@ -1015,4 +1019,13 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+.commentLink{
+    margin-right: 10px;
+    grid-column: 1/10;
+}
+
+.nomEvent{
+    grid-column: 11/100;
 }
