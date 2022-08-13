@@ -194,6 +194,7 @@ td.llistes a.boto{
 
 td.llistes a{
 	color: #333333;
+    text-decoration: underline;
 }
 
 .triangle-up {
