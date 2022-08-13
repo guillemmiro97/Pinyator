@@ -228,9 +228,9 @@ td.llistes a{
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 4px;
-  color: #FFF;
-  background-color: #4069B2;
-  border-color:#1D51B2;
+  color: #333333;
+  background-color: #FEDD19;
+  border-color:#333333;
   border: none;
   text-align: center;
   white-space: nowrap;
