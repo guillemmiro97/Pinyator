@@ -49,7 +49,7 @@ else if (EsURLAdmin() && !EsAdmin())
 
 	if (EsCastellerLv1())
 	{	
-		echo  "<a ".$casteller." href='Casteller.php'>Casteller</a>";	  
+		echo  "<a ".$casteller." href='Casteller.php?b=($)($)'>Casteller</a>";
 	}
 	if (EsEventLv1())
 	{	

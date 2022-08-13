@@ -244,7 +244,7 @@ td.llistes a{
 /* Add a background color to the button if you move the mouse over it (hover) */
 button.boto:hover,
 a.boto:hover{
-	background-color: #FFC43D;
+	background-color: #333333;
 	color: #FFF;
 	text-decoration: none;
 }
@@ -252,6 +252,7 @@ a.boto:hover{
 .boto_remove{
 	background-color: red;
 	float: right;
+    color:white;
 }
 
 .boto_remove_popup{
@@ -260,12 +261,12 @@ a.boto:hover{
 
 button.boto_remove:hover,
 a.boto_remove:hover{
-	background-color: #FFC43D;
+	background-color: #333333;
 }
 
 button.boto_remove_popup:hover,
 a.boto_remove:hover{
-	background-color: #FFC43D;
+	background-color: #333333;
 }
 
 .boto_add{
@@ -274,7 +275,7 @@ a.boto_remove:hover{
 
 button.boto_add:hover,
 a.boto_add:hover{
-	background-color: #FFC43D;
+	background-color: #333333;
 }
 
 .tabulador{
@@ -404,7 +405,7 @@ button.accordion{
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 button.accordion:hover,
 button.accordion.hover{
-	background-color: #4069B2;
+	background-color: #333333;
 	color: #FFF;
 }
 
