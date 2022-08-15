@@ -86,7 +86,7 @@ $(document).unload = function(){window.location.reload();};
 
 <div class = "missatge" id="missatgeM" style="display: table; height:100%;display: table-cell; vertical-align: middle;"onclick="HideMessage('missatgeM');" >
 	<p>
-        <b>Si et vols apuntar a un esdeveniment, només has de clicar a la "M" de Marrecs.</b>
+        <b>Si et vols apuntar a un esdeveniment, només has de clicar al botó de color vermell.</b>
 		<br>
         <a class="ok" onclick="PonerCookie('apuntatCookie', 'missatgeM');"><b>OK</b></a>
 	</p>
