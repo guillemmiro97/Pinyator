@@ -35,6 +35,7 @@
 			<th class="llistes" onClick="sortTable(3,'castellers')">Posició pinya<i></i></th>
 			<th class="llistes" onClick="sortTable(3,'castellers')">Posició tronc<i></i></th>
 			<th class="llistes" onClick="sortTable(4,'castellers')">Altura<i></i></th>
+			<th class="llistes" onClick="sortTable(4,'castellers')">Altura tronc<i></i></th>
 			<th class="llistes" <?php CastellerLv2Not("hidden")?>>UUID</th>
 			<th class="llistes" onClick="sortTable(6,'castellers')">Responsables<i></i></th>
 			<th class="llistes" onClick="sortTable(7,'castellers')">Estat<i></i></th>
@@ -75,8 +76,8 @@
 
 		$sql="SELECT C.CASTELLER_ID, IFNULL(C.MALNOM, '---') AS MALNOM, C.NOM, C.COGNOM_1, C.COGNOM_2,
 		P1.NOM AS POSICIO_PINYA, P2.NOM AS POSICIO_TROC,C.CODI,
-		CR1.MALNOM AS RESPONSABLE1, CR2.MALNOM AS RESPONSABLE2, 
-		C.ALTURA, CASE WHEN C.ESTAT = 1 THEN 'ACTIU' ELSE 'BAIXA' END AS ESTAT
+		CR1.MALNOM AS RESPONSABLE1, CR2.MALNOM AS RESPONSABLE2, C.ALTURA,
+		C.ALTURA_TRONCS, CASE WHEN C.ESTAT = 1 THEN 'ACTIU' ELSE 'BAIXA' END AS ESTAT
 		FROM CASTELLER AS C
 		LEFT JOIN POSICIO AS P1 ON P1.POSICIO_ID=C.POSICIO_PINYA_ID
 		LEFT JOIN POSICIO AS P2 ON P2.POSICIO_ID=C.POSICIO_TRONC_ID
@@ -121,6 +122,7 @@
 				<td class='llistes'>".$row["POSICIO_PINYA"]."</td>
 				<td class='llistes'>".$row["POSICIO_TROC"]."</td>
 				<td class='llistes'>".$row["ALTURA"]."</td>
+				<td class='llistes'>".$row["ALTURA_TRONCS"]."</td>
 				".$codi."
 				<td class='llistes'>".implode(", ", array_filter([$row["RESPONSABLE1"],$row["RESPONSABLE2"]]))."</td>
 				<td class='llistes'>".$row["ESTAT"]."</td>
