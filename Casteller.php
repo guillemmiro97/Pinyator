@@ -32,8 +32,8 @@
 			<th class="llistes" onClick="sortTable(0,'castellers')">Malnom<i></i></th>
 			<th class="llistes" onClick="sortTable(1,'castellers')">Nom<i></i></th>
 			<th class="llistes" onClick="sortTable(2,'castellers')">Cognoms<i></i></th>
-			<th class="llistes" onClick="sortTable(3,'castellers')">Posicio pinya<i></i></th>
-			<th class="llistes" onClick="sortTable(3,'castellers')">Posicio tronc<i></i></th>
+			<th class="llistes" onClick="sortTable(3,'castellers')">Posició pinya<i></i></th>
+			<th class="llistes" onClick="sortTable(3,'castellers')">Posició tronc<i></i></th>
 			<th class="llistes" onClick="sortTable(4,'castellers')">Altura<i></i></th>
 			<th class="llistes" <?php CastellerLv2Not("hidden")?>>UUID</th>
 			<th class="llistes" onClick="sortTable(6,'castellers')">Responsables<i></i></th>
