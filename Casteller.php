@@ -34,11 +34,10 @@
 			<th class="llistes" onClick="sortTable(2,'castellers')">Cognoms<i></i></th>
 			<th class="llistes" onClick="sortTable(3,'castellers')">Posició pinya<i></i></th>
 			<th class="llistes" onClick="sortTable(3,'castellers')">Posició tronc<i></i></th>
-			<th class="llistes" onClick="sortTable(4,'castellers')">Altura<i></i></th>
-			<th class="llistes" onClick="sortTable(4,'castellers')">Altura tronc<i></i></th>
+			<th class="llistes" onClick="sortTable(4,'castellers')">Alçada mans<i></i></th>
+			<th class="llistes" onClick="sortTable(5,'castellers')">Alçada tronc<i></i></th>
 			<th class="llistes" <?php CastellerLv2Not("hidden")?>>UUID</th>
-			<th class="llistes" onClick="sortTable(6,'castellers')">Responsables<i></i></th>
-			<th class="llistes" onClick="sortTable(7,'castellers')">Estat<i></i></th>
+			<th class="llistes" onClick="sortTable(6,'castellers')">Estat<i></i></th>
 			<th class="llistes" <?php CastellerLv2Not("hidden")?>></th>
 		</tr>
 <?php
@@ -124,7 +123,6 @@
 				<td class='llistes'>".$row["ALTURA"]."</td>
 				<td class='llistes'>".$row["ALTURA_TRONCS"]."</td>
 				".$codi."
-				<td class='llistes'>".implode(", ", array_filter([$row["RESPONSABLE1"],$row["RESPONSABLE2"]]))."</td>
 				<td class='llistes'>".$row["ESTAT"]."</td>
 				".$accio."
 				</tr>";
