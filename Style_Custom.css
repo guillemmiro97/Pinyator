@@ -249,6 +249,10 @@ a.boto:hover{
     text-decoration: none;
 }
 
+.img_boto:hover{
+    filter: invert(1);
+}
+
 .boto_remove{
     background-color: red;
     float: right;

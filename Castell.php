@@ -139,7 +139,7 @@
 					<td class='llistes'>".$row["DATA_CREACIO"]."</td>
 					<td class='llistes'>
 						<button class='boto ".$public."' name='Castell_Publica.php?id=".$row["CASTELL_ID"]."' onClick='Publicar(this)'>P</button>
-						<button class='boto boto_remove' name='Castell_Desa.php?id=".$row["CASTELL_ID"]."&a=1' onClick='ShowPopupEsborra(this)'><img class='img_boto' src='icons/trash.png'></button>
+						<button class='boto boto_remove' name='Castell_Desa.php?id=".$row["CASTELL_ID"]."&a=1' onClick='ShowPopupEsborra(this)'><img class='img_boto' src='icons/trash.svg'></button>
 					</td>
 				</tr>";
 				

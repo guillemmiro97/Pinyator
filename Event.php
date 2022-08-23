@@ -136,9 +136,9 @@ if (mysqli_num_rows($result) > 0)
 		if(EsEventLv2())
 		{
 			echo "<td class='llistes'>";
-			echo "<button class='boto' name='Event_Copia.php?id=".$row["EVENT_ID"]."' onClick='ShowPopupCopia(this)'><img class='img_boto' src='icons/copy.png'></button>";
+			echo "<button class='boto' name='Event_Copia.php?id=".$row["EVENT_ID"]."' onClick='ShowPopupCopia(this)'><img class='img_boto' src='icons/copy.svg'></button>";
 
-			echo "<button class='boto boto_remove' name='Event_Esborra.php?id=".$row["EVENT_ID"]."' onClick='ShowPopupEsborra(this)'><img class='img_boto' src='icons/trash.png'></button>";
+			echo "<button class='boto boto_remove' name='Event_Esborra.php?id=".$row["EVENT_ID"]."' onClick='ShowPopupEsborra(this)'><img class='img_boto' src='icons/trash.svg'></button>";
 
 			echo "</td>";
 		}
