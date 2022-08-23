@@ -1,7 +1,7 @@
 <script src="https://cdn.jsdelivr.net/mojs/latest/mo.min.js"></script>
 <article>
     <section style="padding-bottom: 10px;">
-        <div class="taula" style="font-size: 25px;">
+        <div id="taula-Titols" class="taula" style="font-size: 25px;">
             <div class="cell columna_Nom">
                 <strong style="grid-column:1/100;">Nom</strong>
             </div>
@@ -21,12 +21,12 @@
                 <strong>Engrescats</strong>
             </div>
         </div>
-<?php
-if (!empty($Casteller_id_taula))
-{
-    $script = "";
+        <?php
+        if (!empty($Casteller_id_taula))
+        {
+            $script = "";
 
-    $sql="SELECT E.EVENT_ID, E.NOM AS EVENT_NOM, E.EVENT_PARE_ID,
+            $sql="SELECT E.EVENT_ID, E.NOM AS EVENT_NOM, E.EVENT_PARE_ID,
 	date_format(E.DATA, '%d-%m-%Y %H:%i') AS DATA, ".$Casteller_id_taula." AS CASTELLER_ID, IFNULL(I.ESTAT,-1) AS ESTAT,
 	IFNULL(EP.DATA, E.DATA) AS ORDENACIO, E.MAX_PARTICIPANTS,
 	IFNULL(I.ACOMPANYANTS, 0) AS ACOMPANYANTS, E.TIPUS,
@@ -51,83 +51,83 @@ if (!empty($Casteller_id_taula))
 	WHERE E.ESTAT = 1	
 	ORDER BY ORDENACIO, E.EVENT_PARE_ID, E.DATA";
 
-    $result2 = mysqli_query($conn, $sql);
+            $result2 = mysqli_query($conn, $sql);
 
-    if (mysqli_num_rows($result2) > 0)
-    {
-        $PosicioId = 0;
-        $Separador="";
-        // output data of each row
-        while($row2 = mysqli_fetch_assoc($result2))
-        {
-            $idElement="E".$row2["EVENT_ID"]."C".$row2["CASTELLER_ID"];
-
-            $comment = "<a class='commentLink' href='Event_Comentari_Public.php?id=".$row2["EVENT_ID"]."&nom=".$malnomPrincipal."'><img src='icons/comment.png'></img></a>";
-
-            $max_participants = $row2["MAX_PARTICIPANTS"];
-            $max_acompanyants = $row2["MAX_ACOMPANYANTS"];
-            $observacions = $row2["OBSERVACIONS"];
-
-            $apuntats=0;
-            if (($row2["APUNTATS"] > 0) && ($row2["TIPUS"] != -1))
+            if (mysqli_num_rows($result2) > 0)
             {
-                $apuntats=$row2["APUNTATS"];
-            }
-            else if (($row2["APUNTATS_ALTRES"] > 0) && ($row2["TIPUS"] == -1))
-            {
-                $apuntats=$row2["APUNTATS_ALTRES"];
-            }
-
-            if ($row2["PUBLIC"]>0)
-            {
-                $eventNom = "<a class='nomEvent' href='Actuacio.php?id=".$row2["EVENT_ID"]."'><span style='text-decoration:underline;'>".$row2["EVENT_NOM"]."</span></a>";
-            }
-            else
-            {
-                $eventNom = "<span class='nomEvent'>".$row2["EVENT_NOM"]."</span>";
-            }
-            $stat  = $row2["ESTAT"];
-            if ($stat == -1)
-            {
-                $stat = 0;
-                $script .= "PrimerSaveLike(".$row2["EVENT_ID"].",".$row2["CASTELLER_ID"].");";
-            }
-
-            $checked="";
-            $imgLike="semaforVermell.png";
-
-            if ($stat== 0)
-            {
-                $color = "style='background-color:#ff1a1a;'";
-                $estat="No vinc";
-                $checked="";
-                $imgLike="semaforVermell.png";
-            }
-            elseif ($stat > 0)
-            {
-                $color = "style='background-color:#33cc33;'";//green
-                $estat="Vinc";
-                $checked="checked";
-                $imgLike="semaforVerd.png";
-            }
-
-            $tInici = "";
-            $tFinal = "";
-            $Juntador = "";
-            if ($row2["EVENT_PARE_ID"] > 0)
-            {
+                $PosicioId = 0;
                 $Separador="";
-                //PONER EL TAB Y EL ESTILO DE JUNTAR
-                $tInici = "";
-                $tFinal = "";
-                $Juntador = "style= margin-left:35px;margin-top:0px;border-top:0px;";
-            }
+                // output data of each row
+                while($row2 = mysqli_fetch_assoc($result2))
+                {
+                    $idElement="E".$row2["EVENT_ID"]."C".$row2["CASTELLER_ID"];
 
-            $data = date_create($row2["DATA"]);
+                    $comment = "<a class='commentLink' href='Event_Comentari_Public.php?id=".$row2["EVENT_ID"]."&nom=".$malnomPrincipal."'><img src='icons/comment.png'></img></a>";
 
-            $script .= "EventNou(".$row2["EVENT_ID"].",".$stat.",".$row2["CASTELLER_ID"].",".$apuntats.",".$max_participants.",".$max_acompanyants.");";
+                    $max_participants = $row2["MAX_PARTICIPANTS"];
+                    $max_acompanyants = $row2["MAX_ACOMPANYANTS"];
+                    $observacions = $row2["OBSERVACIONS"];
 
-            echo "
+                    $apuntats=0;
+                    if (($row2["APUNTATS"] > 0) && ($row2["TIPUS"] != -1))
+                    {
+                        $apuntats=$row2["APUNTATS"];
+                    }
+                    else if (($row2["APUNTATS_ALTRES"] > 0) && ($row2["TIPUS"] == -1))
+                    {
+                        $apuntats=$row2["APUNTATS_ALTRES"];
+                    }
+
+                    if ($row2["PUBLIC"]>0)
+                    {
+                        $eventNom = "<a class='nomEvent' href='Actuacio.php?id=".$row2["EVENT_ID"]."'><span style='text-decoration:underline;'>".$row2["EVENT_NOM"]."</span></a>";
+                    }
+                    else
+                    {
+                        $eventNom = "<span class='nomEvent'>".$row2["EVENT_NOM"]."</span>";
+                    }
+                    $stat  = $row2["ESTAT"];
+                    if ($stat == -1)
+                    {
+                        $stat = 0;
+                        $script .= "PrimerSaveLike(".$row2["EVENT_ID"].",".$row2["CASTELLER_ID"].");";
+                    }
+
+                    $checked="";
+                    $imgLike="semaforVermell.png";
+
+                    if ($stat== 0)
+                    {
+                        $color = "style='background-color:#ff1a1a;'";
+                        $estat="No vinc";
+                        $checked="";
+                        $imgLike="semaforVermell.png";
+                    }
+                    elseif ($stat > 0)
+                    {
+                        $color = "style='background-color:#33cc33;'";//green
+                        $estat="Vinc";
+                        $checked="checked";
+                        $imgLike="semaforVerd.png";
+                    }
+
+                    $tInici = "";
+                    $tFinal = "";
+                    $Juntador = "";
+                    if ($row2["EVENT_PARE_ID"] > 0)
+                    {
+                        $Separador="";
+                        //PONER EL TAB Y EL ESTILO DE JUNTAR
+                        $tInici = "";
+                        $tFinal = "";
+                        $Juntador = "style= margin-left:35px;margin-top:0px;border-top:0px;";
+                    }
+
+                    $data = date_create($row2["DATA"]);
+
+                    $script .= "EventNou(".$row2["EVENT_ID"].",".$stat.",".$row2["CASTELLER_ID"].",".$apuntats.",".$max_participants.",".$max_acompanyants.");";
+
+                    echo "
                     <div class='taula' ".$Juntador.">
                         <div class='cell columna_Nom'>
                             ".$comment.$eventNom."
@@ -144,7 +144,7 @@ if (!empty($Casteller_id_taula))
             
             ";
 
-            echo "<div class='cell columna_Assitencia'>
+                    echo "<div class='cell columna_Assitencia'>
                         <div>
                           <div class='like-cnt ".$checked."' id='".$idElement."' onClick='OnClickLike(".$idElement.", ".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].", ".$Casteller_id.", ".$row2["TIPUS"].")'>
                                   <img id='IMG".$idElement."' src='icons/".$imgLike."' width=48 height=48>
@@ -152,29 +152,29 @@ if (!empty($Casteller_id_taula))
                         </div>
                   </div>";
 
-            //<div>
-            //  <div class='like-cnt ".$checked."' id='".$idElement."' onClick='OnClickLike(".$idElement.", ".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].", ".$Casteller_id.", ".$row2["TIPUS"].")'>
-            //      <img id='IMG".$idElement."' src='icons/".$imgLike."' width=48 height=48>
-            //  </div>
-            //</div>
+                    //<div>
+                    //  <div class='like-cnt ".$checked."' id='".$idElement."' onClick='OnClickLike(".$idElement.", ".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].", ".$Casteller_id.", ".$row2["TIPUS"].")'>
+                    //      <img id='IMG".$idElement."' src='icons/".$imgLike."' width=48 height=48>
+                    //  </div>
+                    //</div>
 
-            if ($visualitzarPenya)
-            {
-                echo "<div class='cell columna_Engrescats' name='E".$row2["EVENT_ID"]."'>
+                    if ($visualitzarPenya)
+                    {
+                        echo "<div class='cell columna_Engrescats' name='E".$row2["EVENT_ID"]."'>
                         ".$apuntats."
                       </div></div>";
+                    }
+                    else
+                    {
+                        echo "</div>";
+                    }
+                }
+
+                echo "<script>".$script."</script>";
             }
-            else
+            else if (mysqli_error($conn) != "")
             {
-                echo "</div>";
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
             }
         }
-
-        echo "<script>".$script."</script>";
-    }
-    else if (mysqli_error($conn) != "")
-    {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
-}
-?>
+        ?>
