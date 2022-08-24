@@ -1,6 +1,6 @@
 <html lang="es-ES">
 <head>
-  <title>Pinyator - Èxits</title>
+  <title>Pinyator - Documentació</title>
 <meta charset="utf-8">
 <?php $menu=10; include "$_SERVER[DOCUMENT_ROOT]/pinyator/Head.php";?>
 <script src="llibreria/popup_esborra.js"></script>
