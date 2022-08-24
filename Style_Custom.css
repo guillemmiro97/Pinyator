@@ -1048,7 +1048,6 @@ input:checked + .slider:before {
 
     .cell{
         padding: 0px;
-        height: 45px;
     }
 
     #engrescatsApuntatMain{
