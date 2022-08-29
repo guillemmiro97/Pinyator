@@ -2,9 +2,11 @@
 <head>
   <title>Pinyator - Inscrits esdeveniment</title>
   <meta charset="utf-8">
+    <?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
+    <script src="llibreria/popup.js"></script>
 </head>
-<?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Style.php";?>
-<body>
+
+<body class="popup">
 <?php  
 	$id = intval($_GET["id"]);
 	$nom = strval($_GET["nom"]); ?>
@@ -19,6 +21,7 @@
 	<?php 	
 include "Event_Comentari_Llista.php";
 ?>
-   </body>
+<?php include "$_SERVER[DOCUMENT_ROOT]/pinyator/Popup.php";?>
+</body>
 </html>
 
