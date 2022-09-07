@@ -11,6 +11,9 @@ body
     padding-right:10px;
 }
 
+a {
+    text-decoration: underline !important;
+}
 
 .topnav
 {
