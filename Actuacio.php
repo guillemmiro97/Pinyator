@@ -55,7 +55,7 @@ if ((!empty($_GET['id'])) && (isset($_COOKIE[$cookie_name])))
 		// output data of each row
 		while($row = mysqli_fetch_assoc($result)) 
 		{
-			echo "<a href='Castell_Buscat.php?id=".$row["CASTELL_ID"]."&malnom=".$malnom."'><b style='font-size: 25px;'>".$row["NOM"]."</b></a><br>";
+			echo "<a class='linkCastell' href='Castell_Buscat.php?id=".$row["CASTELL_ID"]."&malnom=".$malnom."'><b style='font-size: 25px;'>".$row["NOM"]."</b></a><br>";
 		}
 	}
 	else if (mysqli_error($conn) != "")
