@@ -824,7 +824,7 @@ input:checked + .slider:before {
     height: 50px;
     display: flex;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    font-size: 25px;
+    font-size: 23px;
     color: #333333;
     width: 100%;
     line-height: 1.2;
@@ -931,15 +931,50 @@ input:checked + .slider:before {
     margin: 10px 40px 0px 10px;
     border: #FEDD19 4px solid;
     font-size: 20px;
+    background-color: #FFFFFF;
 }
 
 .cell{
-    background-color: #FFFFFF;
     align-items: center;
     display: grid;
     justify-content: center;
     padding: 10px;
     text-align: center;
+}
+
+.cellActuacio{
+    align-items: center;
+    display: grid;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    background-image: url(icons/actuacio.png);
+    background-position: bottom;
+    background-size: 290px;
+    background-repeat-y: no-repeat;
+}
+
+.cellAltres{
+    align-items: center;
+    display: grid;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    background-color:#FFFBC4;
+}
+
+.taulaActuacio{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin: 10px 40px 0px 10px;
+    border: #FEDD19 4px solid;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.taulaActuacio a {
+    color: white !important;
 }
 
 .columna_Nom {
@@ -1070,6 +1105,31 @@ input:checked + .slider:before {
 
     .buttonSocial{
         margin-right: 10px;
+    }
+
+    .cellActuacio{
+        padding: 0px;
+        background-image: none;
+    }
+
+    .cellAltres{
+        padding: 0px;
+    }
+
+    .taulaActuacio{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        margin: 0px 10px 0px 0px;
+    }
+
+    .fondoResponsiveActuacion{
+        grid-column: 1/4;
+        grid-row: 1/4;
+        background-image: url(icons/actuacio.png);
+        background-position: bottom;
+        background-size: 560px;
+        background-repeat-y: no-repeat;
     }
 
 

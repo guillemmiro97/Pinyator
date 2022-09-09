@@ -127,24 +127,53 @@
 
                     $script .= "EventNou(".$row2["EVENT_ID"].",".$stat.",".$row2["CASTELLER_ID"].",".$apuntats.",".$max_participants.",".$max_acompanyants.");";
 
+                    $tipusCelda = "";
+                    $tipusTaula = "";
+                    $siluetas = "";
+                    $gradiente = "";
+                    $nomColla = "";
+
+                    if($row2["TIPUS"] == 1){
+                        $tipusCelda = "Actuacio";
+                        $tipusTaula = "Actuacio";
+                        $siluetas = "<div class='fondoResponsiveActuacion'></div>";
+
+                        if(str_contains($row2["EVENT_NOM"], "DIADA")){
+                            $nomColla = explode(" ",$row2["EVENT_NOM"]);
+                            $nomColla = $nomColla[1];
+                        } else {
+                            $nomColla = "ENGRESCATS";
+                        }
+
+                        $sqlGradient = "SELECT Color_1, Color_2 FROM COLLES WHERE Nom_Colla like '".$nomColla."';";
+                        $resultGradient = mysqli_query($conn, $sqlGradient);
+                        $colores = mysqli_fetch_assoc($resultGradient);
+
+                        $gradiente = "style='background: linear-gradient(0deg, #000000 0%, ".$colores['Color_1']." 45%, ".$colores['Color_2']." 100%);'";
+
+                    } else if($row2["TIPUS"] == -1){
+                        $tipusCelda = "Altres";
+                    }
+
                     echo "
-                    <div class='taula' ".$Juntador.">
-                        <div class='cell columna_Nom'>
+                    <div class='taula".$tipusTaula."' ".$Juntador." ".$gradiente.">
+                        ".$siluetas."
+                        <div class='cell".$tipusCelda." columna_Nom'>
                             ".$comment.$eventNom."
                         </div>
-                        <div class='cell columna_Data'>
+                        <div class='cell".$tipusCelda." columna_Data'>
                             ".date_format($data, "d/m")."
                         </div>
-                        <div class='cell columna_Hora'>
+                        <div class='cell".$tipusCelda." columna_Hora'>
                             ".date_format($data, "H:i")."
                         </div>
-                        <div class='cell columna_Lloc'>
+                        <div class='cell".$tipusCelda." columna_Lloc'>
                             ".$row2["OBSERVACIONS"]."
                         </div>
             
             ";
 
-                    echo "<div class='cell columna_Assitencia'>
+                    echo "<div class='cell".$tipusCelda." columna_Assitencia'>
                         <div>
                           <div class='like-cnt ".$checked."' id='".$idElement."' onClick='OnClickLike(".$idElement.", ".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].", ".$Casteller_id.", ".$row2["TIPUS"].")'>
                                   <img id='IMG".$idElement."' src='icons/".$imgLike."' width=48 height=48>
@@ -160,7 +189,7 @@
 
                     if ($visualitzarPenya)
                     {
-                        echo "<div class='cell columna_Engrescats' name='E".$row2["EVENT_ID"]."'>
+                        echo "<div class='cell".$tipusCelda." columna_Engrescats' name='E".$row2["EVENT_ID"]."'>
                         ".$apuntats."
                       </div></div>";
                     }
