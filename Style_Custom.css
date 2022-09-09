@@ -1025,7 +1025,6 @@ input:checked + .slider:before {
     height: 160px;
     display: grid;
     align-content: center;
-    justify-content: end;
     margin-right: 40px;
     width: fit-content;
 }
@@ -1122,6 +1121,7 @@ input:checked + .slider:before {
     #userName{
         height: 100px;
         padding: 0px 10px;
+        float: none;
     }
 
     #userIMGBack{
@@ -1158,5 +1158,9 @@ input:checked + .slider:before {
         background-repeat-y: no-repeat;
     }
 
+    #strikeButtonID {
+        height: 100px;
+
+    }
 
 }
