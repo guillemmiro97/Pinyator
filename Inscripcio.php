@@ -100,6 +100,10 @@ $(document).unload = function(){window.location.reload();};
 background-attachment: fixed;  background-position: center; opacity:0.4; background-size: 27%;'>
 </div>
 
+<div id="strikePopUp">
+</div>
+
+
 <?php
 	$topLlista = 60;
 
@@ -160,8 +164,31 @@ function StarOff($left)
 {
 	echo "<div style='position:absolute; left:".$left."'><span class='fa fa-star starOff' style='font-size:30px'></span></div>";
 }
-	
+
+$sqlEventsTotals = "SELECT COUNT(Event_ID) AS num FROM EVENT WHERE estat = 1;";
+$resultEventsTotals = mysqli_query($conn, $sqlEventsTotals);
+$rowEventsTotals = mysqli_fetch_assoc($resultEventsTotals);
+
+$EventsTotals = $rowEventsTotals['num'];
+
+$sqlAssitenciaTotal = "SELECT sum(inscrits.Estat) as num FROM inscrits INNER JOIN Event ON inscrits.Event_ID=Event.Event_ID WHERE inscrits.Casteller_ID = '".$Casteller_id."' AND event.Estat = 1;";
+$resultAssitenciaTotal = mysqli_query($conn, $sqlAssitenciaTotal);
+$rowAssitenciaTotal = mysqli_fetch_assoc($resultAssitenciaTotal);
+
+$AssitenciaTotal = $rowAssitenciaTotal['num'];
+
+$strike = "";
+$imgName = "noPleno.png";
+
+if($AssitenciaTotal == $EventsTotals){
+    $strike = "checked";
+    $imgName = "pleno.png";
+}
+
 ?>
+
+<div id="assitenciaNum" style="display:none"><?php echo $AssitenciaTotal; ?></div>
+<div id="eventsNum" style="display:none"><?php echo $EventsTotals; ?></div>
 
         <main id="engrescatsApuntatMain">
             <!-- PART DEL USER -->
@@ -177,11 +204,16 @@ function StarOff($left)
                         <p>Àlies: <?php echo $malnom; ?></p>
                     </div>
                 </section>
+                <section>
+                    <div id='strikeButtonID' class='strikeButtonClass <?php echo $strike?>' onClick='OnClickStrike(strikeButtonID, <?php echo $Casteller_id?>)'>
+                        <img class='boton' id="IMGstrikeButton" src='icons/<?php echo $imgName?>' width=100 height=100>
+                    </div>
+                </section>
             </article>
 
             <?php
-            /***+++++++++++ LLISTAT +++++++++++***/
 
+            /***+++++++++++ LLISTAT +++++++++++***/
 
             $Casteller_id_taula = $Casteller_id;
             include "$_SERVER[DOCUMENT_ROOT]/pinyator/Inscripcio_taula.php";

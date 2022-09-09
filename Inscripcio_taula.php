@@ -176,7 +176,7 @@
                     echo "<div class='cell".$tipusCelda." columna_Assitencia'>
                         <div>
                           <div class='like-cnt ".$checked."' id='".$idElement."' onClick='OnClickLike(".$idElement.", ".$row2["EVENT_ID"].", ".$row2["CASTELLER_ID"].", ".$Casteller_id.", ".$row2["TIPUS"].")'>
-                                  <img id='IMG".$idElement."' src='icons/".$imgLike."' width=48 height=48>
+                                  <img class='boton' id='IMG".$idElement."' src='icons/".$imgLike."' width=48 height=48>
                             </div>
                         </div>
                   </div>";

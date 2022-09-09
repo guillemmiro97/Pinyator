@@ -372,6 +372,9 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 	var estat=0;
 	var event_id=eventid;
 	var casteller_id=castellerid;
+
+	var assitencia = document.getElementById("assitenciaNum");
+	var eventsTotals = document.getElementById("eventsNum");
 	
 	for(i=0;i<events.length;i++)
 	{
@@ -430,6 +433,7 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 							img.src='icons/semaforVerd.png';
 							burst.replay();
 							operador=1;
+							assitencia.textContent = parseInt(assitencia.textContent) + 1;
 						}
 					}
 					else
@@ -437,6 +441,7 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 						img.src='icons/semaforVermell.png';
 						like_cnt.classList.remove("checked");
 						operador=-1;
+						assitencia.textContent = parseInt(assitencia.textContent) - 1;
 					}				
 					
 					var frame = document.getElementById("counterCastellers");
@@ -450,6 +455,17 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 					{
 						ModificaRanking(operador);
 					}
+
+
+					var elementIMG = "IMGstrikeButton";
+					if(assitencia.textContent == eventsTotals.textContent){
+						strikeButtonID.classList.add("checked");
+						document.getElementById(elementIMG).src = "icons/pleno.png"
+					} else {
+						strikeButtonID.classList.remove("checked");
+						document.getElementById(elementIMG).src = "icons/noPleno.png"
+					}
+
 				}
 				else if (str == "NotAllowed")
 				{
@@ -474,4 +490,57 @@ function getOffset(el)
 	leftCenter: rect.left + window.scrollX + (rect.width/2),
     topCenter: rect.top + window.scrollY + (rect.height/2)
   };
+}
+
+function OnClickStrike(strikeButtonID, castellerID)
+{
+	var assitencia = document.getElementById("assitenciaNum");
+
+	var checkedStatus = strikeButtonID.classList.contains("checked");
+	var elementIMG = "IMGstrikeButton";
+
+	var elementStrike = "strikePopUp";
+
+	if(!checkedStatus){
+		strikeButtonID.classList.add("checked");
+		document.getElementById(elementIMG).src = "icons/pleno.png"
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET", "Inscripcio_Desa_Tot.php?c=" + castellerID, true);
+		xmlhttp.send();
+		var numButons = document.querySelectorAll('[id^="IMGE"]').length;
+
+		var numText = document.querySelectorAll('[name^="E"]').length;
+		for(var i = 0; i < numText; i++){
+			if(! document.querySelectorAll('[id^="IMGE"]')[i].src.includes( "icons/semaforVerd.png")){
+				document.querySelectorAll('[name^="E"]')[i].textContent = parseInt(document.querySelectorAll('[name^="E"]')[i].textContent) + 1;
+				document.querySelectorAll('[class^="like-cnt"]')[i].classList.add("checked");
+			}
+		}
+
+		for(var i = 0; i < numButons; i++){
+			document.querySelectorAll('[id^="IMGE"]')[i].src = 'icons/semaforVerd.png';
+		}
+		assitencia.textContent = numButons;
+
+	} else {
+		strikeButtonID.classList.remove("checked");
+		document.getElementById(elementIMG).src = "icons/noPleno.png"
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET", "Inscripcio_Esborra_Tot.php?c=" + castellerID, true);
+		xmlhttp.send();
+
+		var numText = document.querySelectorAll('[name^="E"]').length;
+		for(var i = 0; i < numText; i++){
+			document.querySelectorAll('[name^="E"]')[i].textContent = parseInt(document.querySelectorAll('[name^="E"]')[i].textContent) - 1;
+			document.querySelectorAll('[class^="like-cnt"]')[i].classList.remove("checked");
+		}
+
+		var numButons = document.querySelectorAll('[id^="IMGE"]').length;
+		for(var i = 0; i < numButons; i++){
+			document.querySelectorAll('[id^="IMGE"]')[i].src = 'icons/semaforVermell.png';
+		}
+		assitencia.textContent = 0;
+
+	}
+
 }
