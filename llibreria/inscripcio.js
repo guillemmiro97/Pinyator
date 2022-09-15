@@ -461,6 +461,7 @@ function OnClickLike(like_cnt, eventid, castellerid, casteller_ranking, tipus)
 					if(assitencia.textContent == eventsTotals.textContent){
 						strikeButtonID.classList.add("checked");
 						document.getElementById(elementIMG).src = "icons/pleno.png"
+						ejecutaStrike();
 					} else {
 						strikeButtonID.classList.remove("checked");
 						document.getElementById(elementIMG).src = "icons/noPleno.png"
@@ -521,6 +522,7 @@ function OnClickStrike(strikeButtonID, castellerID)
 			document.querySelectorAll('[id^="IMGE"]')[i].src = 'icons/semaforVerd.png';
 		}
 		assitencia.textContent = numButons;
+		ejecutaStrike();
 
 	} else {
 		strikeButtonID.classList.remove("checked");
@@ -542,5 +544,7 @@ function OnClickStrike(strikeButtonID, castellerID)
 		assitencia.textContent = 0;
 
 	}
+
+
 
 }

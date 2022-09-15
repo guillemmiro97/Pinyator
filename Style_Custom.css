@@ -1029,19 +1029,39 @@ input:checked + .slider:before {
     width: fit-content;
 }
 
-#strikePopUp{
+#strikeSection {
+    display: flex;
+    justify-content: end;
+}
+
+#strikePopUpConfeti{
     z-index: 1;
     position: fixed;
     width: 100%;
     height: 100%;
-    background-image: url(icons/strike.png);
     background-repeat: no-repeat;
     background-attachment: fixed;
+    opacity: 0%;
+    display: none;
     background-position: center;
-    background-size: 100%;
+}
+
+#strikePopUpConfeti{
+    background-image: url(icons/confetti.gif);
+    background-size: 15%;
+    background-repeat: initial;
+}
+
+#strikePopUpFirework{
+    height: 100%;
+    width: 100%;
+    /*background-color: black;*/
+    z-index: 1;
+    position: fixed;
     opacity: 0%;
     display: none;
 }
+
 
 .boton:hover {
     cursor: pointer;
@@ -1161,6 +1181,10 @@ input:checked + .slider:before {
     #strikeButtonID {
         height: 100px;
 
+    }
+
+    #strikeSection {
+        justify-content: center;
     }
 
 }
