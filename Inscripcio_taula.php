@@ -149,7 +149,14 @@
                         $resultGradient = mysqli_query($conn, $sqlGradient);
                         $colores = mysqli_fetch_assoc($resultGradient);
 
-                        $gradiente = "style='background: linear-gradient(0deg, #000000 0%, ".$colores['Color_1']." 45%, ".$colores['Color_2']." 100%);'";
+                        if(mysqli_num_rows($resultGradient) == 0){
+                            $nomColla = "ENGRESCATS";
+                            $sqlGradient = "SELECT Color_1, Color_2 FROM COLLES WHERE Nom_Colla like '".$nomColla."';";
+                            $resultGradient = mysqli_query($conn, $sqlGradient);
+                            $colores = mysqli_fetch_assoc($resultGradient);
+                        }
+
+                        $gradiente = "style='background: linear-gradient(0deg, #000000 0%, ".$colores['Color_1']." 60%, ".$colores['Color_2']." 80%);'";
 
                     } else if($row2["TIPUS"] == -1){
                         $tipusCelda = "Altres";

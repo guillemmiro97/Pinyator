@@ -910,7 +910,7 @@ input:checked + .slider:before {
     height: 150px;
     padding: 10px 20px;
     margin-bottom: 20px;
-    float: left;
+    /*float: left;*/
 }
 
 #userName h1 {

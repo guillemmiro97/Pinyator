@@ -204,17 +204,17 @@ if($AssitenciaTotal == $EventsTotals){
                         <div id="userIMG"></div>
                     </div>
                 </section>
-                <section>
+                <section style="display:flex">
                     <div id="userName">
                         <h1><?php echo $nom; ?></h1>
                         <p>Àlies: <?php echo $malnom; ?></p>
                     </div>
                 </section>
-                <section id="strikeSection" >
+                <!--<section id="strikeSection" >
                     <div id='strikeButtonID' class='strikeButtonClass <?php echo $strike?>' onClick='OnClickStrike(strikeButtonID, <?php echo $Casteller_id?>)'>
                         <img class='boton' id="IMGstrikeButton" src='icons/<?php echo $imgName?>' width=100 height=100>
                     </div>
-                </section>
+                </section>-->
             </article>
 
             <?php
