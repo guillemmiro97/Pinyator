@@ -1,5 +1,5 @@
 <?php
-	$conn = mysqli_connect('localhost','engrescats','password','pinyator');
+	$conn = mysqli_connect('localhost','user','password','pinyator');
 	if (!$conn) 
 	{
 		die('Could not connect: ' . mysqli_error($conn));
