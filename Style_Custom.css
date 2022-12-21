@@ -824,7 +824,7 @@ input:checked + .slider:before {
     height: 50px;
     display: flex;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    font-size: 25px;
+    font-size: 23px;
     color: #333333;
     width: 100%;
     line-height: 1.2;
@@ -910,6 +910,7 @@ input:checked + .slider:before {
     height: 150px;
     padding: 10px 20px;
     margin-bottom: 20px;
+    /*float: left;*/
 }
 
 #userName h1 {
@@ -931,15 +932,50 @@ input:checked + .slider:before {
     margin: 10px 40px 0px 10px;
     border: #FEDD19 4px solid;
     font-size: 20px;
+    background-color: #FFFFFF;
 }
 
 .cell{
-    background-color: #FFFFFF;
     align-items: center;
     display: grid;
     justify-content: center;
     padding: 10px;
     text-align: center;
+}
+
+.cellActuacio{
+    align-items: center;
+    display: grid;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    background-image: url(icons/actuacio.png);
+    background-position: bottom;
+    background-size: 290px;
+    background-repeat-y: no-repeat;
+}
+
+.cellAltres{
+    align-items: center;
+    display: grid;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    background-color:#FFFBC4;
+}
+
+.taulaActuacio{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin: 10px 40px 0px 10px;
+    border: #FEDD19 4px solid;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.taulaActuacio a {
+    color: white !important;
 }
 
 .columna_Nom {
@@ -985,7 +1021,51 @@ input:checked + .slider:before {
     display:none;
 }
 
+#strikeButtonID {
+    height: 160px;
+    display: grid;
+    align-content: center;
+    margin-right: 40px;
+    width: fit-content;
+}
 
+#strikeSection {
+    display: flex;
+    justify-content: end;
+}
+
+#strikePopUpConfeti{
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0%;
+    display: none;
+    background-position: center;
+}
+
+#strikePopUpConfeti{
+    background-image: url(icons/confetti.gif);
+    background-size: 15%;
+    background-repeat: initial;
+}
+
+#strikePopUpFirework{
+    height: 100%;
+    width: 100%;
+    /*background-color: black;*/
+    z-index: 1;
+    position: fixed;
+    opacity: 0%;
+    display: none;
+}
+
+
+.boton:hover {
+    cursor: pointer;
+}
 
 @media only screen and (max-width: 1079px) {
     #taula-Titols{
@@ -1061,6 +1141,7 @@ input:checked + .slider:before {
     #userName{
         height: 100px;
         padding: 0px 10px;
+        float: none;
     }
 
     #userIMGBack{
@@ -1072,5 +1153,38 @@ input:checked + .slider:before {
         margin-right: 10px;
     }
 
+    .cellActuacio{
+        padding: 0px;
+        background-image: none;
+    }
+
+    .cellAltres{
+        padding: 0px;
+    }
+
+    .taulaActuacio{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        margin: 0px 10px 0px 0px;
+    }
+
+    .fondoResponsiveActuacion{
+        grid-column: 1/4;
+        grid-row: 1/4;
+        background-image: url(icons/actuacio.png);
+        background-position: bottom;
+        background-size: 560px;
+        background-repeat-y: no-repeat;
+    }
+
+    #strikeButtonID {
+        height: 100px;
+
+    }
+
+    #strikeSection {
+        justify-content: center;
+    }
 
 }
